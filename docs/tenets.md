@@ -3,7 +3,7 @@
 
 ### Overview
  
-A Tenet is a rule about a system. It is written in [CLQL](/clql) They are underlying patterns which the CodeLingo Bots follow to guide development and safeguard systems. Tenets can be added directly to Bots or embedded in the resources they monitor. For example, CLAIR reads .lingo files that live along side source code in a code repository.
+A Tenet is a rule about a system. It is written in [CLQL](/clql/index.html). They are underlying patterns which the CodeLingo Bots follow to guide development and safeguard systems. Tenets can be added directly to Bots or embedded in the resources they monitor. For example, CLAIR reads .lingo files that live along side source code in a code repository.
 
 <!-- TODO(JENNA) Can you think of a visual representation/diagram to explain how bots, tenets and lexicons fit together/work? -->
 

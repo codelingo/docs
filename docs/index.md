@@ -4,4 +4,4 @@ The CodeLingo platform guide's software teams to build better code, faster. Code
  
 Our Enterprise offering includes access to the CodeLingo team to compose solutions for customers based on their unique software development life-cycle (SDLC) and to on-board the customer so they can compose/develop their own solutions.
 
-There are three key concepts to CodeLingo: [Lexicons](/lexicons), [Tenets](tenets) and [Bots](/bots). This documentation introduces these concepts and gives practical examples of each.
+There are three key concepts to CodeLingo: [Lexicons](/lexicons/index.html), [Tenets](tenets/index.html) and [Bots](/bots/index.html). This documentation introduces these concepts and gives practical examples of each.
