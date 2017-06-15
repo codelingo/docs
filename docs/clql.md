@@ -35,39 +35,37 @@ Queries are made up of [Facts](lexicons.md). A CLQL query with just a single fac
 
 `<cs.class` 
 
-It consists of a single fact `<cs.class`. The namespace `cs`This fact is made up of a yield tag `<`, a lexicon id `cs`, and a fact name.
+It consists of a single fact `<cs.class`. The namespace `cs` indicates that it belongs to the C# [lexicon](lexicons.md), and the fact name `class` indicates that it refers to a C# class.
  
-The yield tag indicates which fact you want to return. Every query must have one (and only one) yielded fact.
- 
-The lexicon id tells the CodeLingo backend how to analyse your repository. In particular, the csharp lexicon tells the backend to parse your code into an AST for static analysis.
- 
-The fact name specifies the exact sort of you are interested in. Each lexicon has a set of associated facts, for example, you can also query `cs.int`, `cs.method`, etc. A full list of facts for a given lexicon is available with the `lingo list-facts <owner>/<lexicon>` command.
+The yield tag `<` determines which fact the query will return. Every query must have one (and only one) yielded fact.
 
 <br />
 
 ### Facts with Properties
  
-It is rare that you are interested in all classes, or all methods as above. We can query for elements with specific properties like so:
+To limit the above query to match classes with a particular name, add a "name" property as an argument to the method fact:
  
 ```
 <cs.method:
   name: "myFunc"
 ```
  
-This query returns all methods with the name "myFunc". Note that the yield tag is still on the `method` fact - you can't return properties, only the elements they belong to.  Also note that properties are not namespaces, as their namespace is implied from the fact they hang off.
+This query returns all methods with the name "myFunc". Note that the yield tag is still on the `method` fact - properties cannot be returned, only their parent facts. Also note that properties are not namespaced, as their namespace is implied from their parent fact.
+
+Facts with arguments are proceeded by a colon. 
 
 <br />
 
 ### Floats and Ints
 
-Not all properties are strings, there are also floats and ints. This query finds all int literals with the value 8:
+Properties can be of type string, float, and int. The following finds all int literals with the value 8:
  
 ```
 <cs.int_lit:
   value: 5
 ```
  
-Similarly we can find a float with the value 8.7:
+This query finds float literals with the value 8.7:
  
 ```
 <cs.float_lit:
@@ -78,17 +76,17 @@ Similarly we can find a float with the value 8.7:
 
 ### Comparison
 
-The comparison operators >, <, ==, >=, and <= are available for floats and ints. We can query all int literals above negative 3 like so:
+The comparison operators >, <, ==, >=, and <= are available for floats and ints. The following finds all int literals above negative 3:
 ```
 <cs.int_lit:
-  value: >-3
+  value: > -3
 ```
 
 <br />
 
 ### Regex
 
-Any string property can be queried with regex. We can find all methods with names longer than 25 characters like so:
+Any string property can be queried with regex. The following finds methods with names longer than 25 characters:
  
 ```
 <cs.method:
@@ -96,10 +94,18 @@ Any string property can be queried with regex. We can find all methods with name
 ```
 
 <br />
- 
+
 ### Fact Nesting
 
-As seen in the query generation example, you can nest facts inside other facts. We can find all the methods inside of “myClass” class like so:
+Facts can be take arbitrarily many other facts as arguments, forming a query with a tree struct of arbitrary depth. A parent-child fact pair will match any parent element even if the child is not a direct descendant. The following query finds all the if statements inside the “myMethod” method, even those nested inside intermediate scopes (for loops etc):
+
+```
+cs.method:
+  name: myMethod
+  <cs.if_stmt
+```
+ 
+Any fact in a query can be yielded. If `cs.class` is yielded, this query returns the “myClass” class, but only if it has at least one method:
  
 ```
 cs.class:
@@ -107,17 +113,7 @@ cs.class:
   <cs.method
 ```
  
-Note that `<cs.method` does not end in a colon, since it has no arguments - it has no properties or other facts nested inside it.
- 
-You can put the yield tag on any fact in a query. If you put it on the `cs.class`, the query would return the “myClass” class, but only if it has at least one method:
- 
-```
-cs.class:
-  name: “myClass”
-  <cs.method
-```
- 
-Any fact in a query can have properties. You can find a specific method of a specific class with:
+Any fact in a query can have properties. The following query finds the "myMethod" method on the "myClass" class:
  
 ```
 cs.class:
@@ -130,37 +126,27 @@ cs.class:
 
 ### Branching
 
-So far each fact has only had one child fact, but facts can have an arbitrary number of children. We can find a method with a foreach loop, an if statement, and a method call with:
+The order of sibling facts is irrelevant in CLQL. The following query will find a method with a foreach loop, a for loop, and a while loop regardless of their order in the query:
  
 ```
 <cs.method:
-  cs.if_stmt
+  cs.for_stmt
   cs.foreach_stmt
-  cs.method_call
-```
- 
-The order of the children will not change the meaning of the query.
- 
-Similarly, facts can have arbitrarily many properties, and we can find methods with long names a many arguments with:
-
-```
-<cs.method:
-  name: /^.{25,}$/
-  arg-num: > 6
+  cs.while_stmt
 ```
 
 <br />
 
 ### Negation
 
-Sometimes you are interested in all the elements that don’t have a given property. We can query for every class except the “boringClass” using “!” for negation:
+Negation allows queries to match children that *do not* have a given property or child fact. Negated facts and properties are prepended by "!". The following query finds all classes except classA:
 
 ```
 <cs.class:
-  !name: “boringClass”
+  !name: "classA"
 ```
  
-Negation can apply to both facts and properties. This query will find all classes with String methods:
+This query finds all classes with String methods:
 
 ```
 <cs.class:
@@ -168,7 +154,7 @@ Negation can apply to both facts and properties. This query will find all classe
     name: “String”
 ```
  
-Be careful to place the negation on the right fact/property - this similar query finds all methods with a method that is not called string:
+The placement of the negation operator has a significant effect on the query's meaning - this similar query finds all methods with a method that is not called String:
 
 ```
 <cs.class:
@@ -176,7 +162,7 @@ Be careful to place the negation on the right fact/property - this similar query
     !name: “String”
 ```
  
-Negating a fact does not affect its siblings. This query finds all string methods that use an if statement, but don’t use a foreach statement:
+Negating a fact does not affect its siblings. The following query finds all String methods that use an if statement, but don’t use a foreach statement:
 
 ```
 <cs.method:
@@ -185,13 +171,13 @@ Negating a fact does not affect its siblings. This query finds all string method
   !cs.foreach_stmt
 ```
  
-You cannot use a negation on the yielded fact.
+A fact cannot be both yielded and negated.
 
 <br />
 
 ### Or
 
-If a fact has multiple children, it will match against elements of the code that have child1 *and* child2 *and* child3 etc. We use the “or” operator to override the implicit and.  We can query all string methods that use basic loops like so:
+A fact with multiple children will match against elements of the code that have child1 *and* child2 *and* child3 etc. The “or” operator overrides the implicit "and". The following query finds all String methods that use basic loops:
 
 ```
 <cs.method:
@@ -206,7 +192,9 @@ If a fact has multiple children, it will match against elements of the code that
 
 ### Variables
 
-Sometimes you want to compare elements that do not have a direct parent-child relationship. For example, you can compare two classes and see which methods they both implement:
+Facts that do not have a parent-child relationship can be compared by assigning their properties to variables. Any argument starting with “$” defines a variable. A query with a variable will only match a pattern in the code if all properties representing that variable are equal.
+
+The following query compares two classes (which do have a parent-child relationship) and returns the methods which both classes implement:
 
 ```
 cs.class:
@@ -219,15 +207,15 @@ cs.class:
     name: $methodName
 ```
 
-Any argument starting with “$” defines a variable. The query above will only return methods of classA for which classB has a corresponding method.
+ The query above will only return methods of classA for which classB has a corresponding method.
 
 <br />
- 
+
 ### Interleaving
 
-CLQL can be used to query source code, but it can also be used to query other domains of knowledge like Version Control Systems. In our previous examples, we assumed our queries were limited to the current state of our local project. By default the lingo tool scopes your queries to the current state of your local project by default, you can override that and do a fully explicit query. 
+CLQL can be used to query source code, but it can also be used to query other domains of knowledge like Version Control Systems. The queries in the previous examples were assumed to be scoped to a given C# program. By default the lingo tool scopes queries to the current state of your local project by default, but that can be overriden, allowing a fully explicit query. 
  
-If you are using Git, you can recreate the basic class finding query like this:
+Using facts from the git [lexicon](lexicons.md), the following query recreates the basic C# class finding query without implicit project scoping:
 
 ```
 git.repo:
@@ -240,7 +228,7 @@ git.repo:
       <cs.class
 ```
  
-You can use this to query for changes in the code over time. For example, we can check if a given method has increased its number of arguments:
+Git (and indeed any VCS) facts can be used to query for changes in the code over time. For example, the following query checks if a given method has increased its number of arguments:
  
 ```
 git.repo:
