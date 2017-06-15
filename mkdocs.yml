@@ -1,0 +1,13 @@
+site_name: CodeLingo Docs #- On Prem
+pages:
+    - Overview: index.md
+    - Getting Started: getting-started.md
+    # - Platform: platform.md
+    - CLQL: clql.md
+    - Tenets: tenets.md
+    - Lexicons: lexicons.md
+    - Bots: bots.md
+    # - Lexicon SDK: lexicon-sdk.md
+    # - Bot SDK: bot-sdk.md
+    
+theme: cinder
