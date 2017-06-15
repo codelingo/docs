@@ -11,3 +11,4 @@ pages:
     # - Bot SDK: bot-sdk.md
     
 theme: cinder
+use_directory_urls: false
