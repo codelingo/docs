@@ -1,10 +1,7 @@
 # Overview
  
 The CodeLingo platform guide's software teams to build better code, faster. CodeLingo has been built to integrate with the unique workflows and existing tooling of software development teams and their unique software development life-cycle (SDLC). With CodeLingo you can query patterns in any domain of the SDLC and automate tasks based on the patterns found. From static to runtime analysis, to timelines and logs - powerful Tenets can be written to: automate code reviews, provide real-time crash reporting, performance tune systems, migrate architectures and so on.
- 
-Our Enterprise offering includes access to the CodeLingo team to compose solutions for customers based on their unique software development life-cycle (SDLC) and to on-board the customer so they can compose/develop their own solutions.
- 
- 
+
 
 There are three key concepts to CodeLingo: [Bots](/bots), [Tenets](tenets), and [Lexicons](/lexicons).
  
