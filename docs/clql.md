@@ -34,7 +34,7 @@ The yield tag `<` determines which fact the query will return. Every query must 
 
 <br />
 
-### Facts Properties
+### Fact Properties
 
 To limit the above query to match classes with a particular name, add a "name" property as an argument to the `method` fact:
  
@@ -90,7 +90,7 @@ Any string property can be queried with regex. The following finds methods with 
 
 ### Fact Nesting
 
-Facts can be take arbitrarily many other facts as arguments, forming a query with a tree struct of arbitrary depth. A parent-child fact pair will match any parent element even if the child is not a direct descendant. The following query finds all the if statements inside the “myMethod” method, even those nested inside intermediate scopes (for loops etc):
+Facts can be take arbitrarily many other facts as arguments, forming a query with a tree struct of arbitrary depth. A parent-child fact pair will match any parent element even if the child is not a direct descendant. The following query finds all the if statements inside a method called "myMethod", even those nested inside intermediate scopes (for loops etc):
 
 ```
 cs.method:
@@ -98,7 +98,7 @@ cs.method:
   <cs.if_stmt
 ```
  
-Any fact in a query can be yielded. If `cs.class` is yielded, this query returns the “myClass” class, but only if it has at least one method:
+Any fact in a query can be yielded. If `cs.class` is yielded, this query returns all classes named "myClass", but only if it has at least one method:
  
 ```
 cs.class:
@@ -106,7 +106,7 @@ cs.class:
   <cs.method
 ```
  
-Any fact in a query can have properties. The following query finds the "myMethod" method on the "myClass" class:
+Any fact in a query can have properties. The following query finds all methods named "myMethod" on the all classes named "myClass":
  
 ```
 cs.class:
@@ -132,7 +132,7 @@ The order of sibling facts is irrelevant in CLQL. The following query will find 
 
 ### Negation
 
-Negation allows queries to match children that *do not* have a given property or child fact. Negated facts and properties are prepended by "!". The following query finds all classes except classA:
+Negation allows queries to match children that *do not* have a given property or child fact. Negated facts and properties are prepended by "!". The following query finds all classes except those named "classA":
 
 ```
 <cs.class:
