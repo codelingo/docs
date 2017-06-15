@@ -5,18 +5,18 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">   
-    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="shortcut icon" href="../img/favicon.ico">
 
-    <title>CodeLingo Docs</title>
+    <title>Bots - CodeLingo Docs</title>
 
-    <link href="/css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.018/css/hack.min.css">
     <link href='//fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
-    <link href="/css/base.css" rel="stylesheet">
-    <link href="/css/cinder.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../css/base.css" rel="stylesheet">
+    <link href="../css/cinder.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -54,7 +54,7 @@
             
 
             <!-- Main title -->
-            <a class="navbar-brand" href="/">CodeLingo Docs</a>
+            <a class="navbar-brand" href="..">CodeLingo Docs</a>
         </div>
 
         <!-- Expanded navigation -->
@@ -65,37 +65,37 @@
                 
                 
                     <li >
-                        <a href="/">Overview</a>
+                        <a href="..">Overview</a>
                     </li>
                 
                 
                 
                     <li >
-                        <a href="/getting-started/">Getting Started</a>
+                        <a href="../getting-started/">Getting Started</a>
                     </li>
                 
                 
                 
                     <li >
-                        <a href="/clql/">CLQL</a>
+                        <a href="../clql/">CLQL</a>
                     </li>
                 
                 
                 
                     <li >
-                        <a href="/tenets/">Tenets</a>
+                        <a href="../tenets/">Tenets</a>
                     </li>
                 
                 
                 
                     <li >
-                        <a href="/lexicons/">Lexicons</a>
+                        <a href="../lexicons/">Lexicons</a>
                     </li>
                 
                 
                 
-                    <li >
-                        <a href="/bots/">Bots</a>
+                    <li class="active">
+                        <a href="./">Bots</a>
                     </li>
                 
                 
@@ -109,8 +109,8 @@
                     </a>
                 </li>
                 
-                    <li class="disabled">
-                        <a rel="next" >
+                    <li >
+                        <a rel="next" href="../lexicons/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
@@ -128,16 +128,34 @@
 
     <div class="container">
         
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="first-level active"><a href="#bots">Bots</a></li>
+        
+            <li class="second-level"><a href="#overview">Overview</a></li>
+            
+        
+    
+    </ul>
+</div></div>
+        <div class="col-md-9" role="main">
 
-    <div class="row-fluid">
-      <div id="main-content" class="span12">
-        <h1 id="404-page-not-found" style="text-align: center">404</h1>
-        <p style="text-align: center"><strong>Page not found</strong></p>
-        <p style="text-align: center"><a href="">Home</a></p>
-      </div>
-    </div>
-
-
+<h1 id="bots">Bots</h1>
+<h3 id="overview">Overview</h3>
+<p>Bots listen for events in the SDLC, look for patterns and perform some action based on the pattern found. This automated end-to-end workflow we call a “BotFlow”. Below is an example of a BotFlow, created with our BotFlow Composer, which automates code reviews of pull requests to a git repository:</p>
+<p><todo: image of botflow composer></p>
+<p><img alt="CLAIR (CodeLingo AI Reviewer) commenting on a pull-request" src="../img/clair_review_simple.png" /></p>
+<p>CLAIR (CodeLingo AI Reviewer) commenting on a pull-request.</p>
+<p>Other examples of BotFlows include:</p>
+<ul>
+<li>A forensic Bot analyses logs and finds event B happened before A, which violates a Tenet</li>
+<li>A project overview Bot graphs Tech Debt burndown chart and delegates based on ownership</li>
+<li>A Copilot Bot gives real time feedback to a developer in their IDE as they’re coding</li>
+<li>A profiling Bot detects high memory usage correlated to similar code</li>
+<li>A crash report Bot monitors a running system and reports on unexpected runtime information</li>
+</ul></div>
+        
     </div>
 
     <footer class="col-md-12 text-center">
@@ -146,15 +164,15 @@
         <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
     </footer>
 
-    <script src="/js/jquery-1.10.2.min.js"></script>
-    <script src="/js/bootstrap-3.0.3.min.js"></script>
-    <script src="/js/highlight.pack.js"></script>
+    <script src="../js/jquery-1.10.2.min.js"></script>
+    <script src="../js/bootstrap-3.0.3.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
     <script>
-    var base_url = '';
+    var base_url = '..';
     </script>
-    <script data-main="/mkdocs/js/search.js" src="/mkdocs/js/require.js"></script>
-    <script src="/js/base.js"></script>
+    <script data-main="../mkdocs/js/search.js" src="../mkdocs/js/require.js"></script>
+    <script src="../js/base.js"></script>
 
     <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
         <div class="modal-dialog">

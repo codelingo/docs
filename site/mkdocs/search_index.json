@@ -2,23 +2,143 @@
     "docs": [
         {
             "location": "/", 
-            "text": "Welcome to MkDocs\n\n\nFor full documentation visit \nmkdocs.org\n.\n\n\nCommands\n\n\n\n\nmkdocs new [dir-name]\n - Create a new project.\n\n\nmkdocs serve\n - Start the live-reloading docs server.\n\n\nmkdocs build\n - Build the documentation site.\n\n\nmkdocs help\n - Print this help message.\n\n\n\n\nProject layout\n\n\nmkdocs.yml    # The configuration file.\ndocs/\n    index.md  # The documentation homepage.\n    ...       # Other markdown pages, images and other files.", 
-            "title": "Home"
+            "text": "Overview\n\n\nThe CodeLingo platform guide's software teams to build better code, faster. CodeLingo has been built to integrate with the unique workflows and existing tooling of software development teams and their unique software development life-cycle (SDLC). With CodeLingo you can query patterns in any domain of the SDLC and automate tasks based on the patterns found. From static to runtime analysis, to timelines and logs - powerful Tenets can be written to: automate code reviews, provide real-time crash reporting, performance tune systems, migrate architectures and so on.\n\n\nOur Enterprise offering includes access to the CodeLingo team to compose solutions for customers based on their unique software development life-cycle (SDLC) and to on-board the customer so they can compose/develop their own solutions.\n\n\nThere are three key concepts to CodeLingo: \nBots\n, \nTenets\n, and \nLexicons\n.\n\n\nThe lingo Client\n\n\nThe lingo client is a command line interface (CLI) tool used to manage the Lexicons, Tenets and Bots. The lingo client will help you find, create and run these resources. For example, to list available lexicons run \n$ lingo lexicon list\n. You will see output similar to the following:\n\n\nast/codelingo/cs\nast/codelingo/php\nast/codelingo/golang\nvcs/codelingo/git\nvcs/codelingo/perforce\n...\n\n\n\n\nTo see a description of a lexicon run  \n$ lingo lexicon describe\n. For example:\n\n\n$ lingo lexicon describe ast/codelingo/cs\n\nC# AST Lexicon\n\nThis lexicon is a list of facts about the c# AST.\n\n\n\n\nTo list the lexicon\u2019s facts:\n\n\n$ lingo lexicon list-facts ast/codelingo/cs\n\nname: cs.func_decl\nproperties:\n  name\n\n\n\n\n\nTo see the full list of commands available, please run \n$ lingo --help\n. The lingo CLI tool also powers IDE plugins, such as the CLQL generation example above.", 
+            "title": "Overview"
         }, 
         {
-            "location": "/#welcome-to-mkdocs", 
-            "text": "For full documentation visit  mkdocs.org .", 
-            "title": "Welcome to MkDocs"
+            "location": "/#overview", 
+            "text": "The CodeLingo platform guide's software teams to build better code, faster. CodeLingo has been built to integrate with the unique workflows and existing tooling of software development teams and their unique software development life-cycle (SDLC). With CodeLingo you can query patterns in any domain of the SDLC and automate tasks based on the patterns found. From static to runtime analysis, to timelines and logs - powerful Tenets can be written to: automate code reviews, provide real-time crash reporting, performance tune systems, migrate architectures and so on.  Our Enterprise offering includes access to the CodeLingo team to compose solutions for customers based on their unique software development life-cycle (SDLC) and to on-board the customer so they can compose/develop their own solutions.  There are three key concepts to CodeLingo:  Bots ,  Tenets , and  Lexicons .", 
+            "title": "Overview"
         }, 
         {
-            "location": "/#commands", 
-            "text": "mkdocs new [dir-name]  - Create a new project.  mkdocs serve  - Start the live-reloading docs server.  mkdocs build  - Build the documentation site.  mkdocs help  - Print this help message.", 
-            "title": "Commands"
+            "location": "/#the-lingo-client", 
+            "text": "The lingo client is a command line interface (CLI) tool used to manage the Lexicons, Tenets and Bots. The lingo client will help you find, create and run these resources. For example, to list available lexicons run  $ lingo lexicon list . You will see output similar to the following:  ast/codelingo/cs\nast/codelingo/php\nast/codelingo/golang\nvcs/codelingo/git\nvcs/codelingo/perforce\n...  To see a description of a lexicon run   $ lingo lexicon describe . For example:  $ lingo lexicon describe ast/codelingo/cs\n\nC# AST Lexicon\n\nThis lexicon is a list of facts about the c# AST.  To list the lexicon\u2019s facts:  $ lingo lexicon list-facts ast/codelingo/cs\n\nname: cs.func_decl\nproperties:\n  name  To see the full list of commands available, please run  $ lingo --help . The lingo CLI tool also powers IDE plugins, such as the CLQL generation example above.", 
+            "title": "The lingo Client"
         }, 
         {
-            "location": "/#project-layout", 
-            "text": "mkdocs.yml    # The configuration file.\ndocs/\n    index.md  # The documentation homepage.\n    ...       # Other markdown pages, images and other files.", 
-            "title": "Project layout"
+            "location": "/getting-started/", 
+            "text": "Getting Started with the lingo Client\n\n\nThe lingo client is a command line interface (CLI) tool used to manage the Lexicons, Tenets and Bots. The lingo client will help you find, create and run these resources.\n\n\nInstall\n\n\nDownload\n a pre-built binary or, if you have \nGolang setup\n, install from source:\n\n\n$ git clone https://github.com/codelingo/lingo $GOPATH/src/github.com/codelingo/lingo\n$ cd $GOPATH/src/github.com/codelingo/lingo\n$ make install\n\n\n\n\nThis will download, build and place the \nlingo\n binary on your $PATH\n\n\nWindows\n\n\nPut the binary in a folder listed in your %PATH%. If you don't have an appropriate folder set up, create a new one (ie C:\\Lingo) and append it to PATH with a ; in between by going to Control Panel\\System and Security\\System -\n Advanced system settings -\n Environment Variables\n\n\nYou must run lingo from Git Bash or similar environment (if not git bash, then at least with git and msys installed). Running in Cmd will not work.\n\n\nLinux / Unix\n\n\nPlace the lingo binary on your $PATH.\n\n\nSetup\n\n\n\n\n\n\nCreate a CodeLingo account: \nhttp://codelingo.io/join\n\n\n\n\n\n\nSetup lingo with your user account:\n\n\nbash\n$ lingo setup\n\n\n\n\n\n\nYou will be prompted to enter a username and token. You can generate the token at codelingo.io/lingo-token. That's it. The lingo tool is now setup on your computer.\n\n\nUnder The Hood\n: The setup command creates a ~/.codelingo folder in which it stores credentials and configuration details to push code up and get issues back from the CodeLingo platform. You'll note it also adds a ~/.codelingo/config/git-credentials file. This is used by the lingo tool, via git, to sync code to the CodeLingo git server.\n\n\nRun a Review\n\n\nThe \nlingo\n tool uses Tenets to review code. Tenets live in .lingo files alongside your source code. The \nlingo new\n command writes a .lingo file and adds a simple Tenet (which simply finds all functions).\n\nUnder The Hood\n: The first time \nlingo review\n is run on a repository, \nlingo\n will automatically add the Codelingo git server as a remote, so that changes can be synced and analysed on the Codelingo platform.\n\n\nFirst Run\n\n\nSetup a test repository:\n\n\nmkdir myawesomepkg\ncd myawesomepkg\ngit init\n\n\n\n\nAdd a file, named \u201ctest.php\u201d, with the following source code:\n\n\n?php\nfunction writeMsg() {\n    echo \nHello world!\n;\n}\n\nwriteMsg(); // call the function\n?\n\n\n\n\n\nAdd your first Tenet and save it, unchanged:\n\n\nlingo new\n\n\n\n\nCommit:\n\n\ngit add -A .\ngit commit -m\ninitial commit\n\n\n\n\n\nThen run \nlingo review\n. You should see the following output:\n\n\ntest.php:2\n\n    This is a function, but you probably already knew that.\n\n\n    ...\n\n  \n function writeMsg() {\n        echo \nHello world!\n;\n    }\n\n    ...\n\n[o]pen [d]iscard [K]eep:\n\n\n\n\nAs the Tenet is using the inbuilt common fact \"func\", it will match functions in both PHP and Golang (the two currently supported languages). Add a go file called \"main.go\" with the following source code:\n\n\npackage main\n\nimport (\n  \nfmt\n\n)\n\nfunc main() {\n  fmt.Println(\nHello world\n)\n}\n\n\n\n\nRun \n$ lingo review\n and you should now see two comments - one on the PHP function and the other on the Go function.\n\n\nNote: you don't have to commit this second file. From here on, lingo will be able to see all changes in your repository, whether they are committed or not.\n\n\nTo open a file at the line of the issue, type \no\n and hit return. It will give you an option (which it will remember) to set your editor, defaulting to vi.\n\n\nWrite a Tenet\n\n\nContinuing on from the first run above, open the .lingo file in your editor of choice and change it to the following:\n\n\ntenets:\n- name: first-tenet\n  comment: This is a function, name 'writeMsg', but you probably knew that.\n  match:\n    \nfunc:\n      name: \nwriteMsg\n\n\n\n\n\nThis will find funcs named \"writeMsg\". Save and close the file, then run \nlingo review\n. Try adding another func called \"readMsg\" and run a review. Only the \"writeMsg\" func should be highlighted. Now, update the Tenet to find all funcs that end in \"Msg\":\n\n\n  match:\n    \nfunc:\n      name: /.*Msg$/\n\n\n\n\nThe \"\n\" symbol returns the node that you're interested in. The review comment is attached to the returned node. There can only be one returned node per match statement. If a match statement has no \"\n\", then even if true, no issue will be raised.\n\n\nVim has full support for the Lingo syntax, including CLQL. To set it up, \nsee here\n. Other than the match statement, written in CLQL, the rest of a .lingo file is written in YAML. As such, you can set .lingo files to YAML syntax in your IDE to get partial highlighting.\n\n\nCLQL\n\n\nCLQL is the query language under the \nmatch:\n section of a Tenet. It stands for CodeLingo Query Language. The full spec can be found \nhere\n, but a practical to get acquainted with the language is to review the \nexamples\n.\n\n\nRunning Examples\n\n\nAll examples under \nexamples/php\n are working. The other examples have varying levels of completeness and serve as an implementation roadmap. To run the examples, copy the directory out of the repository and follow the same steps as in the tutorial above.", 
+            "title": "Getting Started"
+        }, 
+        {
+            "location": "/getting-started/#getting-started-with-the-lingo-client", 
+            "text": "The lingo client is a command line interface (CLI) tool used to manage the Lexicons, Tenets and Bots. The lingo client will help you find, create and run these resources.", 
+            "title": "Getting Started with the lingo Client"
+        }, 
+        {
+            "location": "/getting-started/#install", 
+            "text": "Download  a pre-built binary or, if you have  Golang setup , install from source:  $ git clone https://github.com/codelingo/lingo $GOPATH/src/github.com/codelingo/lingo\n$ cd $GOPATH/src/github.com/codelingo/lingo\n$ make install  This will download, build and place the  lingo  binary on your $PATH", 
+            "title": "Install"
+        }, 
+        {
+            "location": "/getting-started/#windows", 
+            "text": "Put the binary in a folder listed in your %PATH%. If you don't have an appropriate folder set up, create a new one (ie C:\\Lingo) and append it to PATH with a ; in between by going to Control Panel\\System and Security\\System -  Advanced system settings -  Environment Variables  You must run lingo from Git Bash or similar environment (if not git bash, then at least with git and msys installed). Running in Cmd will not work.", 
+            "title": "Windows"
+        }, 
+        {
+            "location": "/getting-started/#linux-unix", 
+            "text": "Place the lingo binary on your $PATH.", 
+            "title": "Linux / Unix"
+        }, 
+        {
+            "location": "/getting-started/#setup", 
+            "text": "Create a CodeLingo account:  http://codelingo.io/join    Setup lingo with your user account:  bash\n$ lingo setup    You will be prompted to enter a username and token. You can generate the token at codelingo.io/lingo-token. That's it. The lingo tool is now setup on your computer.  Under The Hood : The setup command creates a ~/.codelingo folder in which it stores credentials and configuration details to push code up and get issues back from the CodeLingo platform. You'll note it also adds a ~/.codelingo/config/git-credentials file. This is used by the lingo tool, via git, to sync code to the CodeLingo git server.", 
+            "title": "Setup"
+        }, 
+        {
+            "location": "/getting-started/#run-a-review", 
+            "text": "The  lingo  tool uses Tenets to review code. Tenets live in .lingo files alongside your source code. The  lingo new  command writes a .lingo file and adds a simple Tenet (which simply finds all functions). Under The Hood : The first time  lingo review  is run on a repository,  lingo  will automatically add the Codelingo git server as a remote, so that changes can be synced and analysed on the Codelingo platform.", 
+            "title": "Run a Review"
+        }, 
+        {
+            "location": "/getting-started/#first-run", 
+            "text": "Setup a test repository:  mkdir myawesomepkg\ncd myawesomepkg\ngit init  Add a file, named \u201ctest.php\u201d, with the following source code:  ?php\nfunction writeMsg() {\n    echo  Hello world! ;\n}\n\nwriteMsg(); // call the function\n?   Add your first Tenet and save it, unchanged:  lingo new  Commit:  git add -A .\ngit commit -m initial commit   Then run  lingo review . You should see the following output:  test.php:2\n\n    This is a function, but you probably already knew that.\n\n\n    ...\n\n    function writeMsg() {\n        echo  Hello world! ;\n    }\n\n    ...\n\n[o]pen [d]iscard [K]eep:  As the Tenet is using the inbuilt common fact \"func\", it will match functions in both PHP and Golang (the two currently supported languages). Add a go file called \"main.go\" with the following source code:  package main\n\nimport (\n   fmt \n)\n\nfunc main() {\n  fmt.Println( Hello world )\n}  Run  $ lingo review  and you should now see two comments - one on the PHP function and the other on the Go function.  Note: you don't have to commit this second file. From here on, lingo will be able to see all changes in your repository, whether they are committed or not.  To open a file at the line of the issue, type  o  and hit return. It will give you an option (which it will remember) to set your editor, defaulting to vi.", 
+            "title": "First Run"
+        }, 
+        {
+            "location": "/getting-started/#write-a-tenet", 
+            "text": "Continuing on from the first run above, open the .lingo file in your editor of choice and change it to the following:  tenets:\n- name: first-tenet\n  comment: This is a function, name 'writeMsg', but you probably knew that.\n  match:\n     func:\n      name:  writeMsg   This will find funcs named \"writeMsg\". Save and close the file, then run  lingo review . Try adding another func called \"readMsg\" and run a review. Only the \"writeMsg\" func should be highlighted. Now, update the Tenet to find all funcs that end in \"Msg\":    match:\n     func:\n      name: /.*Msg$/  The \" \" symbol returns the node that you're interested in. The review comment is attached to the returned node. There can only be one returned node per match statement. If a match statement has no \" \", then even if true, no issue will be raised.  Vim has full support for the Lingo syntax, including CLQL. To set it up,  see here . Other than the match statement, written in CLQL, the rest of a .lingo file is written in YAML. As such, you can set .lingo files to YAML syntax in your IDE to get partial highlighting.", 
+            "title": "Write a Tenet"
+        }, 
+        {
+            "location": "/getting-started/#clql", 
+            "text": "CLQL is the query language under the  match:  section of a Tenet. It stands for CodeLingo Query Language. The full spec can be found  here , but a practical to get acquainted with the language is to review the  examples .", 
+            "title": "CLQL"
+        }, 
+        {
+            "location": "/getting-started/#running-examples", 
+            "text": "All examples under  examples/php  are working. The other examples have varying levels of completeness and serve as an implementation roadmap. To run the examples, copy the directory out of the repository and follow the same steps as in the tutorial above.", 
+            "title": "Running Examples"
+        }, 
+        {
+            "location": "/clql/", 
+            "text": "CLQL\n\n\nA Query Language for Software Systems", 
+            "title": "CLQL"
+        }, 
+        {
+            "location": "/clql/#clql", 
+            "text": "", 
+            "title": "CLQL"
+        }, 
+        {
+            "location": "/clql/#a-query-language-for-software-systems", 
+            "text": "", 
+            "title": "A Query Language for Software Systems"
+        }, 
+        {
+            "location": "/tenets/", 
+            "text": "Tenets\n\n\nRules to Guide Software Development\n\n\nOverview\n\n\nA Tenet is a rule about a system. It is written in \nCLQL\n They are underlying patterns which the CodeLingo Bots follow to guide development and safeguard systems. Tenets can be added directly to Bots or embedded in the resources they monitor. For example, CLAIR reads .lingo files that live along side source code in a code repository.\n[cascading Tenets]\n\n\nExamples of Tenets include:\n\n\n\n\nAnything a static linter expresses, with a fraction of the code\n\n\nChange management: large scale incremental refactoring\n\n\nProject specific practices: scaling the tacit knowledge of senior engineers to the whole team\n\n\nInfostructure specific guidelines / safeguards: learning from failures\n\n\nPackaging the author\u2019s guidance with a library", 
+            "title": "Tenets"
+        }, 
+        {
+            "location": "/tenets/#tenets", 
+            "text": "", 
+            "title": "Tenets"
+        }, 
+        {
+            "location": "/tenets/#rules-to-guide-software-development", 
+            "text": "", 
+            "title": "Rules to Guide Software Development"
+        }, 
+        {
+            "location": "/tenets/#overview", 
+            "text": "A Tenet is a rule about a system. It is written in  CLQL  They are underlying patterns which the CodeLingo Bots follow to guide development and safeguard systems. Tenets can be added directly to Bots or embedded in the resources they monitor. For example, CLAIR reads .lingo files that live along side source code in a code repository.\n[cascading Tenets]  Examples of Tenets include:   Anything a static linter expresses, with a fraction of the code  Change management: large scale incremental refactoring  Project specific practices: scaling the tacit knowledge of senior engineers to the whole team  Infostructure specific guidelines / safeguards: learning from failures  Packaging the author\u2019s guidance with a library", 
+            "title": "Overview"
+        }, 
+        {
+            "location": "/lexicons/", 
+            "text": "Lexicons\n\n\nlibraries of terms to query any domain\n\n\nOverview\n\n\nA \nTenet\n matches a pattern written as a statement of facts in \nCLQL\n. Those facts come from a Lexicon, which is a collection of terms specific to domain of knowledge. These domains include:\n\n\n\n\nStatic facts about programming languages (AST): C#, Javascript, Java, PHP, Golang etc\n\n\nDynamic facts about languages (Runtime): values, race conditions, tracing, profiling etc\n\n\nFacts about VCSs: perforce, git, hg, commits, comments, ownership etc\n\n\nFacts about databases, networking, CI, CD, business rules, HR etc", 
+            "title": "Lexicons"
+        }, 
+        {
+            "location": "/lexicons/#lexicons", 
+            "text": "", 
+            "title": "Lexicons"
+        }, 
+        {
+            "location": "/lexicons/#libraries-of-terms-to-query-any-domain", 
+            "text": "", 
+            "title": "libraries of terms to query any domain"
+        }, 
+        {
+            "location": "/lexicons/#overview", 
+            "text": "A  Tenet  matches a pattern written as a statement of facts in  CLQL . Those facts come from a Lexicon, which is a collection of terms specific to domain of knowledge. These domains include:   Static facts about programming languages (AST): C#, Javascript, Java, PHP, Golang etc  Dynamic facts about languages (Runtime): values, race conditions, tracing, profiling etc  Facts about VCSs: perforce, git, hg, commits, comments, ownership etc  Facts about databases, networking, CI, CD, business rules, HR etc", 
+            "title": "Overview"
+        }, 
+        {
+            "location": "/bots/", 
+            "text": "Bots\n\n\nOverview\n\n\nBots listen for events in the SDLC, look for patterns and perform some action based on the pattern found. This automated end-to-end workflow we call a \u201cBotFlow\u201d. Below is an example of a BotFlow, created with our BotFlow Composer, which automates code reviews of pull requests to a git repository:\n\n\n\n\n\n\nCLAIR (CodeLingo AI Reviewer) commenting on a pull-request.\n\n\nOther examples of BotFlows include:\n\n\n\n\nA forensic Bot analyses logs and finds event B happened before A, which violates a Tenet\n\n\nA project overview Bot graphs Tech Debt burndown chart and delegates based on ownership\n\n\nA Copilot Bot gives real time feedback to a developer in their IDE as they\u2019re coding\n\n\nA profiling Bot detects high memory usage correlated to similar code\n\n\nA crash report Bot monitors a running system and reports on unexpected runtime information", 
+            "title": "Bots"
+        }, 
+        {
+            "location": "/bots/#bots", 
+            "text": "", 
+            "title": "Bots"
+        }, 
+        {
+            "location": "/bots/#overview", 
+            "text": "Bots listen for events in the SDLC, look for patterns and perform some action based on the pattern found. This automated end-to-end workflow we call a \u201cBotFlow\u201d. Below is an example of a BotFlow, created with our BotFlow Composer, which automates code reviews of pull requests to a git repository:    CLAIR (CodeLingo AI Reviewer) commenting on a pull-request.  Other examples of BotFlows include:   A forensic Bot analyses logs and finds event B happened before A, which violates a Tenet  A project overview Bot graphs Tech Debt burndown chart and delegates based on ownership  A Copilot Bot gives real time feedback to a developer in their IDE as they\u2019re coding  A profiling Bot detects high memory usage correlated to similar code  A crash report Bot monitors a running system and reports on unexpected runtime information", 
+            "title": "Overview"
         }
     ]
 }

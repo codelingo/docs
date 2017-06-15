@@ -1,15 +1,21 @@
 # Bots
 
-
 ### Overview
 
-Bots listen for events in the SDLC, look for patterns and perform some action based on the pattern found. This automated end-to-end workflow we call a “BotFlow”. Below is an example of a BotFlow, created with our BotFlow Composer, which automates code reviews of pull requests to a git repository:
- 
-[image of botflow composer]
- 
+Bots listen for events in the SDLC, look for patterns and perform some action based on the pattern found. Our flagship bot is CLAIR (CodeLingo AI Reviewer). CLAIR automates code reviews of pull requests to a git repository.
 
-CLAIR (CodeLingo AI Reviewer) commenting on a pull-request.
+<!--
+
+This automated end-to-end workflow we call a “BotFlow”. Below is an example of a BotFlow, created with our BotFlow Composer, which automates code reviews of pull requests to a git repository:
  
+todo: image of botflow composer 
+
+ -->
+
+
+<img src="/img/clair_review_simple.png" alt="CLAIR (CodeLingo AI Reviewer) commenting on a pull-request" style="width: 80%;"/>
+CLAIR commenting on a pull-request.
+
 Other examples of BotFlows include:
  
 - A forensic Bot analyses logs and finds event B happened before A, which violates a Tenet
