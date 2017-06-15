@@ -11,29 +11,33 @@ Most often, a Tenet will be describing a particular pattern in code. To ease the
 
 ![Query Generation](img/queryGeneration.png)
  
-Since break statement is selected, the generated query will return any any break statement nested in code similar to the above. 
+Since the break statement is selected, the generated query will return any break statement nested in code similar to the above.
  
 First, this query searches for all foreach statements. Then it searches within the block of statements (hence cs.block_stmt) that makes up the foreach’s body. Then it searches for if statements, and finally it searches the if statement bodies for break statements and returns them. 
  
-The query will also match in cases where the elements are deeply nested - ie, if there are any other intervening elements, like an extra if statement:
+The query will also match in cases where the elements are deeply nested, i.e. if there are any other intervening elements, like an extra if statement:
 
 ![Added if Statement](img/addedIfStmt.png)
  
 In general, a generated query will describe the selected element and its position in the structure of the program. 
 
-## Facts and Lexicons
- 
-The most basic thing that a CLQL query can do is match a single element of a program, in this case a C# program. We can find all the classes in our program with a simple query:
+## Facts and Basic Querying
+
+<!--Should we include systems that CLQL does not *yet* support? -->
+CLQL can query many types of software related systems, including version control systems, file systems, and code itself. For simplicity, this document will begin by assuming that queries are run on a single CSharp program. 
+
+<!--TODONOW link to fact definition section on lexicon page-->
+Queries are made up of [Facts](lexicons.md). A CLQL query with just a single fact will match all elements of that type in the program. The following query matches and returns all classes in the queried program:
 
 `<cs.class` 
 
-The above query consists of a single fact `<cs.class`. This fact is made up of a yield tag `<`, a lexicon id `cs`, and a fact name.
+It consists of a single fact `<cs.class`. The namespace `cs`This fact is made up of a yield tag `<`, a lexicon id `cs`, and a fact name.
  
 The yield tag indicates which fact you want to return. Every query must have one (and only one) yielded fact.
  
 The lexicon id tells the CodeLingo backend how to analyse your repository. In particular, the csharp lexicon tells the backend to parse your code into an AST for static analysis.
  
-The fact name specifies the exact sort of you are interested in. Each lexicon has a set of associated facts, for example, you can also query `cs.int`, `cs.method` , etc. A full list of facts for a given lexicon is available with the `lingo list-facts <owner>/<lexicon>` command.
+The fact name specifies the exact sort of you are interested in. Each lexicon has a set of associated facts, for example, you can also query `cs.int`, `cs.method`, etc. A full list of facts for a given lexicon is available with the `lingo list-facts <owner>/<lexicon>` command.
 
 ## Facts with Properties
  
@@ -229,6 +233,71 @@ git.repo:
         <cs.method:
             arg-num: > $args
 ```
+
+# Use Cases
+
+## CSharp
+
+Someimtes iterative code can be more safely expressed declaratively using LINQ. For example, 
+
+```
+decimal total = 0;
+foreach (Account account in myAccounts) {
+  if (account.Status == "active") {
+    total += account.Balance;
+  }
+}
+```
+
+can be expressed with:
+
+```
+decimal total = (from account in myAccounts
+                  where account.Status == "active"
+                  select account.Balance).Sum();
+```
+
+The CLQL to match this pattern should find all variables that are declared before a foreach statement, and are incremented within the loop. The facts for incrementing inside a foreach loop, and declaring a variable can be generated in the IDE:
+
+![C# example Generation](img/cs_decl.png)
+
+![C# example Generation](img/cs_inc.png)
+
+Then the generated code can be turned into a working query by combining the above queries under the same file and scope, removing extraneous facts, and using a CLQL variable to ensure that the `cs.variable` facts are refering to the same variable:
+
+```
+cs.file:
+    cs.block_stmt:
+        cs.assign_stmt:
+            cs.decl_stmt:
+                cs.variable:
+                    name: $varName
+        <cs.foreach_stmt:
+            cs.increment_by_expr:
+                cs.variable: 
+                    name: $varName
+```
+
+## C++
+
+Functions should not return local objects by reference. When the function returns and the stack is unwrapped, that object will be destructed, and the reference will not point to anything. 
+
+The following query matches finds this bug by matching all functions that return a reference type, and declare the returned value inside the function body:
+
+```
+<cc.func_decl:
+    cc.func_header:
+        cc.return_type:
+            cc.reference
+    cc.block_stmt:
+        cc.declaration_stmt:
+            cc.variable:
+                name: $returnedReference
+        cc.return_stmt:
+            cc.variable:
+                name: $returnedReference
+```
+
 
 <!--- 
 TODO(BlakeMScurr) fully fill out tempalte
