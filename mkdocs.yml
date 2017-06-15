@@ -1,8 +1,8 @@
-site_name: CodeLingo Docs #- On Prem
+site_name: CodeLingo Docs - On Prem
 pages:
     - Overview: index.md
     - Getting Started: getting-started.md
-    # - Platform: platform.md
+    - Platform: platform.md
     - CLQL: clql.md
     - Tenets: tenets.md
     - Lexicons: lexicons.md

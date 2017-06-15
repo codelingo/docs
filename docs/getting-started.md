@@ -4,37 +4,40 @@ The lingo client is a command line interface (CLI) tool used to manage the Lexic
 
 ## Install
 
-[Download](https://github.com/codelingo/lingo/releases) a pre-built binary or, if you have [Golang setup](https://golang.org/doc/install), install from source:
 
-```bash
-$ git clone https://github.com/codelingo/lingo $GOPATH/src/github.com/codelingo/lingo
-$ cd $GOPATH/src/github.com/codelingo/lingo
-$ make install
-```
-
-This will download, build and place the `lingo` binary on your $PATH
+[Download] the client binary from your on premise bundle.
 
 ### Windows
 
-Put the binary in a folder listed in your %PATH%. If you don't have an appropriate folder set up, create a new one (ie C:\Lingo) and append it to PATH with a ; in between by going to Control Panel\System and Security\System -> Advanced system settings -> Environment Variables
+Put the binary in a folder listed in your %PATH%. If you don't have an appropriate folder set up, create a new one (ie C:\Lingo) and append it to PATH with a ";" in between by going to Control Panel\System and Security\System -> Advanced system settings -> Environment Variables.
 
 You must run lingo from Git Bash or similar environment (if not git bash, then at least with git and msys installed). Running in Cmd will not work.
 
-### Linux / Unix
+### Linux / Unix  
 
 Place the lingo binary on your $PATH.
 
 ## Setup
 
-1. Create a CodeLingo account: [http://codelingo.io/join](http://codelingo.io/join)
+1. Create a CodeLingo account: `http://< on-prem-ip >/join`
 
 2. Setup lingo with your user account:
 
-    ```bash
-    $ lingo setup
-    ```
+```bash
+$ lingo setup
+```
 
-You will be prompted to enter a username and token. You can generate the token at codelingo.io/lingo-token. That's it. The lingo tool is now setup on your computer.
+You will be prompted to enter a username and token. You can generate the token at codelingo.io/lingo-token. 
+
+3. Tell the client to talk to the on premise CodeLingo platform:
+
+```bash
+$ lingo use-env onprem
+```
+
+Replace the "addr" and "host" with the platform IP in the "onprem" section of `$HOME/.codelingo/configs/platform.yaml`. That's it. The lingo client is now setup on your computer.
+
+---
 
 *Under The Hood*: The setup command creates a ~/.codelingo folder in which it stores credentials and configuration details to push code up and get issues back from the CodeLingo platform. You'll note it also adds a ~/.codelingo/config/git-credentials file. This is used by the lingo tool, via git, to sync code to the CodeLingo git server.
 
