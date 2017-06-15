@@ -17,6 +17,8 @@ In general, a generated query will describe the selected element and its positio
 
 <br />
 
+## Features
+
 ### Querying with Facts
 
 <!--Should we include systems that CLQL does not *yet* support? -->
@@ -28,14 +30,13 @@ Queries are made up of [Facts](lexicons.md). A CLQL query with just a single fac
 `<cs.class` 
 
 It consists of a single fact `<cs.class`. The namespace `cs` indicates that it belongs to the C# [lexicon](lexicons.md), and the fact name `class` indicates that it refers to a C# class.
- 
 The yield tag `<` determines which fact the query will return. Every query must have one (and only one) yielded fact.
 
 <br />
 
-### Facts with Properties
- 
-To limit the above query to match classes with a particular name, add a "name" property as an argument to the method fact:
+### Facts Properties
+
+To limit the above query to match classes with a particular name, add a "name" property as an argument to the `method` fact:
  
 ```
 <cs.method:
@@ -93,7 +94,7 @@ Facts can be take arbitrarily many other facts as arguments, forming a query wit
 
 ```
 cs.method:
-  name: myMethod
+  name: "myMethod"
   <cs.if_stmt
 ```
  
@@ -239,7 +240,7 @@ git.repo:
       arg-num: > $args
 ```
 
-# Use Cases
+## Examples
 
 <br />
 
