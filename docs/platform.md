@@ -2,6 +2,7 @@
 #### On Premise Install
 
 <br/>
+
 ### Overview
 
 The CodeLingo OnPrem Platform runs on a single node Kubernetes cluster deployed onto a single VM. All resources for the CodeLingo OnPrem Platform are packaged within a single Open Virtual Appliance (OVA) which can be imported into any major hypervisor. The following instructions are written for an Ubuntu 16.04 (or later) host.
@@ -10,16 +11,19 @@ The CodeLingo OnPrem Platform runs on a single node Kubernetes cluster deployed 
 The CodeLingo OnPrem Platform comes with a SysAdmin tool: *platctl*. The platctl tool streamlines the management of the cluster: from initial deployment to updates, monitoring and teardown.
 
 <br/>
+
 ### Prerequisite
 
 A hypervisor and the [codelingo-onprem.ova](https://drive.google.com/drive/u/1/folders/0B1mECGkVsAMLN1Bmem8yb1AzdVk) are required. Platctl automates deployment on [Virtualbox](https://www.virtualbox.org/wiki/Downloads), but can support deployment onto any hypervisor.
 
 <br/>
+
 ### Install Platctl
 
 [Download](https://drive.google.com/drive/u/1/folders/0B1mECGkVsAMLN1Bmem8yb1AzdVk) the pre-built binary of platctl onto the hypervisor host and place it on host's $PATH.
 
 <br/>
+
 ### Install OVA
 
 To install the OVA run:
@@ -28,7 +32,7 @@ To install the OVA run:
 $ platctl vbox import-appliance
 ```
 
-When prompted, supply the filepath to the codelingo-onprem.ova file, CPU and Memory system resource allocation. On a successful import, the command will print `Successfully imported the appliance.`.  If an error was reported, or a hypervisor other that virtualbox is used, repeat the import manually using the hypervisor's interface with the following minimum system resources:
+When prompted, supply the filepath to the codelingo-onprem.ova file, CPU and Memory system resource allocation. On a successful import, the command will print `Successfully imported the appliance.`.  If an error was reported, or a hypervisor other than virtualbox is used, repeat the import manually using the hypervisor's interface with the following minimum system resources:
 
 ```
 CPUs: 1
@@ -36,6 +40,7 @@ Memory: 8192MB
 ```
 
 <br/>
+
 ### Deploy The CodeLingo OnPrem Platform
 
 Run the following command to set the IP of the CodeLingo OnPrem Platform VM:
