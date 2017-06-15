@@ -2,6 +2,8 @@
 
 The lingo client is a command line interface (CLI) tool used to manage the Lexicons, Tenets and Bots. The lingo client will help you find, create and run these resources.
 
+<br/>
+
 ## Install
 
 [Download](https://github.com/codelingo/lingo/releases) a pre-built binary or, if you have [Golang setup](https://golang.org/doc/install), install from source:
@@ -14,15 +16,21 @@ $ make install
 
 This will download, build and place the `lingo` binary on your $PATH
 
+<br/>
+
 ### Windows
 
 Put the binary in a folder listed in your %PATH%. If you don't have an appropriate folder set up, create a new one (ie C:\Lingo) and append it to PATH with a ; in between by going to Control Panel\System and Security\System -> Advanced system settings -> Environment Variables
 
 You must run lingo from Git Bash or similar environment (if not git bash, then at least with git and msys installed). Running in Cmd will not work.
 
+<br/>
+
 ### Linux / Unix
 
 Place the lingo binary on your $PATH.
+
+<br/>
 
 ## Setup
 
@@ -30,22 +38,28 @@ Place the lingo binary on your $PATH.
 
 2. Setup lingo with your user account:
 
-    ```bash
-    $ lingo setup
-    ```
+```bash
+$ lingo setup
+```
 
 You will be prompted to enter a username and token. You can generate the token at codelingo.io/lingo-token. That's it. The lingo tool is now setup on your computer.
 
+---
+
 *Under The Hood*: The setup command creates a ~/.codelingo folder in which it stores credentials and configuration details to push code up and get issues back from the CodeLingo platform. You'll note it also adds a ~/.codelingo/config/git-credentials file. This is used by the lingo tool, via git, to sync code to the CodeLingo git server.
 
-
+<br/>
 
 ## Run a Review
 
-The `lingo` tool uses Tenets to review code. Tenets live in .lingo files alongside your source code. The `lingo new` command writes a .lingo file and adds a simple Tenet (which simply finds all functions).
+<!-- TODO: add commands to discover and install CLAIR -->
+
+CodeLingo's flagship Bot is CLAIR, CodeLingo AI Reviewer. CLAIR uses Tenets to automatically review pull requests. With the `lingo` tool CLAIR can be run on a local repository from the command line. <!-- add image of CLI review --> CLAIR reads Tenets from .lingo files that live alongside the source code files. The `lingo new` command writes a .lingo file and adds a simple Tenet (which simply finds all functions).
+
+---
 *Under The Hood*: The first time `lingo review` is run on a repository, `lingo` will automatically add the Codelingo git server as a remote, so that changes can be synced and analysed on the Codelingo platform.
 
-
+<br/>
 
 ### First Run
 
@@ -121,6 +135,8 @@ Note: you don't have to commit this second file. From here on, lingo will be abl
 
 To open a file at the line of the issue, type `o` and hit return. It will give you an option (which it will remember) to set your editor, defaulting to vi.
 
+<br/>
+
 ## Write a Tenet
 
 Continuing on from the first run above, open the .lingo file in your editor of choice and change it to the following:
@@ -146,6 +162,7 @@ The "<" symbol returns the node that you're interested in. The review comment is
 
 Vim has full support for the Lingo syntax, including CLQL. To set it up, [see here](scripts/lingo.vim.readme). Other than the match statement, written in CLQL, the rest of a .lingo file is written in YAML. As such, you can set .lingo files to YAML syntax in your IDE to get partial highlighting.
 
+<!-- 
 ## CLQL
 
 CLQL is the query language under the `match:` section of a Tenet. It stands for CodeLingo Query Language. The full spec can be found [here](https://docs.google.com/document/d/1NIw1J9u2hiez9ZYZ0S1sV8lJamdE9eyqWa8R9uho0MU/edit), but a practical to get acquainted with the language is to review the [examples](_examples).
@@ -153,3 +170,33 @@ CLQL is the query language under the `match:` section of a Tenet. It stands for 
 ## Running Examples
 
 All examples under [examples/php](_examples/php) are working. The other examples have varying levels of completeness and serve as an implementation roadmap. To run the examples, copy the directory out of the repository and follow the same steps as in the tutorial above.
+
+-->
+
+## Discovering Lexicons, Tenets and Bots
+
+The CodeLingo Platform supports an eco-system of Lexicons, Tenets and Bots. The lingo client is used to discover them. For example, to list available lexicons run the following:
+ 
+```bash
+$ lingo lexicon list
+
+ast/codelingo/cs
+ast/codelingo/php
+ast/codelingo/golang
+vcs/codelingo/git
+vcs/codelingo/perforce
+...
+```
+
+ 
+To see a description of a lexicon run  `$ lingo lexicon describe`. For example:
+ 
+```bash
+$ lingo lexicon describe ast/codelingo/cs
+ 
+C Sharp AST Lexicon
+ 
+This lexicon is a list of facts about the C Sharp AST.
+```
+ 
+To list all facts the lexicon provides, run `$ lingo lexicon list-facts ast/codelingo/cs`. To see the full list of commands available, please run `$ lingo --help`. The lingo CLI tool also powers IDE plugins, such as the [CLQL generation](/clql).

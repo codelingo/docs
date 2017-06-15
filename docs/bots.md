@@ -1,8 +1,11 @@
 # Bots
+#### Agents Guiding Code Quaity at Scale
+
+<br/>
 
 ### Overview
 
-Bots listen for events in the SDLC, look for patterns and perform some action based on the pattern found. Our flagship bot is CLAIR (CodeLingo AI Reviewer). CLAIR automates code reviews of pull requests to a git repository.
+Bots listen for events in the SDLC, look for patterns and perform some action based on the pattern found. Our flagship bot is CLAIR (CodeLingo AI Reviewer). CLAIR automates code reviews of pull requests to a git repository:
 
 <!--
 
@@ -12,14 +15,12 @@ todo: image of botflow composer
 
  -->
 
-
 <img src="/img/clair_review_simple.png" alt="CLAIR (CodeLingo AI Reviewer) commenting on a pull-request" style="width: 80%;"/>
-CLAIR commenting on a pull-request.
 
-Other examples of BotFlows include:
+Other possible Bots include:
  
-- A forensic Bot analyses logs and finds event B happened before A, which violates a Tenet
-- A project overview Bot graphs Tech Debt burndown chart and delegates based on ownership
-- A Copilot Bot gives real time feedback to a developer in their IDE as they’re coding
-- A profiling Bot detects high memory usage correlated to similar code
-- A crash report Bot monitors a running system and reports on unexpected runtime information
+- A forensic Bot that analyses logs and finds event B happened before A, which violates a Tenet
+- A project overview Bot that graphs Tech Debt burndown chart and delegates based on ownership
+- A Copilot Bot that gives real time feedback to a developer in their IDE as they’re coding
+- A profiling Bot that detects high memory usage correlated to similar code
+- A crash report Bot that monitors a running system and reports on unexpected runtime information
