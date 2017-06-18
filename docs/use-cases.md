@@ -42,3 +42,22 @@ The tenet below will raise an issue if the getUser call finishes before the upda
 <br />
 
 #### Detecting Deadlock
+In the example below, imagine we have an application used for importing data into a database from a number of different sources.
+
+We run these imports asynchronously to speed up the import process.
+
+If any call of our import data function has unusually low resource usage and takes more than 5 minutes, it's likely the function is idling and could be a case of deadlock.
+
+```
+<cs.method:
+  name: "importData"
+  file: "./db/manager.cs"
+  prof:
+    cpu: 
+      average: <= 1%
+    hdd:
+      average: <= 1MB/s
+    memory:
+      avergae: <= 10MB
+    time: >= 5m 
+```
