@@ -1,6 +1,6 @@
-# AST
+# Abstract Syntax Tree (AST)
 
-CodeLingo Query Language (CLQL) is able to perform static analysis using abstract syntax tree (AST) [lexicons](/lexicons).
+Abstract Syntax Tree (AST) [lexicons](/lexicons) are used to query static properties of source code. These are typically used to enforce project specific patterns such as layering violations as well as more general code smells.
 
 ## CLQL vs StyleCop
 
