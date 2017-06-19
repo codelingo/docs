@@ -1,8 +1,8 @@
 # Use Cases
 
-## AST
+## Abstract Syntax Tree (AST)
 
-AST (Abstract Syntax Tree) lexicons are used to query all aspects of the source code directly. These are typically used to enforce code styles and identify code smells.
+Abstract Syntax Tree (AST) lexicons are used to query static properties of source code. These are typically used to enforce project specific patterns such as layering violations as well as more general code smells.
 
 <br />
 
@@ -15,23 +15,25 @@ In the example below we have a database manager class that wraps up a third part
 
 From past profiles of our application, we expect the function `getDBCon` to use less than 10MB of memory. If it uses more than this, we want to be notified.
 
-We can do this with the following tenet:
+We can do this with the following Tenet:
 
 ```clql
 csprof.session:
-  run: "./bin/program.exe"
-  args: "/host:127.0.0.1 /db:testing"
+  csprof.exec:
+      command: "./scripts/build.sh"
+      args: "-o ./bin/program.exe"
+  csprof.exec:
+    command: "./bin/program.exe"
+    args: "/host:127.0.0.1 /db:testing"
   cs.file:
     filename: "./db/manager.cs"
     <cs.method:
       name: "getDBCon"
       csprof.exit:
-        memory: < 10MB
+        memory_mb: >= 10
 ```
  
-Sometime in the future we decide to update the underlying library to the latest version.
-
-After profiling our application again, CodeLingo catches that multiple instances of the `getDBCon` function have exceeded the < 10MB memory tenet.
+Sometime in the future we decide to update the underlying library to the latest version. After profiling our application again, CodeLingo catches that multiple instances of the `getDBCon` function have exceeded the `>= 10MB memory` Tenet.
 
 As we iterate over the issues, we see a steady increase in the memory consumed by the `getDBCon` function. Knowing that this didn't happen with the older version of the library, we suspect a memory leak may have been introduced in the update and further investigation is required.
 
@@ -49,25 +51,29 @@ We need to know if our database manager is handling the asynchronous calls corre
 
 ```clql
 csprof.session:
-  run: "./bin/program.exe"
-  args: "/host:127.0.0.1 /db:testing"
+  csprof.exec:
+    command: "./scripts/build.sh"
+    args: "-o ./bin/program.exe"
+  csprof.exec:
+    command: "./bin/program.exe"
+    args: "/host:127.0.0.1 /db:testing"
   cs.file:
     filename: "./db/manager.cs"
     cs.method:
       name: "updateUser"
-      csprof.start:
+      csprof.block_start:
         time: $startUpdate
-      csprof.exit:
+      csprof.block_exit:
         time: $exitUpdate
     <cs.method:
       name: "getUser"
-      csprof.start:
+      csprof.block_start:
         time: > $startUpdate
-      csprof.exit:
+      csprof.block_start:
         time: < $exitUpdate
 ```
 
-If the `getUser` function is called while an instance of the `updateUser` function is in progress, the `getUser` function must return after the `updateUser` function to prevent a dirty read from the database. An issue will be raised if this does not hold true.
+This query users [variables](clql.md#variables) If the `getUser` function is called while an instance of the `updateUser` function is in progress, the `getUser` function must return after the `updateUser` function to prevent a dirty read from the database. An issue will be raised if this does not hold true.
 
 <br />
 
@@ -76,30 +82,32 @@ In the example below, we have an application used for importing data into a data
 
 The `importData` function is particularly resource heavy on our server due to the raw amount of data that needs to be processed.
 
-Knowing this, we decide to write a tenet to catch any idle instances of the `importData` function:
+Knowing this, we decide to write a Tenet to catch any idle instances of the `importData` function:
 
 ```clql
 cs.session:
-  run: "./bin/program.exe"
-  args: "/host:127.0.0.1 /db:testing"
+  csprof.exec:
+    command: "./scripts/build.sh"
+    args: "-o ./bin/program.exe"
+  csprof.exec:
+    command: "./bin/program.exe"
+    args: "/host:127.0.0.1 /db:testing"
   cs.file:
     filename: "./db/manager.cs"
     <cs.method:
       name: "importData"
       csprof.duration:
-        time: >= 4m
-        cpu:
-          average: <= 1%
-        memory:
-          average: <= 10MB
+        time_min: >= 4
+        average_cpu_percent: <= 1
+        average_memory_mb: <= 10
 ```
 
 If an instance of the `importData` runs for more than 4 minutes with unusually low resource usage, an issue will be raised as the function is suspect of deadlock.
 
 <br />
 
-## VCS
+## Version Control System
 
-VCS (Version Control System) lexicons are used to query the physical files in a project and the changes made to them. Further documentation to come.
+Version Control System (VCS) lexicons are used to query the physical files in a project and the changes made to them. Further documentation to come.
 
 <br />
