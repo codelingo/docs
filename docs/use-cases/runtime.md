@@ -1,16 +1,9 @@
-# Use Cases
+# Runtime
 
-## Abstract Syntax Tree (AST)
+Runtime lexicons are used to query the runtime data of a program. These are typically used to identify performance issues and common runtime problems.
 
-Abstract Syntax Tree (AST) lexicons are used to query static properties of source code. These are typically used to enforce project specific patterns such as layering violations as well as more general code smells.
+### Detecting Memory Leaks
 
-<br />
-
-## Profile
-
-Profile lexicons are used to query the runtime data of a program. These are typically used to identify performance issues and common runtime problems.
-
-#### Detecting Memory Leaks
 In the example below we have a database manager class that wraps up a third party library we use to return connections to a database.
 
 From past profiles of our application, we expect the function `getDBCon` to use less than 10MB of memory. If it uses more than this, we want to be notified.
@@ -41,7 +34,7 @@ Note: CLQL is able to assist in pin-pointing the source of memory leaks, but tha
 
 <br />
 
-#### Detecting Race Conditions
+### Detecting Race Conditions
 In the example below we have a database manager class that we use to update and read user records.
 
 Our application has a number of different workers that operate asynchronously, making calls to the database manager at any time.
@@ -77,12 +70,9 @@ This query users [variables](clql.md#variables) If the `getUser` function is cal
 
 <br />
 
-#### Detecting Deadlock
-In the example below, we have an application used for importing data into a database from a number of different sources asynchronously.
+### Detecting Deadlocks
 
-The `importData` function is particularly resource heavy on our server due to the raw amount of data that needs to be processed.
-
-Knowing this, we decide to write a Tenet to catch any idle instances of the `importData` function:
+In the example below, we have an application used for importing data into a database from a number of different sources asynchronously. The `importData` function is particularly resource heavy on our server due to the raw amount of data that needs to be processed. Knowing this, we decide to write a Tenet to catch any idle instances of the `importData` function:
 
 ```clql
 cs.session:
@@ -103,11 +93,5 @@ cs.session:
 ```
 
 If an instance of the `importData` runs for more than 4 minutes with unusually low resource usage, an issue will be raised as the function is suspect of deadlock.
-
-<br />
-
-## Version Control System
-
-Version Control System (VCS) lexicons are used to query the physical files in a project and the changes made to them. Further documentation to come.
 
 <br />
