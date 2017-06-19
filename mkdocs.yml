@@ -7,6 +7,10 @@ pages:
     - Lexicons: lexicons.md
     - Tenets: tenets.md
     - Bots: bots.md
+    - Comparisons: 
+        - AST: comparisons/ast.md
+        - VCS: comparisons/vcs.md
+        - Integration: comparisons/integration.md
     # - Lexicon SDK: lexicon-sdk.md
     # - Bot SDK: bot-sdk.md
     

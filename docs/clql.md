@@ -49,9 +49,21 @@ Facts with arguments are proceeded by a colon.
 
 <br />
 
+### The Element Fact
+
+The following query matches any element from the C# lexicon, including files, namespaces, methods, literals etc:
+
+```
+<cs.element
+```
+
+Every lexicon has an element fact that performs the same function.
+
+<br />
+
 ### Floats and Ints
 <!--TODO(blakemscurr) explain boolean properties once syntax has been added to the ebnf-->
-Properties can be of type string, bool, float, and int. The following finds all int literals with the value 8:
+Properties can be of type string, float, and int. The following finds all int literals with the value 8:
  
 ```
 <cs.int_lit:
