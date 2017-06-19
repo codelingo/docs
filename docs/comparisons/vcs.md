@@ -1,3 +1,0 @@
-# VCS
-
-[documentation to come]

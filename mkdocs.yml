@@ -7,10 +7,13 @@ pages:
     - Lexicons: lexicons.md
     - Tenets: tenets.md
     - Bots: bots.md
-    - Comparisons: 
-        - AST: comparisons/ast.md
-        - VCS: comparisons/vcs.md
-        - Integration: comparisons/integration.md
+    # todo: use cases should be organised by: query and bot. The cases below
+    # should all be under query.
+    - Use Cases: 
+        - AST: use-cases/ast.md
+        - VCS: use-cases/vcs.md
+        - Runtime: use-cases/runtime.md
+        - Integration: use-cases/integration.md
     # - Lexicon SDK: lexicon-sdk.md
     # - Bot SDK: bot-sdk.md
     

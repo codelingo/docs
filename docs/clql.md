@@ -1,7 +1,7 @@
 # CLQL
 #### A Query Language for Software Systems
 
-Tenets are written in the CodeLingo Query Language (CLQL). CLQL is a simple, lightweight language. It’s full grammar is under [70 lines of code](img/ebnf.png).
+CodeLingo Query Language (CLQL) is a simple, lightweight language. It’s full grammar is under [70 lines of code](img/ebnf.png).
 
 <br />
 
@@ -11,9 +11,7 @@ When looking for patterns in code, CodeLingo's Integrated Development Environmen
 
 ![Query Generation](img/queryGeneration.png)
  
-Since the break statement is selected, the generated query will return any break statement nested in code similar to the above. That is, this CLQL will match any break statement inside an if block inside a for loop.
- 
-In general, a generated query will describe the selected element and its position in the structure of the program. 
+In the above example the break statement is selected. The generated CLQL query will match any break statement inside an if block inside a for loop, matching the nested pattern of the selected break element.
 
 <br />
 
@@ -45,19 +43,7 @@ To limit the above query to match classes with a particular name, add a "name" p
  
 This query returns all methods with the name "myFunc". Note that the yield tag is still on the `method` fact - properties cannot be returned, only their parent facts. Also note that properties are not namespaced, as their namespace is implied from their parent fact.
 
-Facts with arguments are proceeded by a colon. 
-
-<br />
-
-### The Element Fact
-
-The following query matches any element from the C# lexicon, including files, namespaces, methods, literals etc:
-
-```
-<cs.element
-```
-
-Every lexicon has an element fact that performs the same function.
+Facts with arguments are proceeded by a colon.
 
 <br />
 
@@ -214,27 +200,46 @@ cs.class:
     name: $methodName
 ```
 
- The query above will only return methods of classA for which classB has a corresponding method.
+The query above will only return methods of classA for which classB has a corresponding method.
 
 <br />
 
 ### Interleaving
 
-CLQL can be used to query source code, but it can also be used to query other domains of knowledge like Version Control Systems. The queries in the previous examples were assumed to be scoped to a given C# program. By default the lingo tool scopes queries to the current state of your local project by default, but that can be overriden, allowing a fully explicit query. 
- 
-Using facts from the git [lexicon](lexicons.md), the following query recreates the basic C# class finding query without implicit project scoping:
+When writing a Tenet in a .lingo file read by CLAIR, only the AST lexicon facts are required:
 
+```clql
+lexicons:
+- vcs/codelingo/git
+- ast/codelingo/cs
+
+tenets:
+  - name: all-classes
+    match: 
+      cs.project:
+        <cs.class
 ```
-git.repo:
-  name: “yourRepo”
-  owner: “you”
-  host: “local”
-  git.commit: 
-    sha: “HEAD”    
-    cs.project:
-      <cs.class
+
+CLAIR adds the repository information to the query before searching the CodeLingo Platform:
+
+```clql
+lexicons:
+- vcs/codelingo/git
+- ast/codelingo/cs
+
+query:
+  git.repo:
+    name: “yourRepo”
+    owner: “you”
+    host: “local”
+    git.commit: 
+      sha: “HEAD”    
+      cs.project:
+        <cs.class
 ```
- 
+
+Every query to the CodeLingo platform itself starts with VCS facts to instruct the CodeLingo Platform on where to retrieve the source code from.
+
 Git (and indeed any Version Control System) facts can be used to query for changes in the code over time. For example, the following query checks if a given method has increased its number of arguments:
  
 ```
@@ -248,10 +253,10 @@ git.repo:
       cs.method:
         arg-num: $args
   git.commit:
-  sha: “HEAD”    
-  cs.project:
-    <cs.method:
-      arg-num: > $args
+    sha: “HEAD”    
+    cs.project:
+      <cs.method:
+        arg-num: > $args
 ```
 
 ## Examples
