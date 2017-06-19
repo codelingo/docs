@@ -1,6 +1,6 @@
 # AST
 
-CLQL (CodeLingo Query Language) is able to perform static analysis using AST (abstract syntax tree) [lexicons](/lexicons). 
+CodeLingo Query Language (CLQL) is able to perform static analysis using abstract syntax tree (AST) [lexicons](/lexicons).
 
 ## CLQL vs StyleCop
 
@@ -19,7 +19,7 @@ StyleCop can use a custom rule to raise a violation for all empty block statemen
 ```cs
 namespace Testing.EmptyBlockRule {
     using global::StyleCop;
-    using global::styleCop.CShapr;
+    using global::styleCop.CSharp;
 
     [SourceAnalyzer(typeof(CsParser))]
     public class EmptyBlocks : SourceAnalyzer
