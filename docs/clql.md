@@ -49,8 +49,20 @@ Facts with arguments are proceeded by a colon.
 
 <br />
 
-### Floats and Ints
+### The Element Fact
 
+The following query matches any element from the C# lexicon, including files, namespaces, methods, literals etc:
+
+```
+<cs.element
+```
+
+Every lexicon has an element fact that performs the same function.
+
+<br />
+
+### Floats and Ints
+<!--TODO(blakemscurr) explain boolean properties once syntax has been added to the ebnf-->
 Properties can be of type string, float, and int. The following finds all int literals with the value 8:
  
 ```
@@ -128,6 +140,8 @@ The order of sibling facts is irrelevant in CLQL. The following query will find 
   cs.while_stmt
 ```
 
+<!--TODO(blakemscurr): Explain the <lexicon>.element fact-->
+
 <br />
 
 ### Negation
@@ -167,7 +181,6 @@ Negating a fact does not affect its siblings. The following query finds all Stri
 A fact cannot be both yielded and negated.
 
 <br />
-
 ### Or
 
 A fact with multiple children will match against elements of the code that have child1 *and* child2 *and* child3 etc. The “or” operator overrides the implicit "and". The following query finds all String methods that use basic loops:
@@ -180,6 +193,7 @@ A fact with multiple children will match against elements of the code that have 
     cs.while_stmt
     cs.for_stmt
 ```
+<!-- TODO(blakemscurr) depth-->
 
 <br />
 
