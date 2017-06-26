@@ -73,11 +73,29 @@ $ paltctl system-check
 
 You can now [setup the lingo client](/getting-started).
 
+### Updating
+
+Rolling updates are currently not supported (though in the road map). As such, the platform or Lexicon being updated will go off-line during the update. 
+
+To update the CodeLingo OnPrem Platform, run the following command:
+
+```bash
+$ platctl platform update
+```
+
+It will prompt for the file path to the new CodeLingo OnPrem Platform Docker image.
+
+To update a Lexicon, run:
+
+```bash
+$ platctl lexicon update
+```
+
+It will prompt for the file path to the new Lexicon Docker image.
 
 ### System Administration
 
 The platctl tool has many commands to help SysAdmins manage the CodeLingo OnPrem Platform. The following list highlights some of the more common commands.
-
 
 List all pods in the CodeLingo OnPrem Platform cluster:
 
@@ -92,13 +110,6 @@ default            postgres-3789429173-vzx51   1/1       Running            0   
 default            website-3391169752-nvhhd    1/1       Running            0          58m
 ...
 ```
-
-Update the CodeLingo OnPrem Platform. The command will prompt for the filepath to the new CodeLingo OnPrem Platform Docker image:
-
-```bash
-$ platctl platform update
-```
-
 Tear down the CodeLingo OnPrem Platform and remove all resources associated with it.
 
 ```bash
