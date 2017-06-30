@@ -5,7 +5,7 @@
 
 ### Overview
 
-The CodeLingo OnPrem Platform runs on a single node Kubernetes cluster deployed onto a single VM. All resources for the CodeLingo OnPrem Platform are packaged within a single Open Virtual Appliance (OVA) which can be imported into any major hypervisor. The following instructions are written for an Ubuntu 16.04 (or later) host.
+All resources for the CodeLingo OnPrem Platform are packaged within a single Open Virtual Appliance (OVA) which can be imported into a virtual machine host like VirtualBox. The following instructions have been tested on Ubuntu 16.04 and Windows 10.
 
 
 The CodeLingo OnPrem Platform comes with a SysAdmin tool: *platctl*. The platctl tool streamlines the management of the cluster: from initial deployment to updates, monitoring and teardown.
@@ -15,6 +15,9 @@ The CodeLingo OnPrem Platform comes with a SysAdmin tool: *platctl*. The platctl
 ### Prerequisite
 
 A hypervisor and the [codelingo-onprem.ova](https://drive.google.com/drive/u/1/folders/0B1mECGkVsAMLN1Bmem8yb1AzdVk) are required. Platctl automates deployment on [Virtualbox](https://www.virtualbox.org/wiki/Downloads), but can support deployment onto any hypervisor.
+
+##### Windows
+In addition to above prerequisite, install [Git Bash](https://git-for-windows.github.io/). If using VirtualBox, add the VirtualBox directory to your $PATH in `Advanced System Settings`.
 
 <br/>
 
@@ -43,15 +46,29 @@ Memory: 8192MB
 
 ### Deploy The CodeLingo OnPrem Platform
 
+Start the ssh agent (Windows only):
+
+```bash
+$ eval $(ssh-agent -s)
+```
+
+This will output a PID that indicates the running ssh agent process.
+
 Run the following command to set the IP of the CodeLingo OnPrem Platform VM:
 
 ```bash
 $ platctl ip set-static
 ```
 
-The command will prompt for an IP and a network interface name to use as the CodeLingo OnPrem Platform address. Run `$ ifconfig` to list all available network interfaces and select one of them to be the bridged adapter for the VM (e.g. enp0s3) and select a static IP within the chosen network.
+The command will prompt for an IP and a network interface name to use as the CodeLingo OnPrem Platform address. 
 
-Run the following command to start up the CodeLingo OnPrem Platform:
+##### Ubuntu
+Run `$ ifconfig` to list all available network interfaces and select one of them to be the bridged adapter for the VM. Enter the name of the selected interface (e.g. enp0s3) when prompted then select a static IP within the chosen network.
+
+##### Windows
+Run ` $ ipconfig //all` to list all available network adaptors, and select one of them to be the bridged adapter for the VM. Enter the description of the selected adaptor when prompted (e.g. Killer e2200 Gigabit Ethernet Controller) then select a static IP within the chosen network.
+
+Run the following command to start up the CodeLingo OnPrem Platform and enter the static IP when prompted:
 
 ```bash
 $ platctl platform up
@@ -126,12 +143,6 @@ Current platform IP:
 
 ```bash
 $ platctl ip get
-```
-
-Re-add private key:
-
-```bash
-$ platctl util add-key
 ```
 
 Start the CodeLingo OnPrem VM:
