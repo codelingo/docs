@@ -85,7 +85,7 @@ Congratulations! You've just deployed the CodeLingo OnPrem Platform.
 To confirm the CodeLingo OnPrem Platform is running correctly, run the following command:
 
 ```bash
-$ paltctl system-check
+$ platctl system-check
 ```
 
 You can now [setup the lingo client](/getting-started).
@@ -136,7 +136,7 @@ $ platctl down
 Run a system health check:
 
 ```bash
-$ paltctl system-check
+$ platctl system-check
 ```
 
 Current platform IP:
