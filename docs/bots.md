@@ -15,7 +15,7 @@ todo: image of botflow composer
 
  -->
 
-<img src="../img/clair_review_simple.png" alt="CLAIR (CodeLingo AI Reviewer) commenting on a pull-request" style="width: 80%;"/>
+<img src="/docs/img/clair_review_simple.png" alt="CLAIR (CodeLingo AI Reviewer) commenting on a pull-request" style="width: 80%;"/>
 
 Other possible Bots include:
  

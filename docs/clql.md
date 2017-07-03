@@ -23,11 +23,11 @@ In the above example the break statement is selected. The generated CLQL query w
 While CLQL can query many types of software related systems, this document will focus on querying a single CSharp program.
 
 <!--TODONOW link to fact definition section on lexicon page-->
-Queries are made up of [Facts](lexicons.md). A CLQL query with just a single fact will match all elements of that type in the program. The following query matches and returns all classes in the queried program:
+Queries are made up of [Facts](concepts/lexicons.md). A CLQL query with just a single fact will match all elements of that type in the program. The following query matches and returns all classes in the queried program:
 
 `<cs.class` 
 
-It consists of a single fact `<cs.class`. The namespace `cs` indicates that it belongs to the C# [lexicon](lexicons.md), and the fact name `class` indicates that it refers to a C# class.
+It consists of a single fact `<cs.class`. The namespace `cs` indicates that it belongs to the C# [lexicon](concepts/lexicons.md), and the fact name `class` indicates that it refers to a C# class.
 The yield tag `<` determines which fact the query will return. Every query must have one (and only one) yielded fact.
 
 <br />

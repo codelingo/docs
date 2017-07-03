@@ -14,7 +14,7 @@ Below are several examples of different Flows.
 
 This Flow builds a simple search dashboard with three panels: a CLQL search field, a list of file and line matches and a graph.
 
-<img src="/img/search_flow.jpg" style="width: 100%;"/>
+<img src="/docs/img/search_flow.jpg" style="width: 100%;"/>
 
 In this example, the executed query is searching runtime and AST information about a CSharp repository stored in a GitHub repository. To answer the query, the CodeLingo Platform fires up three lexicons: the Git Lexicon retrieves the code from the GitHub repository, the AST lexicon queries the code and the Runtime lexicon builds and runs the code and queries its runtime information.
 
@@ -22,7 +22,7 @@ In this example, the executed query is searching runtime and AST information abo
 
 Interacting with Flows is not restricted to the Flow Dashboard. Bots can recieve input and give output to other external services.
 
-<img src="/img/ide_search_flow.jpg" style="width: 100%;"/>
+<img src="/docs/img/ide_search_flow.jpg" style="width: 100%;"/>
 
 In this example a CodeLingo IDE plugin allows the user to query code within their IDE and navigate to the result, while also generating a graph of the results on the Flow Dashboard.
 
@@ -31,7 +31,7 @@ In this example a CodeLingo IDE plugin allows the user to query code within thei
 
 This is an example of a fully automated flow with no dashboard. When a pull request is made to the monitored repository, GitHub sends a web hook to the Bot. That Bot then queries the pull request and repository for any Tenets.
 
-<img src="/img/review_flow.jpg" style="width: 100%;"/>
+<img src="/docs/img/review_flow.jpg" style="width: 100%;"/>
 
 The next Bot in the Flow then queries the pull request with the Tenets. Any issues found are added as comments on the pull request.
 
@@ -40,7 +40,7 @@ The next Bot in the Flow then queries the pull request with the Tenets. Any issu
 
 This is the same flow as above except a Bot waits for a human to confirm each found issue, via the dashboard, before commenting on the pull request.
 
-<img src="/img/review_confirm_flow.jpg" style="width: 100%;"/>
+<img src="/docs/img/review_confirm_flow.jpg" style="width: 100%;"/>
 
 Further customization of this Flow might include categorizing the issues and keeping track of which Tenets where kept and discarded.
 
@@ -49,7 +49,7 @@ Further customization of this Flow might include categorizing the issues and kee
 
 The crashed program has a single function added to it which sends the stack trace and any other data to the Bot in the Flow. The team is notified via Slack and a crash report is generated, ready to be analysed by a human.
 
-<img src="/img/crash_report_flow.jpg" style="width: 100%;"/>
+<img src="/docs/img/crash_report_flow.jpg" style="width: 100%;"/>
 
 Similar to the example above, this is a long running Flow which waits to be triggered by an external resource.
 
@@ -60,7 +60,7 @@ This Flow extends the above crash report Flow to add in debugging, fixing and pr
 Along with the report panels, debug panels are added to help narrow down the cause of the crash and generate a Tenet to protect against future occurrences. The Lexicons reproduce a running state of the software, which matches, as close as possible, that of the crashed program with the information provided.
 
 
-<img src="/img/crash_redeploy_flow.jpg" style="width: 100%;"/>
+<img src="/docs/img/crash_redeploy_flow.jpg" style="width: 100%;"/>
 
 
 <!-- 
