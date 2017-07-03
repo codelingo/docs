@@ -1,6 +1,6 @@
 # Getting Started with the lingo Client
 
-The lingo client is a command line interface (CLI) tool used to manage the Lexicons, Tenets and Bots. The lingo client will help you find, create and run these resources.
+The lingo client is a command line interface (CLI) tool used to manage the [Lexicons](concepts/lexicons.md), [Tenets](concepts/lexicons.md) and [Bots](concepts/lexicons.md). The lingo client will help you find, create and run these resources.
 
 <br/>
 
