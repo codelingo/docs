@@ -7,7 +7,7 @@
 
 Bots watch resources and look for patterns in them based on the [Tenets](/concepts/tenets.md) associated with the resource. For example, CodeLingo AI Reviewer (CLAIR) is a Bot that preforms a review on a pull request:
 
-<img src="/img/clair_review_simple.png" alt="CLAIR (CodeLingo AI Reviewer) commenting on a pull-request" style="width: 80%;"/>
+<img src="/docs/img/clair_review_simple.png" alt="CLAIR (CodeLingo AI Reviewer) commenting on a pull-request" style="width: 80%;"/>
 
 CLAIR reads the Tenets written in .lingo files in the repository and queries the platform with them. She can be called directly via the commandline:
 
