@@ -14,10 +14,9 @@ The CodeLingo OnPrem Platform comes with a SysAdmin tool: *platctl*. The platctl
 
 ### Prerequisite
 
-A hypervisor and the [codelingo-onprem.ova](https://drive.google.com/drive/u/1/folders/0B1mECGkVsAMLN1Bmem8yb1AzdVk) are required. Platctl automates deployment on [Virtualbox](https://www.virtualbox.org/wiki/Downloads), but can support deployment onto any hypervisor.
+A hypervisor and the [codelingo-onprem.ova](https://drive.google.com/drive/u/1/folders/0B1mECGkVsAMLN1Bmem8yb1AzdVk) are required. Platctl automates deployment on [Virtualbox](https://www.virtualbox.org/wiki/Downloads), but can support deployment onto any hypervisor. If using Windows, install [Git Bash](https://git-for-windows.github.io/) and add the VirtualBox directory to your $PATH under "Advanced System Settings".
 
-##### Windows
-In addition to above prerequisite, install [Git Bash](https://git-for-windows.github.io/). If using VirtualBox, add the VirtualBox directory to your $PATH in `Advanced System Settings`.
+
 
 <br/>
 
@@ -62,10 +61,10 @@ $ platctl ip set-static
 
 The command will prompt for an IP and a network interface name to use as the CodeLingo OnPrem Platform address. 
 
-##### Ubuntu
+#### Ubuntu
 Run `$ ifconfig` to list all available network interfaces and select one of them to be the bridged adapter for the VM. Enter the name of the selected interface (e.g. enp0s3) when prompted then select a static IP within the chosen network.
 
-##### Windows
+#### Windows
 Run ` $ ipconfig //all` to list all available network adaptors, and select one of them to be the bridged adapter for the VM. Enter the description of the selected adaptor when prompted (e.g. Killer e2200 Gigabit Ethernet Controller) then select a static IP within the chosen network.
 
 Run the following command to start up the CodeLingo OnPrem Platform and enter the static IP when prompted:
