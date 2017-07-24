@@ -109,6 +109,14 @@ $ platctl lexicon update
 
 It will prompt for the file path to the new Lexicon Docker image.
 
+To update all scripts, run:
+
+```bash
+$ platctl script update
+```
+
+It will prompt for the file path to the local platctl folder.
+
 ### System Administration
 
 The platctl tool has many commands to help SysAdmins manage the CodeLingo OnPrem Platform. The following list highlights some of the more common commands.
