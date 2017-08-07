@@ -28,7 +28,7 @@ Place the lingo binary on your $PATH.
 
 ## Setup
 
-1. Create a CodeLingo account: `http://< on-prem-ip >/join`
+1. Create a CodeLingo account: `http://< on-prem-ip >:30303/join`
 
 2. Setup lingo with your user account:
 
@@ -36,7 +36,7 @@ Place the lingo binary on your $PATH.
 $ lingo setup
 ```
 
-You will be prompted to enter a username and token. You can generate the token at `< on-prem-ip >/lingo-token`. 
+You will be prompted to enter a username and token. You can generate the token at `< on-prem-ip >:30303/lingo-token`. 
 
 3. Tell the client to talk to the on premise CodeLingo platform:
 
