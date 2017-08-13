@@ -1,31 +1,21 @@
-# C# and Perforce Tutorial
-
-This tutorial walks through the setup
+# C# and Perforce
 
 <br/>
 
 ## Install
 
 #### Perforce
-1. Download Perforce client (p4) and server (p4d) [binaries](https://www.perforce.com/downloads).
+1. Download the Perforce client (p4) and server (p4d) [binaries](https://www.perforce.com/downloads).
 2. Make both Perforce binaries executable with `$ chmod +x <path to the binary>` and add them to your `$PATH` in Linux and Mac or `%PATH%` in Windows. 
 
 #### C# lexicon 
-Install the C# lexicon if it is not available after platform installation.
-
-CSharp(C#) should be listed in namespace `fission-function` if the lexicon has been installed: 
-
-```bash
-$ platctl util get-pods
-```
-
-e.g.`fission-function   codelingo-ast-csharp-0-0-0-7ef4ebb9-e58a-4e91-8cfe-f7c910e0mbhq   2/2       Running   0          4d`
+The CodeLingo Platform comes with the C# lexicon pre-installed.
 
 <br/>
 
 ## Setup
 
-[Setup](tutorials/getting-started.md) Lingo client. 
+If the lingo client has not already been setup, please follow [these setup steps](tutorials/getting-started.md). 
 
 Note: The username of the newly created CodeLingo account must be the same as the local Perforce username.
 
@@ -64,7 +54,6 @@ Edit the .lingo file as follows:
 ```bash
 lexicons:
 - codelingo/common
-- codelingo/p4
 - codelingo/csharp
 tenets:
 - name: find-funcs
