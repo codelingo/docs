@@ -1,7 +1,9 @@
 site_name: CodeLingo Docs #- On Prem
 pages:
     - Overview: index.md
-    - Getting Started: getting-started.md
+    - Tutorials:
+      - Getting Started: tutorials/getting-started.md
+      - C# and Perforce: tutorials/cs-perforce.md
     - Concepts: 
       - Search: concepts/search.md
       - Tenets: concepts/tenets.md
