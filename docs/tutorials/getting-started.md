@@ -44,7 +44,7 @@ You will be prompted to enter a username and token. You can generate the token a
 $ lingo use-env onprem
 ```
 
-Replace the "addr" and "host" with the platform IP in the "onprem" section of `$HOME/.codelingo/configs/platform.yaml`. That's it. The lingo client is now setup on your computer.
+Enter the IP address of the CodeLingo platform when prompted. That's it. The lingo client is now setup on your computer.
 
 ---
 
