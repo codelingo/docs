@@ -16,7 +16,7 @@ The CodeLingo OnPrem Platform comes with a SysAdmin tool: *platctl*. The platctl
 
 A hypervisor and the [codelingo-onprem.ova](https://drive.google.com/drive/u/1/folders/0B1mECGkVsAMLN1Bmem8yb1AzdVk) are required. Platctl automates deployment on [Virtualbox](https://www.virtualbox.org/wiki/Downloads), but can support deployment onto any hypervisor. If using Windows, install [Git Bash](https://git-for-windows.github.io/) and add the VirtualBox directory to your $PATH under "Advanced System Settings".
 
-
+Note: Run the Git Bash terminal as Administrator to avoid repetitive prompts for permissions.
 
 <br/>
 
@@ -37,7 +37,7 @@ $ platctl vbox import-appliance
 When prompted, supply the filepath to the codelingo-onprem.ova file, CPU and Memory system resource allocation. On a successful import, the command will print `Successfully imported the appliance.`.  If an error was reported, or a hypervisor other than virtualbox is used, repeat the import manually using the hypervisor's interface with the following minimum system resources:
 
 ```
-CPUs: 1
+CPUs: 2
 Memory: 8192MB
 ```
 
