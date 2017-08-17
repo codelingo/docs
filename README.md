@@ -4,6 +4,10 @@ This repo generates a static HTML site from markdown. Docs for the different ver
 
 See here to run the site: http://www.mkdocs.org
 
-To publish the docs: mkdocs hg-deploy
+To build the site: `mkdocs build`
+
+This will create the html site under ./site
+
+To publish the docs: `mkdocs hg-deploy`
 
 Documentation on the individual repositories should be kept in sync with this repo. We should look to automate this in the future.
