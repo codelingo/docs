@@ -17,11 +17,12 @@ In the above example the break statement is selected. The generated CLQL query w
 
 #### Visual Studio
 
+Similar to the Sublime example above, CodeLingo also provides a Visual Studio extension that generates a CLQL query. 
+
 ![Query Generation VS](img/query_gen_vs.png)
 
 ![Result VS](img/result_vs.png)
 
-Similar to Sublime example above, CodeLingo also provides a Visual Studio extenstion that generates a CLQL query. 
 
 <br />
 
