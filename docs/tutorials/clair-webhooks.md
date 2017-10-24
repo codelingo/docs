@@ -7,7 +7,7 @@ She can be setup in a few simple steps:
 1. Make sure you have [joined Codelingo](https://codelingo.io/join) and are logged in.
 ![CodeLingo Join](../img/cl_join.png)
 
-2. Visit the [CodeLingo Dashboard]("https://codelingo.io/dashboard).
+2. Visit the [CodeLingo Dashboard](https://codelingo.io/dashboard).
 
 3. Select the repositories that CLAIR should monitor.
 ![Codelingo Dashboard](../img/cl_connect_repos.png)
