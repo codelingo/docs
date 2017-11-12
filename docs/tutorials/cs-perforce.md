@@ -15,7 +15,7 @@ The CodeLingo Platform comes with the C# lexicon pre-installed.
 
 ## Setup
 
-If the lingo client has not already been setup, please follow [these setup steps](tutorials/getting-started.md). 
+If the lingo client has not already been setup, please follow [these setup steps](getting-started.md). 
 
 Note: The username of the newly created CodeLingo account must be the same as the local Perforce username.
 
