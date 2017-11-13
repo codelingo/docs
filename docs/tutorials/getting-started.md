@@ -15,8 +15,7 @@ The lingo client is a command line interface (CLI) tool used to manage the [Lexi
 
 Put the binary in a folder listed in your %PATH%. If you don't have an appropriate folder set up, create a new one (ie C:\Lingo) and append it to PATH with a ";" in between by going to Control Panel\System and Security\System -> Advanced system settings -> Environment Variables.
 
-You must run lingo from Git Bash or similar environment (if not git bash, then at least with git and msys installed). Running in Cmd will not work.
-
+<br/>
 
 ### Linux / Unix  
 
@@ -201,4 +200,4 @@ C Sharp AST Lexicon
 This lexicon is a list of facts about the C Sharp AST.
 ```
  
-To list all facts the lexicon provides, run `$ lingo lexicon list-facts ast/codelingo/cs`. To see the full list of commands available, please run `$ lingo --help`. The lingo CLI tool also powers IDE plugins, such as the [CLQL generation](/clql/index.html).
+To list all facts the lexicon provides, run `$ lingo lexicon list-facts ast/codelingo/cs`. To see the full list of commands available, please run `$ lingo --help`. The lingo CLI tool also powers IDE plugins, such as the [CLQL generation](/clql).
