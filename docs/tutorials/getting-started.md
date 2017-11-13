@@ -22,8 +22,6 @@ This will download, build and place the `lingo` binary on your $PATH
 
 Put the binary in a folder listed in your %PATH%. If you don't have an appropriate folder set up, create a new one (ie C:\Lingo) and append it to PATH with a ; in between by going to Control Panel\System and Security\System -> Advanced system settings -> Environment Variables
 
-You must run lingo from Git Bash or similar environment (if not git bash, then at least with git and msys installed). Running in Cmd will not work.
-
 <br/>
 
 ### Linux / Unix
