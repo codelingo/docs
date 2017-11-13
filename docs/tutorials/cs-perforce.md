@@ -15,7 +15,7 @@ The CodeLingo Platform comes with the C# lexicon pre-installed.
 
 ## Setup
 
-If the lingo client has not already been setup, please follow [these setup steps](tutorials/getting-started.md). 
+If the lingo client has not already been setup, please follow [these setup steps](getting-started.md). 
 
 Note: The username of the newly created CodeLingo account must be the same as the local Perforce username.
 
@@ -60,7 +60,7 @@ tenets:
   doc: Example tenet that finds all functions.
   comment: This is a function, but you probably already knew that.
   match: |
-    <csharp.MethodDeclaration
+    <csharp.method_declaration[:]
 ```
 
 Commit:

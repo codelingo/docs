@@ -4,7 +4,6 @@ pages:
     - Tutorials:
       - Getting Started: tutorials/getting-started.md
       - C# and Perforce: tutorials/cs-perforce.md
-
     - Platform: platform.md
     - Concepts: 
       - Search: concepts/search.md

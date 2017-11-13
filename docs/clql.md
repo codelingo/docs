@@ -13,7 +13,7 @@ When looking for patterns in code, CodeLingo's Integrated Development Environmen
 
 ![Query Generation](img/queryGeneration.png)
  
-In the above example the break statement is selected. The generated CLQL query will match any break statement inside an if block inside a for loop, matching the nested pattern of the selected break element.
+In the above example the break statement is selected. The generated CLQL query will match any break statement directly inside an if block inside a for loop, matching the nested pattern of the selected break element.
 
 #### Visual Studio
 
@@ -36,10 +36,10 @@ While CLQL can query many types of software related systems, this document will 
 <!--TODONOW link to fact definition section on lexicon page-->
 Queries are made up of [Facts](concepts/lexicons.md). A CLQL query with just a single fact will match all elements of that type in the program. The following query matches and returns all classes in the queried program:
 
-`<cs.class` 
+`<cs.class[:]` 
 
-It consists of a single fact `<cs.class`. The namespace `cs` indicates that it belongs to the C# [lexicon](concepts/lexicons.md), and the fact name `class` indicates that it refers to a C# class.
-The yield tag `<` determines which fact the query will return. Every query must have one (and only one) yielded fact.
+It consists of a single fact `<cs.class`. The namespace `cs` indicates that it belongs to the C# [lexicon](lexicons.md), and the fact name `class` indicates that it refers to a C# class.
+The yield tag `<` determines which fact the query will return. Every query must have one (and only one) yielded fact. The depth range `[:]` makes this fact match any class anywhere in the program, no matter how deeply nested.
 
 <br />
 
@@ -48,7 +48,7 @@ The yield tag `<` determines which fact the query will return. Every query must 
 To limit the above query to match classes with a particular name, add a "name" property as an argument to the `method` fact:
  
 ```
-<cs.method:
+<cs.method[:]:
   name: "myFunc"
 ```
  
@@ -63,14 +63,14 @@ Facts with arguments are proceeded by a colon.
 Properties can be of type string, float, and int. The following finds all int literals with the value 8:
  
 ```
-<cs.int_lit:
+<cs.int_lit[:]:
   value: 5
 ```
  
 This query finds float literals with the value 8.7:
  
 ```
-<cs.float_lit:
+<cs.float_lit[:]:
   value: 8.7
 ```
 
@@ -80,7 +80,7 @@ This query finds float literals with the value 8.7:
 
 The comparison operators >, <, ==, >=, and <= are available for floats and ints. The following finds all int literals above negative 3:
 ```
-<cs.int_lit:
+<cs.int_lit[:]:
   value: > -3
 ```
 
@@ -91,7 +91,7 @@ The comparison operators >, <, ==, >=, and <= are available for floats and ints.
 Any string property can be queried with regex. The following finds methods with names longer than 25 characters:
  
 ```
-<cs.method:
+<cs.method[:]:
   name: /^.{25,}$/
 ```
 
@@ -102,36 +102,70 @@ Any string property can be queried with regex. The following finds methods with 
 Facts can be take arbitrarily many other facts as arguments, forming a query with a tree struct of arbitrary depth. A parent-child fact pair will match any parent element even if the child is not a direct descendant. The following query finds all the if statements inside a method called "myMethod", even those nested inside intermediate scopes (for loops etc):
 
 ```
-cs.method:
+cs.method[:]:
   name: "myMethod"
-  <cs.if_stmt
+  <cs.if_stmt[:]
 ```
  
 Any fact in a query can be yielded. If `cs.class` is yielded, this query returns all classes named "myClass", but only if it has at least one method:
  
 ```
-cs.class:
+cs.class[:]:
   name: “myClass”
-  <cs.method
+  <cs.method[:]
 ```
  
 Any fact in a query can have properties. The following query finds all methods named "myMethod" on the all classes named "myClass":
  
 ```
-cs.class:
+cs.class[:]:
   name: “myClass”
-  <cs.method:
+  <cs.method[:]:
     Name: “myMethod”
 ```
+
+### Depth
+
+Facts use depth ranges to specify the depth at which they can be found below their parent. Depth ranges have two zero based numbers, representing the minimum and maximum depth to find the result at, inclusive and exclusive respectively. The following query finds any if statements that are direct children of their parent method, in other words, if statements at depth zero from methods:
+
+```
+cs.method[:]:
+  <cs.if_stmt[0:1]
+```
+
+This query finds if statements at (zero based) depths 3, 4, and 5:
+
+```
+cs.method[:]:
+  <cs.if_stmt[3:6]
+```
+
+A depth range where the maximum is not larger than the minimum, i.e., `[5:5]` or `[6:0]`, will give an error.
+
+Depth ranges specifying a single depth can be described with a single number. This query finds direct children at depth zero:
+
+```
+cs.method[:]:
+  <cs.if_stmt[0]
+```
+
+Indicies in a depth range can range from 0 to positive infinity. Positive infinity is represented by leaving the second index empty. This query finds all methods, and all their descendant if_statements from depth 5 onwards:
+
+```
+cs.method[:]:
+  <cs.if_stmt[5:]
+```
+
+The depth range on top level facts, like `cs.method` in the previous examples, determine the depth from the root to that fact. The root can be thought of as the node all other data hangs off. The values hanging off the root depend on the context of the query, it could be a `git.repo`, `p4.repo`, or `cs.project` for example. Example queries here use `[:]` for top level facts to avoid context based ambiguity.
 
 <br />
 
 ### Branching
 
-The order of sibling facts is irrelevant in CLQL. The following query will find a method with a foreach loop, a for loop, and a while loop regardless of their order in the query:
+The following query will find a method with a foreach loop, a for loop, and a while loop in that order:
  
 ```
-<cs.method:
+<cs.method[:]:
   cs.for_stmt
   cs.foreach_stmt
   cs.while_stmt
@@ -146,14 +180,14 @@ The order of sibling facts is irrelevant in CLQL. The following query will find 
 Negation allows queries to match children that *do not* have a given property or child fact. Negated facts and properties are prepended by "!". The following query finds all classes except those named "classA":
 
 ```
-<cs.class:
+<cs.class[:]:
   !name: "classA"
 ```
  
 This query finds all classes with String methods:
 
 ```
-<cs.class:
+<cs.class[:]:
   !cs.method:
     name: “String”
 ```
@@ -161,7 +195,7 @@ This query finds all classes with String methods:
 The placement of the negation operator has a significant effect on the query's meaning - this similar query finds all methods with a method that is not called String:
 
 ```
-<cs.class:
+<cs.class[:]:
   cs.method:
     !name: “String”
 ```
@@ -169,7 +203,7 @@ The placement of the negation operator has a significant effect on the query's m
 Negating a fact does not affect its siblings. The following query finds all String methods that use an if statement, but don’t use a foreach statement:
 
 ```
-<cs.method:
+<cs.method[:]:
   name: “String”
   cs.if_stmt
   !cs.foreach_stmt
@@ -183,7 +217,7 @@ A fact cannot be both yielded and negated.
 A fact with multiple children will match against elements of the code that have child1 *and* child2 *and* child3 etc. The “or” operator overrides the implicit "and". The following query finds all String methods that use basic loops:
 
 ```
-<cs.method:
+<cs.method[:]:
   name: “String”
   or:
     cs.foreach_stmt
@@ -201,11 +235,11 @@ Facts that do not have a parent-child relationship can be compared by assigning 
 The following query compares two classes (which do have a parent-child relationship) and returns the methods which both classes implement:
 
 ```
-cs.class:
+cs.class[:]:
   name: “classA”
   <cs.method:
     name: $methodName
-cs.class:
+cs.class[:]:
   name: “classB”
   cs.method:
     name: $methodName
