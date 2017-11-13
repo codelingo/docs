@@ -9,9 +9,20 @@ CodeLingo Query Language (CLQL) is a simple, lightweight language. It’s full g
  
 When looking for patterns in code, CodeLingo's Integrated Development Environment (IDE) plugins can help build those patterns by automatically generating queries to detect selected elements of code. A generated query will describe the selected element and its position in the structure of the program:
 
+#### Sublime
+
 ![Query Generation](img/queryGeneration.png)
  
 In the above example the break statement is selected. The generated CLQL query will match any break statement directly inside an if block inside a for loop, matching the nested pattern of the selected break element.
+
+#### Visual Studio
+
+Similar to the Sublime example above, CodeLingo also provides a Visual Studio extension that generates a CLQL query. 
+
+![Query Generation VS](img/query_gen_vs.png)
+
+![Result VS](img/result_vs.png)
+
 
 <br />
 

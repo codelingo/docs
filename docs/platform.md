@@ -16,7 +16,7 @@ The CodeLingo OnPrem Platform comes with a SysAdmin tool: *platctl*. The platctl
 
 A hypervisor and the [codelingo-onprem.ova](https://drive.google.com/drive/u/1/folders/0B1mECGkVsAMLN1Bmem8yb1AzdVk) are required. Platctl automates deployment on [Virtualbox](https://www.virtualbox.org/wiki/Downloads), but can support deployment onto any hypervisor. If using Windows, install [Git Bash](https://git-for-windows.github.io/) and add the VirtualBox directory to your $PATH under "Advanced System Settings".
 
-
+Note: Run the Git Bash terminal as Administrator to avoid repetitive prompts for permissions.
 
 <br/>
 
@@ -34,12 +34,15 @@ To install the OVA run:
 $ platctl vbox import-appliance
 ```
 
-When prompted, supply the filepath to the codelingo-onprem.ova file, CPU and Memory system resource allocation. On a successful import, the command will print `Successfully imported the appliance.`.  If an error was reported, or a hypervisor other than virtualbox is used, repeat the import manually using the hypervisor's interface with the following minimum system resources:
+When prompted, supply the filepath to the codelingo-onprem.ova file, CPU and Memory system resource allocation. On a successful import, the command will print `Successfully imported the appliance.`.  If an error was reported, or a hypervisor other than VirtualBox is used, repeat the import manually using the hypervisor's interface with the following minimum system resources:
 
 ```
-CPUs: 1
+CPUs: 2
 Memory: 8192MB
 ```
+
+#### VMware ESXi alternative:
+Import the codelingo-onprem.ova file into VMWare Workstation then upload to ESXi.
 
 <br/>
 
@@ -56,7 +59,7 @@ This will output a PID that indicates the running ssh agent process.
 Run the following command to set the IP of the CodeLingo OnPrem Platform VM:
 
 ```bash
-$ platctl ip set-static
+$ platctl vbox set-static-ip
 ```
 
 The command will prompt for an IP and a network interface name to use as the CodeLingo OnPrem Platform address. 
@@ -72,6 +75,43 @@ Run the following command to start up the CodeLingo OnPrem Platform and enter th
 ```bash
 $ platctl platform up
 ```
+
+#### VMware ESXi alternative:
+1. (Host) Log in to the appliance with default username(codelingo) and password(codelingo)
+2. (VM) Change the network interface content in `/etc/network/interfaces` as follows.
+From:
+
+```
+# The primary network interface
+auto enp0s3
+iface enp0s3 inet dhcp
+```
+
+To:
+
+```
+auto <network interface e.g. ens33>
+iface <network interface e.g. ens33> inet static
+	address <static IP within the network e.g. 192.168.1.100>
+	netmask <netmask e.g. 255.255.255.0>
+	broadcast <broadcast address e.g. 192.168.1.255>
+	network <network address e.g. 192.168.1.0>
+	gateway <gateway address e.g. 192.168.1.1>
+	dns-nameservers <dns-nameservers e.g. 192.168.1.1>
+```
+
+3. (VM) Reboot:
+
+```bash
+sudo reboot 
+```
+
+4. (Host) start up the CodeLingo OnPrem Platform and enter the static IP when prompted:
+
+```bash
+$ platctl platform up -n <network interface e.g. ens33>
+```
+
 
 Congratulations! You've just deployed the CodeLingo OnPrem Platform.
 
@@ -108,6 +148,14 @@ $ platctl lexicon update
 ```
 
 It will prompt for the file path to the new Lexicon Docker image.
+
+To update all scripts, run:
+
+```bash
+$ platctl script update
+```
+
+It will prompt for the file path to the local platctl folder.
 
 ### System Administration
 
