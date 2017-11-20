@@ -12,6 +12,8 @@ The CodeLingo OnPrem Platform comes with a SysAdmin tool: *platctl*. The platctl
 
 <br/>
 
+Note: All commands are expected to be run in a Unix like command line shell (i.e. GitBash in Windows)
+
 ### Prerequisite
 
 A hypervisor and the [codelingo-onprem.ova](https://drive.google.com/drive/u/1/folders/0B1mECGkVsAMLN1Bmem8yb1AzdVk) are required. Platctl automates deployment on [Virtualbox](https://www.virtualbox.org/wiki/Downloads), but can support deployment onto any hypervisor. If using Windows, install [Git Bash](https://git-for-windows.github.io/) and add the VirtualBox directory to your $PATH under "Advanced System Settings".
