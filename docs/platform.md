@@ -46,6 +46,11 @@ Memory: 8192MB
 <br/>
 
 ### Deploy The CodeLingo OnPrem Platform
+For platctl to orchestrate deployment, it needs a home directory to write out several configuration files. By default it expects this home to be at /etc/codelingo/platctl (Unix) or C:\Users\<username>\codelingo\platctl (Windows). To set a different home directory set the environment variable $PLATCTL_HOME to the home directory. 
+
+
+In either case platctl expects the directory to exist and to allow read/write access.
+
 
 Start the ssh agent (Windows only):
 
