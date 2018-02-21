@@ -25,10 +25,13 @@ While CLQL can query many types of software related systems, this document will 
 <!--TODONOW link to fact definition section on lexicon page-->
 Queries are made up of [Facts](lexicons.md). A CLQL query with just a single fact will match all elements of that type in the program. The following query matches and returns all classes in the queried program:
 
-`<cs.class[:]` 
+`
+@ clair.comment
+cs.class({depth: any})
+` 
 
-It consists of a single fact `<cs.class`. The namespace `cs` indicates that it belongs to the C# [lexicon](lexicons.md), and the fact name `class` indicates that it refers to a C# class.
-The yield tag `<` determines which fact the query will return. Every query must have one (and only one) yielded fact. The depth range `[:]` makes this fact match any class anywhere in the program, no matter how deeply nested.
+It consists of a single fact `cs.class`. The namespace `cs` indicates that it belongs to the C# [lexicon](lexicons.md), and the fact name `class` indicates that it refers to a C# class. The depth range `{depth: any}` makes this fact match any class anywhere in the program, no matter how deeply nested.
+The decorator `@ clair.comment` tells CLAIR (CodeLingo AI Reviewer) to make a comment on every class found. 
 
 <br />
 
@@ -37,7 +40,8 @@ The yield tag `<` determines which fact the query will return. Every query must 
 To limit the above query to match classes with a particular name, add a "name" property as an argument to the `method` fact:
  
 ```
-<cs.method[:]:
+@ clair.comment
+cs.method[:]:
   name: "myFunc"
 ```
  
@@ -52,14 +56,16 @@ Facts with arguments are proceeded by a colon.
 Properties can be of type string, float, and int. The following finds all int literals with the value 8:
  
 ```
-<cs.int_lit[:]:
+@ clair.comment
+cs.int_lit[:]:
   value: 5
 ```
  
 This query finds float literals with the value 8.7:
  
 ```
-<cs.float_lit[:]:
+@ clair.comment
+cs.float_lit[:]:
   value: 8.7
 ```
 
@@ -69,7 +75,8 @@ This query finds float literals with the value 8.7:
 
 The comparison operators >, <, ==, >=, and <= are available for floats and ints. The following finds all int literals above negative 3:
 ```
-<cs.int_lit[:]:
+@ clair.comment
+cs.int_lit[:]:
   value: > -3
 ```
 
@@ -80,7 +87,8 @@ The comparison operators >, <, ==, >=, and <= are available for floats and ints.
 Any string property can be queried with regex. The following finds methods with names longer than 25 characters:
  
 ```
-<cs.method[:]:
+@ clair.comment
+cs.method[:]:
   name: /^.{25,}$/
 ```
 
@@ -93,7 +101,8 @@ Facts can be take arbitrarily many other facts as arguments, forming a query wit
 ```
 cs.method[:]:
   name: "myMethod"
-  <cs.if_stmt[:]
+  @ clair.comment
+  cs.if_stmt[:]
 ```
  
 Any fact in a query can be yielded. If `cs.class` is yielded, this query returns all classes named "myClass", but only if it has at least one method:
@@ -101,7 +110,8 @@ Any fact in a query can be yielded. If `cs.class` is yielded, this query returns
 ```
 cs.class[:]:
   name: “myClass”
-  <cs.method[:]
+  @ clair.comment
+  cs.method[:]
 ```
  
 Any fact in a query can have properties. The following query finds all methods named "myMethod" on the all classes named "myClass":
@@ -109,7 +119,8 @@ Any fact in a query can have properties. The following query finds all methods n
 ```
 cs.class[:]:
   name: “myClass”
-  <cs.method[:]:
+  @ clair.comment
+  cs.method[:]:
     Name: “myMethod”
 ```
 
@@ -119,14 +130,16 @@ Facts use depth ranges to specify the depth at which they can be found below the
 
 ```
 cs.method[:]:
-  <cs.if_stmt[0:1]
+  @ clair.comment
+  cs.if_stmt[0:1]
 ```
 
 This query finds if statements at (zero based) depths 3, 4, and 5:
 
 ```
 cs.method[:]:
-  <cs.if_stmt[3:6]
+  @ clair.comment
+  cs.if_stmt[3:6]
 ```
 
 A depth range where the maximum is not larger than the minimum, i.e., `[5:5]` or `[6:0]`, will give an error.
@@ -135,14 +148,16 @@ Depth ranges specifying a single depth can be described with a single number. Th
 
 ```
 cs.method[:]:
-  <cs.if_stmt[0]
+  @ clair.comment
+  cs.if_stmt[0]
 ```
 
 Indicies in a depth range can range from 0 to positive infinity. Positive infinity is represented by leaving the second index empty. This query finds all methods, and all their descendant if_statements from depth 5 onwards:
 
 ```
 cs.method[:]:
-  <cs.if_stmt[5:]
+  @ clair.comment
+  cs.if_stmt[5:]
 ```
 
 The depth range on top level facts, like `cs.method` in the previous examples, determine the depth from the root to that fact. The root can be thought of as the node all other data hangs off. The values hanging off the root depend on the context of the query, it could be a `git.repo`, `p4.repo`, or `cs.project` for example. Example queries here use `[:]` for top level facts to avoid context based ambiguity.
@@ -154,7 +169,8 @@ The depth range on top level facts, like `cs.method` in the previous examples, d
 The following query will find a method with a foreach loop, a for loop, and a while loop in that order:
  
 ```
-<cs.method[:]:
+@ clair.comment
+cs.method[:]:
   cs.for_stmt
   cs.foreach_stmt
   cs.while_stmt
@@ -169,14 +185,16 @@ The following query will find a method with a foreach loop, a for loop, and a wh
 Negation allows queries to match children that *do not* have a given property or child fact. Negated facts and properties are prepended by "!". The following query finds all classes except those named "classA":
 
 ```
-<cs.class[:]:
+@ clair.comment
+cs.class[:]:
   !name: "classA"
 ```
  
 This query finds all classes with String methods:
 
 ```
-<cs.class[:]:
+@ clair.comment
+cs.class[:]:
   !cs.method:
     name: “String”
 ```
@@ -184,7 +202,8 @@ This query finds all classes with String methods:
 The placement of the negation operator has a significant effect on the query's meaning - this similar query finds all methods with a method that is not called String:
 
 ```
-<cs.class[:]:
+@ clair.comment
+cs.class[:]:
   cs.method:
     !name: “String”
 ```
@@ -192,7 +211,8 @@ The placement of the negation operator has a significant effect on the query's m
 Negating a fact does not affect its siblings. The following query finds all String methods that use an if statement, but don’t use a foreach statement:
 
 ```
-<cs.method[:]:
+@ clair.comment
+cs.method[:]:
   name: “String”
   cs.if_stmt
   !cs.foreach_stmt
@@ -206,7 +226,8 @@ A fact cannot be both yielded and negated.
 A fact with multiple children will match against elements of the code that have child1 *and* child2 *and* child3 etc. The “or” operator overrides the implicit "and". The following query finds all String methods that use basic loops:
 
 ```
-<cs.method[:]:
+@ clair.comment
+cs.method[:]:
   name: “String”
   or:
     cs.foreach_stmt
@@ -226,7 +247,8 @@ The following query compares two classes (which do have a parent-child relations
 ```
 cs.class[:]:
   name: “classA”
-  <cs.method:
+  @ clair.comment
+  cs.method:
     name: $methodName
 cs.class[:]:
   name: “classB”
@@ -251,7 +273,8 @@ tenets:
   - name: all-classes
     match: 
       cs.project:
-        <cs.class
+        @ clair.comment
+        cs.class
 ```
 
 CLAIR adds the repository information to the query before searching the CodeLingo Platform:
@@ -269,7 +292,8 @@ query:
     git.commit: 
       sha: “HEAD”    
       cs.project:
-        <cs.class
+        @ clair.comment
+        cs.class
 ```
 
 Every query to the CodeLingo platform itself starts with VCS facts to instruct the CodeLingo Platform on where to retrieve the source code from.
@@ -289,7 +313,8 @@ git.repo:
   git.commit:
     sha: “HEAD”    
     cs.project:
-      <cs.method:
+      @ clair.comment
+      cs.method:
         arg-num: > $args
 ```
 
@@ -333,7 +358,8 @@ cs.file:
       cs.decl_stmt:
         cs.variable:
           name: $varName
-    <cs.foreach_stmt:
+    @ clair.comment
+    cs.foreach_stmt:
       cs.increment_by_expr:
         cs.variable:
           name: $varName
