@@ -20,7 +20,7 @@ In the above example the break statement is selected. The generated CLQL query w
 ### Querying with Facts
 
 <!--Should we include systems that CLQL does not *yet* support? -->
-While CLQL can query many types of software related systems, this document will focus on querying a single CSharp program.
+CLQL can query many types of software related systems. But assume for simplicity that all queries in on this page are scoped to a single C# program.
 
 <!--TODONOW link to fact definition section on lexicon page-->
 Queries are made up of [Facts](lexicons.md). A CLQL query with just a single fact will match all elements of that type in the program. The following query matches and returns all classes in the queried program:
