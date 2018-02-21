@@ -41,7 +41,7 @@ To limit the above query to match classes with a particular name, add a "name" p
  
 ```
 @ clair.comment
-cs.method[:]:
+cs.method({depth: any}):
   name: "myFunc"
 ```
  
@@ -57,7 +57,7 @@ Properties can be of type string, float, and int. The following finds all int li
  
 ```
 @ clair.comment
-cs.int_lit[:]:
+cs.int_lit({depth: any}):
   value: 5
 ```
  
@@ -65,7 +65,7 @@ This query finds float literals with the value 8.7:
  
 ```
 @ clair.comment
-cs.float_lit[:]:
+cs.float_lit({depth: any}):
   value: 8.7
 ```
 
@@ -76,7 +76,7 @@ cs.float_lit[:]:
 The comparison operators >, <, ==, >=, and <= are available for floats and ints. The following finds all int literals above negative 3:
 ```
 @ clair.comment
-cs.int_lit[:]:
+cs.int_lit({depth: any}):
   value: > -3
 ```
 
@@ -88,7 +88,7 @@ Any string property can be queried with regex. The following finds methods with 
  
 ```
 @ clair.comment
-cs.method[:]:
+cs.method({depth: any}):
   name: /^.{25,}$/
 ```
 
@@ -99,28 +99,28 @@ cs.method[:]:
 Facts can be take arbitrarily many other facts as arguments, forming a query with a tree struct of arbitrary depth. A parent-child fact pair will match any parent element even if the child is not a direct descendant. The following query finds all the if statements inside a method called "myMethod", even those nested inside intermediate scopes (for loops etc):
 
 ```
-cs.method[:]:
+cs.method({depth: any}):
   name: "myMethod"
   @ clair.comment
-  cs.if_stmt[:]
+  cs.if_stmt({depth: any})
 ```
  
 Any fact in a query can be yielded. If `cs.class` is yielded, this query returns all classes named "myClass", but only if it has at least one method:
  
 ```
-cs.class[:]:
+cs.class({depth: any}):
   name: “myClass”
   @ clair.comment
-  cs.method[:]
+  cs.method({depth: any})
 ```
  
 Any fact in a query can have properties. The following query finds all methods named "myMethod" on the all classes named "myClass":
  
 ```
-cs.class[:]:
+cs.class({depth: any}):
   name: “myClass”
   @ clair.comment
-  cs.method[:]:
+  cs.method({depth: any}):
     Name: “myMethod”
 ```
 
@@ -129,38 +129,38 @@ cs.class[:]:
 Facts use depth ranges to specify the depth at which they can be found below their parent. Depth ranges have two zero based numbers, representing the minimum and maximum depth to find the result at, inclusive and exclusive respectively. The following query finds any if statements that are direct children of their parent method, in other words, if statements at depth zero from methods:
 
 ```
-cs.method[:]:
+cs.method({depth: any}):
   @ clair.comment
-  cs.if_stmt[0:1]
+  cs.if_stmt({depth: 0:1})
 ```
 
 This query finds if statements at (zero based) depths 3, 4, and 5:
 
 ```
-cs.method[:]:
+cs.method({depth: any}):
   @ clair.comment
-  cs.if_stmt[3:6]
+  cs.if_stmt({depth: 3:6})
 ```
 
-A depth range where the maximum is not larger than the minimum, i.e., `[5:5]` or `[6:0]`, will give an error.
+A depth range where the maximum is not larger than the minimum, i.e., `({depth: 5:5})` or `({depth: 6:0})`, will give an error.
 
 Depth ranges specifying a single depth can be described with a single number. This query finds direct children at depth zero:
 
 ```
-cs.method[:]:
+cs.method({depth: any}):
   @ clair.comment
-  cs.if_stmt[0]
+  cs.if_stmt({depth: 0})
 ```
 
 Indicies in a depth range can range from 0 to positive infinity. Positive infinity is represented by leaving the second index empty. This query finds all methods, and all their descendant if_statements from depth 5 onwards:
 
 ```
-cs.method[:]:
+cs.method({depth: any}):
   @ clair.comment
   cs.if_stmt[5:]
 ```
 
-The depth range on top level facts, like `cs.method` in the previous examples, determine the depth from the root to that fact. The root can be thought of as the node all other data hangs off. The values hanging off the root depend on the context of the query, it could be a `git.repo`, `p4.repo`, or `cs.project` for example. Example queries here use `[:]` for top level facts to avoid context based ambiguity.
+The depth range on top level facts, like `cs.method` in the previous examples, determine the depth from the root to that fact. The root can be thought of as the node all other data hangs off. The values hanging off the root depend on the context of the query, it could be a `git.repo`, `p4.repo`, or `cs.project` for example. Example queries here use `({depth: any})` for top level facts to avoid context based ambiguity.
 
 <br />
 
@@ -170,7 +170,7 @@ The following query will find a method with a foreach loop, a for loop, and a wh
  
 ```
 @ clair.comment
-cs.method[:]:
+cs.method({depth: any}):
   cs.for_stmt
   cs.foreach_stmt
   cs.while_stmt
@@ -186,7 +186,7 @@ Negation allows queries to match children that *do not* have a given property or
 
 ```
 @ clair.comment
-cs.class[:]:
+cs.class({depth: any}):
   !name: "classA"
 ```
  
@@ -194,7 +194,7 @@ This query finds all classes with String methods:
 
 ```
 @ clair.comment
-cs.class[:]:
+cs.class({depth: any}):
   !cs.method:
     name: “String”
 ```
@@ -203,7 +203,7 @@ The placement of the negation operator has a significant effect on the query's m
 
 ```
 @ clair.comment
-cs.class[:]:
+cs.class({depth: any}):
   cs.method:
     !name: “String”
 ```
@@ -212,7 +212,7 @@ Negating a fact does not affect its siblings. The following query finds all Stri
 
 ```
 @ clair.comment
-cs.method[:]:
+cs.method({depth: any}):
   name: “String”
   cs.if_stmt
   !cs.foreach_stmt
@@ -227,7 +227,7 @@ A fact with multiple children will match against elements of the code that have 
 
 ```
 @ clair.comment
-cs.method[:]:
+cs.method({depth: any}):
   name: “String”
   or:
     cs.foreach_stmt
@@ -245,12 +245,12 @@ Facts that do not have a parent-child relationship can be compared by assigning 
 The following query compares two classes (which do have a parent-child relationship) and returns the methods which both classes implement:
 
 ```
-cs.class[:]:
+cs.class({depth: any}):
   name: “classA”
   @ clair.comment
   cs.method:
     name: $methodName
-cs.class[:]:
+cs.class({depth: any}):
   name: “classB”
   cs.method:
     name: $methodName
