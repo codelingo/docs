@@ -157,7 +157,7 @@ Indicies in a depth range can range from 0 to positive infinity. Positive infini
 ```
 cs.method({depth: any}):
   @ clair.comment
-  cs.if_stmt[5:]
+  cs.if_stmt({depth: 5:})
 ```
 
 The depth range on top level facts, like `cs.method` in the previous examples, determine the depth from the root to that fact. The root can be thought of as the node all other data hangs off. The values hanging off the root depend on the context of the query, it could be a `git.repo`, `p4.repo`, or `cs.project` for example. Example queries here use `({depth: any})` for top level facts to avoid context based ambiguity.
