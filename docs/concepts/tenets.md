@@ -23,7 +23,8 @@ tenets:
       git.commit:
         sha: "HEAD"
         go.project:
-          <go.func_decl:
+          @ clair.comment
+          go.func_decl:
             arg_count: > 4
 ```
 

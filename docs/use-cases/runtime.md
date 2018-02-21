@@ -20,7 +20,8 @@ csprof.session:
     args: "/host:127.0.0.1 /db:testing"
   cs.file:
     filename: "./db/manager.cs"
-    <cs.method:
+    @ clair.comment
+    cs.method:
       name: "getDBCon"
       csprof.exit:
         memory_mb: >= 10
@@ -58,7 +59,8 @@ csprof.session:
         time: $startUpdate
       csprof.block_exit:
         time: $exitUpdate
-    <cs.method:
+    @ clair.comment
+    cs.method:
       name: "getUser"
       csprof.block_start:
         time: > $startUpdate
@@ -84,7 +86,8 @@ cs.session:
     args: "/host:127.0.0.1 /db:testing"
   cs.file:
     filename: "./db/manager.cs"
-    <cs.method:
+    @ clair.comment
+    cs.method:
       name: "importData"
       csprof.duration:
         time_min: >= 4

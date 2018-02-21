@@ -60,7 +60,8 @@ tenets:
   doc: Example tenet that finds all functions.
   comment: This is a function, but you probably already knew that.
   match: |
-    <csharp.method_declaration[:]
+    @ clair.comment
+    csharp.method_declaration({depth: any})
 ```
 
 Commit:

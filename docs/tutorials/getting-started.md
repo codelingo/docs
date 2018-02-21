@@ -144,7 +144,8 @@ tenets:
 - name: first-tenet
   comment: This is a function, name 'writeMsg', but you probably knew that.
   match:
-    <func:
+    @ clair.comment
+    func:
       name: "writeMsg"
 ```
 
@@ -152,11 +153,12 @@ This will find funcs named "writeMsg". Save and close the file, then run `lingo 
 
 ```yaml
   match:
-    <func:
+    @ clair.comment
+    func:
       name: /.*Msg$/
 ```
 
-The "<" symbol returns the node that you're interested in. The review comment is attached to the returned node. There can only be one returned node per match statement. If a match statement has no "<", then even if true, no issue will be raised.
+[CLAIR](/concepts/bots.md) (CodeLingo AI Reviewer). Any fact  If a match statement has no "<", then even if true, no issue will be raised.
 
 Vim has full support for the Lingo syntax, including CLQL. To set it up, [see here](scripts/lingo.vim.readme). Other than the match statement, written in CLQL, the rest of a .lingo file is written in YAML. As such, you can set .lingo files to YAML syntax in your IDE to get partial highlighting.
 
