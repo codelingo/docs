@@ -31,7 +31,7 @@ cs.class({depth: any})
 ` 
 
 It consists of a single fact `cs.class`. The namespace `cs` indicates that it belongs to the C# [lexicon](lexicons.md), and the fact name `class` indicates that it refers to a C# class. The depth range `{depth: any}` makes this fact match any class anywhere in the program, no matter how deeply nested.
-The decorator `@ clair.comment` tells CLAIR (CodeLingo AI Reviewer) to make a comment on every class found. 
+The decorator `@ clair.comment` tells [CLAIR](/concepts/bots.md) (CodeLingo AI Reviewer) to make a comment on every class found.
 
 <br />
 
