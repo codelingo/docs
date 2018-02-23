@@ -7,11 +7,11 @@ CodeLingo Query Language (CLQL) is a simple, lightweight language. It’s full g
 
 ### Query Generation
  
-When looking for patterns in code, CodeLingo's Integrated Development Environment (IDE) plugins can help build those patterns by automatically generating queries to detect selected elements of code. A generated query will describe the selected element and its position in the structure of the program:
+CodeLingo's Integrated Development Environment (IDE) plugins can help build patterns in code by automatically generating queries to detect selected elements of programs. A generated query will describe the selected element and its position in the structure of the program:
 
 ![Query Generation](img/queryGeneration.png)
  
-In the above example the break statement is selected. The generated CLQL query will match any break statement directly inside an if block inside a for loop, matching the nested pattern of the selected break element.
+In the above example string literal is selected. The generated CLQL query will match any literal directly inside an assignment statement, in a function declaration, matching the nested pattern of the selected literal.
 
 <br />
 
@@ -20,18 +20,20 @@ In the above example the break statement is selected. The generated CLQL query w
 ### Querying with Facts
 
 <!--Should we include systems that CLQL does not *yet* support? -->
-CLQL can query many types of software related systems. But assume for simplicity that all queries in on this page are scoped to a single C# program.
+CLQL can query many types of software related systems. But assume for simplicity that all queries in on this page are scoped to a single object oriented program.
 
 <!--TODONOW link to fact definition section on lexicon page-->
 Queries are made up of [Facts](lexicons.md). A CLQL query with just a single fact will match all elements of that type in the program. The following query matches and returns all classes in the queried program:
 
-`
+```
 @ clair.comment
-cs.class({depth: any})
-` 
+common.class({depth: any})
+```
 
-It consists of a single fact `cs.class`. The namespace `cs` indicates that it belongs to the C# [lexicon](lexicons.md), and the fact name `class` indicates that it refers to a C# class. The depth range `{depth: any}` makes this fact match any class within the context of the query (a single C# program), no matter how deeply nested.
+It consists of a single fact `common.class`. The fact name `class` indicates that the refers to a class, and the namespace `common` indicates that it may be a class from any language with classes. If the namespace were `csharp` this fact would only match classes from the C# [lexicon](lexicons.md). The depth range `{depth: any}` makes this fact match any class within the context of the query (a single C# program), no matter how deeply nested.
 The decorator `@ clair.comment` tells [CLAIR](/concepts/bots.md) (CodeLingo AI Reviewer) to make a comment on every class found.
+
+Note: for brevity we will omit the `common` namespace. This can be done in .lingo files by importing the common lexicon as an empty namespace: `import codelingo/ast/common/0.0.0 as _`.
 
 <br />
 
@@ -41,7 +43,7 @@ To limit the above query to match classes with a particular name, add a "name" p
  
 ```
 @ clair.comment
-cs.method({depth: any}):
+method({depth: any}):
   name: "myFunc"
 ```
  
@@ -57,7 +59,7 @@ Properties can be of type string, float, and int. The following finds all int li
  
 ```
 @ clair.comment
-cs.int_lit({depth: any}):
+int_lit({depth: any}):
   value: 5
 ```
  
@@ -65,7 +67,7 @@ This query finds float literals with the value 8.7:
  
 ```
 @ clair.comment
-cs.float_lit({depth: any}):
+float_lit({depth: any}):
   value: 8.7
 ```
 
@@ -76,7 +78,7 @@ cs.float_lit({depth: any}):
 The comparison operators >, <, ==, >=, and <= are available for floats and ints. The following finds all int literals above negative 3:
 ```
 @ clair.comment
-cs.int_lit({depth: any}):
+int_lit({depth: any}):
   value: > -3
 ```
 
@@ -88,7 +90,7 @@ Any string property can be queried with regex. The following finds methods with 
  
 ```
 @ clair.comment
-cs.method({depth: any}):
+method({depth: any}):
   name: /^.{25,}$/
 ```
 
@@ -99,28 +101,28 @@ cs.method({depth: any}):
 Facts can be take arbitrarily many other facts as arguments, forming a query with a tree struct of arbitrary depth. A parent-child fact pair will match any parent element even if the child is not a direct descendant. The following query finds all the if statements inside a method called "myMethod", even those nested inside intermediate scopes (for loops etc):
 
 ```
-cs.method({depth: any}):
+method({depth: any}):
   name: "myMethod"
   @ clair.comment
-  cs.if_stmt({depth: any})
+  if_stmt({depth: any})
 ```
  
-Any fact in a query can be yielded. If `cs.class` is yielded, this query returns all classes named "myClass", but only if it has at least one method:
+Any fact in a query can be yielded. If `class` is yielded, this query returns all classes named "myClass", but only if it has at least one method:
  
 ```
-cs.class({depth: any}):
+class({depth: any}):
   name: “myClass”
   @ clair.comment
-  cs.method({depth: any})
+  method({depth: any})
 ```
  
 Any fact in a query can have properties. The following query finds all methods named "myMethod" on the all classes named "myClass":
  
 ```
-cs.class({depth: any}):
+class({depth: any}):
   name: “myClass”
   @ clair.comment
-  cs.method({depth: any}):
+  method({depth: any}):
     Name: “myMethod”
 ```
 
@@ -129,17 +131,17 @@ cs.class({depth: any}):
 Facts use depth ranges to specify the depth at which they can be found below their parent. Depth ranges have two zero based numbers, representing the minimum and maximum depth to find the result at, inclusive and exclusive respectively. The following query finds any if statements that are direct children of their parent method, in other words, if statements at depth zero from methods:
 
 ```
-cs.method({depth: any}):
+method({depth: any}):
   @ clair.comment
-  cs.if_stmt({depth: 0:1})
+  if_stmt({depth: 0:1})
 ```
 
 This query finds if statements at (zero based) depths 3, 4, and 5:
 
 ```
-cs.method({depth: any}):
+method({depth: any}):
   @ clair.comment
-  cs.if_stmt({depth: 3:6})
+  if_stmt({depth: 3:6})
 ```
 
 A depth range where the maximum is not larger than the minimum, i.e., `({depth: 5:5})` or `({depth: 6:0})`, will give an error.
@@ -147,20 +149,20 @@ A depth range where the maximum is not larger than the minimum, i.e., `({depth: 
 Depth ranges specifying a single depth can be described with a single number. This query finds direct children at depth zero:
 
 ```
-cs.method({depth: any}):
+method({depth: any}):
   @ clair.comment
-  cs.if_stmt({depth: 0})
+  if_stmt({depth: 0})
 ```
 
 Indicies in a depth range can range from 0 to positive infinity. Positive infinity is represented by leaving the second index empty. This query finds all methods, and all their descendant if_statements from depth 5 onwards:
 
 ```
-cs.method({depth: any}):
+method({depth: any}):
   @ clair.comment
-  cs.if_stmt({depth: 5:})
+  if_stmt({depth: 5:})
 ```
 
-The depth range on top level facts, like `cs.method` in the previous examples, determine the depth from the root to that fact. The root can be thought of as the node all other data hangs off. The values hanging off the root depend on the context of the query, it could be a `git.repo`, `p4.repo`, or `cs.project` for example. Example queries here use `({depth: any})` for top level facts to avoid context based ambiguity.
+The depth range on top level facts, like `method` in the previous examples, determine the depth from the root to that fact. The root can be thought of as the node all other data hangs off. The values hanging off the root depend on the context of the query, it could be a `git.repo`, `p4.repo`, or `project` for example. Example queries here use `({depth: any})` for top level facts to avoid context based ambiguity.
 
 <br />
 
@@ -170,10 +172,10 @@ The following query will find a method with a foreach loop, a for loop, and a wh
  
 ```
 @ clair.comment
-cs.method({depth: any}):
-  cs.for_stmt
-  cs.foreach_stmt
-  cs.while_stmt
+method({depth: any}):
+  for_stmt
+  foreach_stmt
+  while_stmt
 ```
 
 <!--TODO(blakemscurr): Explain the <lexicon>.element fact-->
@@ -186,7 +188,7 @@ Negation allows queries to match children that *do not* have a given property or
 
 ```
 @ clair.comment
-cs.class({depth: any}):
+class({depth: any}):
   !name: "classA"
 ```
  
@@ -194,8 +196,8 @@ This query finds all classes with String methods:
 
 ```
 @ clair.comment
-cs.class({depth: any}):
-  !cs.method:
+class({depth: any}):
+  !method:
     name: “String”
 ```
  
@@ -203,8 +205,8 @@ The placement of the negation operator has a significant effect on the query's m
 
 ```
 @ clair.comment
-cs.class({depth: any}):
-  cs.method:
+class({depth: any}):
+  method:
     !name: “String”
 ```
  
@@ -212,10 +214,10 @@ Negating a fact does not affect its siblings. The following query finds all Stri
 
 ```
 @ clair.comment
-cs.method({depth: any}):
+method({depth: any}):
   name: “String”
-  cs.if_stmt
-  !cs.foreach_stmt
+  if_stmt
+  !foreach_stmt
 ```
  
 A fact cannot be both yielded and negated.
@@ -227,12 +229,12 @@ A fact with multiple children will match against elements of the code that have 
 
 ```
 @ clair.comment
-cs.method({depth: any}):
+method({depth: any}):
   name: “String”
   or:
-    cs.foreach_stmt
-    cs.while_stmt
-    cs.for_stmt
+    foreach_stmt
+    while_stmt
+    for_stmt
 ```
 <!-- TODO(blakemscurr) depth-->
 
@@ -245,14 +247,14 @@ Facts that do not have a parent-child relationship can be compared by assigning 
 The following query compares two classes (which do have a parent-child relationship) and returns the methods which both classes implement:
 
 ```
-cs.class({depth: any}):
+class({depth: any}):
   name: “classA”
   @ clair.comment
-  cs.method:
+  method:
     name: $methodName
-cs.class({depth: any}):
+class({depth: any}):
   name: “classB”
-  cs.method:
+  method:
     name: $methodName
 ```
 
@@ -272,9 +274,9 @@ lexicons:
 tenets:
   - name: all-classes
     match: 
-      cs.project:
+      project:
         @ clair.comment
-        cs.class
+        class
 ```
 
 CLAIR adds the repository information to the query before searching the CodeLingo Platform:
@@ -291,9 +293,9 @@ query:
     host: “local”
     git.commit: 
       sha: “HEAD”    
-      cs.project:
+      project:
         @ clair.comment
-        cs.class
+        class
 ```
 
 Every query to the CodeLingo platform itself starts with VCS facts to instruct the CodeLingo Platform on where to retrieve the source code from.
@@ -307,14 +309,14 @@ git.repo:
   host: “local”
   git.commit: 
     sha: “HEAD^”
-    cs.project:
-      cs.method:
+    project:
+      method:
         arg-num: $args
   git.commit:
     sha: “HEAD”    
-    cs.project:
+    project:
       @ clair.comment
-      cs.method:
+      method:
         arg-num: > $args
 ```
 
