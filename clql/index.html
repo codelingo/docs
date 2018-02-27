@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">   
+    <link rel="shortcut icon" href="../img/favicon.ico">
+
+    <title>CLQL - CodeLingo Docs</title>
+
+    <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.018/css/hack.min.css">
+    <link href='//fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../css/base.css" rel="stylesheet">
+    <link href="../css/cinder.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
+    <script>
+    WebFont.load({
+        google: {
+            families: ['Open Sans', 'PT Sans']
+        }
+    });
+    </script>
+
+    
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="..">CodeLingo Docs</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Overview</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../tutorials/getting-started/">Getting Started</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../tutorials/cs-perforce/">C# and Perforce</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Concepts <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../concepts/search/">Search</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../concepts/tenets/">Tenets</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../concepts/lexicons/">Lexicons</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../concepts/bots/">Bots</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../concepts/flows/">Flows</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="active">
+                        <a href="./">CLQL</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Use Cases <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../use-cases/ast/">AST</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../use-cases/vcs/">VCS</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../use-cases/runtime/">Runtime</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../use-cases/integration/">Integration</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li >
+                        <a rel="next" href="../concepts/flows/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../use-cases/ast/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="first-level active"><a href="#clql">CLQL</a></li>
+        
+            <li class="second-level"><a href="#a-query-language-for-software-systems">A Query Language for Software Systems</a></li>
+            
+        
+            <li class="second-level"><a href="#query-generation">Query Generation</a></li>
+            
+        
+            <li class="second-level"><a href="#features">Features</a></li>
+            
+                <li class="third-level"><a href="#querying-with-facts">Querying with Facts</a></li>
+            
+                <li class="third-level"><a href="#fact-properties">Fact Properties</a></li>
+            
+                <li class="third-level"><a href="#floats-and-ints">Floats and Ints</a></li>
+            
+                <li class="third-level"><a href="#comparison">Comparison</a></li>
+            
+                <li class="third-level"><a href="#regex">Regex</a></li>
+            
+                <li class="third-level"><a href="#fact-nesting">Fact Nesting</a></li>
+            
+                <li class="third-level"><a href="#depth">Depth</a></li>
+            
+                <li class="third-level"><a href="#branching">Branching</a></li>
+            
+                <li class="third-level"><a href="#negation">Negation</a></li>
+            
+                <li class="third-level"><a href="#or">Or</a></li>
+            
+                <li class="third-level"><a href="#variables">Variables</a></li>
+            
+                <li class="third-level"><a href="#interleaving">Interleaving</a></li>
+            
+        
+            <li class="second-level"><a href="#examples">Examples</a></li>
+            
+                <li class="third-level"><a href="#csharp">CSharp</a></li>
+            
+                <li class="third-level"><a href="#c">C++</a></li>
+            
+        
+    
+    </ul>
+</div></div>
+        <div class="col-md-9" role="main">
+
+<h1 id="clql">CLQL</h1>
+<h4 id="a-query-language-for-software-systems">A Query Language for Software Systems</h4>
+<p>CodeLingo Query Language (CLQL) is a simple, lightweight language. It’s full grammar is under <a href="../img/ebnf.png">70 lines of code</a>.</p>
+<p><br /></p>
+<h3 id="query-generation">Query Generation</h3>
+<p>CodeLingo's Integrated Development Environment (IDE) plugins can help build patterns in code by automatically generating queries to detect selected elements of programs. A generated query will describe the selected element and its position in the structure of the program:</p>
+<p><img alt="Query Generation" src="../img/queryGeneration.png" /></p>
+<p>In the above example string literal is selected. The generated CLQL query will match any literal directly inside an assignment statement, in a function declaration, matching the nested pattern of the selected literal.</p>
+<p><br /></p>
+<h2 id="features">Features</h2>
+<h3 id="querying-with-facts">Querying with Facts</h3>
+<!--Should we include systems that CLQL does not *yet* support? -->
+
+<p>CLQL can query many types of software related systems. But assume for simplicity that all queries in on this page are scoped to a single object oriented program.</p>
+<!--TODONOW link to fact definition section on lexicon page-->
+
+<p>Queries are made up of <a href="lexicons.md">Facts</a>. A CLQL query with just a single fact will match all elements of that type in the program. The following query matches and returns all classes in the queried program:</p>
+<pre><code>@ clair.comment
+common.class({depth: any})
+</code></pre>
+
+<p>It consists of a single fact <code>common.class</code>. The fact name <code>class</code> indicates that the refers to a class, and the namespace <code>common</code> indicates that it may be a class from any language with classes. If the namespace were <code>csharp</code> this fact would only match classes from the C# <a href="lexicons.md">lexicon</a>. The depth range <code>{depth: any}</code> makes this fact match any class within the context of the query (a single C# program), no matter how deeply nested.
+The decorator <code>@ clair.comment</code> tells <a href="../concepts/bots/">CLAIR</a> (CodeLingo AI Reviewer) to make a comment on every class found.</p>
+<p>Note: for brevity we will omit the <code>common</code> namespace. This can be done in .lingo files by importing the common lexicon as an empty namespace: <code>import codelingo/ast/common/0.0.0 as _</code>.</p>
+<p><br /></p>
+<h3 id="fact-properties">Fact Properties</h3>
+<p>To limit the above query to match classes with a particular name, add a "name" property as an argument to the <code>method</code> fact:</p>
+<pre><code>@ clair.comment
+method({depth: any}):
+  name: &quot;myFunc&quot;
+</code></pre>
+
+<p>This query returns all methods with the name "myFunc". Note that the yield tag is still on the <code>method</code> fact - properties cannot be returned, only their parent facts. Also note that properties are not namespaced, as their namespace is implied from their parent fact.</p>
+<p>Facts with arguments are proceeded by a colon.</p>
+<p><br /></p>
+<h3 id="floats-and-ints">Floats and Ints</h3>
+<p><!--TODO(blakemscurr) explain boolean properties once syntax has been added to the ebnf-->
+Properties can be of type string, float, and int. The following finds all int literals with the value 8:</p>
+<pre><code>@ clair.comment
+int_lit({depth: any}):
+  value: 5
+</code></pre>
+
+<p>This query finds float literals with the value 8.7:</p>
+<pre><code>@ clair.comment
+float_lit({depth: any}):
+  value: 8.7
+</code></pre>
+
+<p><br /></p>
+<h3 id="comparison">Comparison</h3>
+<p>The comparison operators &gt;, &lt;, ==, &gt;=, and &lt;= are available for floats and ints. The following finds all int literals above negative 3:</p>
+<pre><code>@ clair.comment
+int_lit({depth: any}):
+  value: &gt; -3
+</code></pre>
+
+<p><br /></p>
+<h3 id="regex">Regex</h3>
+<p>Any string property can be queried with regex. The following finds methods with names longer than 25 characters:</p>
+<pre><code>@ clair.comment
+method({depth: any}):
+  name: /^.{25,}$/
+</code></pre>
+
+<p><br /></p>
+<h3 id="fact-nesting">Fact Nesting</h3>
+<p>Facts can be take arbitrarily many other facts as arguments, forming a query with a tree struct of arbitrary depth. A parent-child fact pair will match any parent element even if the child is not a direct descendant. The following query finds all the if statements inside a method called "myMethod", even those nested inside intermediate scopes (for loops etc):</p>
+<pre><code>method({depth: any}):
+  name: &quot;myMethod&quot;
+  @ clair.comment
+  if_stmt({depth: any})
+</code></pre>
+
+<p>Any fact in a query can be yielded. If <code>class</code> is yielded, this query returns all classes named "myClass", but only if it has at least one method:</p>
+<pre><code>class({depth: any}):
+  name: “myClass”
+  @ clair.comment
+  method({depth: any})
+</code></pre>
+
+<p>Any fact in a query can have properties. The following query finds all methods named "myMethod" on the all classes named "myClass":</p>
+<pre><code>class({depth: any}):
+  name: “myClass”
+  @ clair.comment
+  method({depth: any}):
+    Name: “myMethod”
+</code></pre>
+
+<h3 id="depth">Depth</h3>
+<p>Facts use depth ranges to specify the depth at which they can be found below their parent. Depth ranges have two zero based numbers, representing the minimum and maximum depth to find the result at, inclusive and exclusive respectively. The following query finds any if statements that are direct children of their parent method, in other words, if statements at depth zero from methods:</p>
+<pre><code>method({depth: any}):
+  @ clair.comment
+  if_stmt({depth: 0:1})
+</code></pre>
+
+<p>This query finds if statements at (zero based) depths 3, 4, and 5:</p>
+<pre><code>method({depth: any}):
+  @ clair.comment
+  if_stmt({depth: 3:6})
+</code></pre>
+
+<p>A depth range where the maximum is not larger than the minimum, i.e., <code>({depth: 5:5})</code> or <code>({depth: 6:0})</code>, will give an error.</p>
+<p>Depth ranges specifying a single depth can be described with a single number. This query finds direct children at depth zero:</p>
+<pre><code>method({depth: any}):
+  @ clair.comment
+  if_stmt({depth: 0})
+</code></pre>
+
+<p>Indicies in a depth range can range from 0 to positive infinity. Positive infinity is represented by leaving the second index empty. This query finds all methods, and all their descendant if_statements from depth 5 onwards:</p>
+<pre><code>method({depth: any}):
+  @ clair.comment
+  if_stmt({depth: 5:})
+</code></pre>
+
+<p>The depth range on top level facts, like <code>method</code> in the previous examples, determine the depth from the root to that fact. The root can be thought of as the node all other data hangs off. The values hanging off the root depend on the context of the query, it could be a <code>git.repo</code>, <code>p4.repo</code>, or <code>project</code> for example. Example queries here use <code>({depth: any})</code> for top level facts to avoid context based ambiguity.</p>
+<p><br /></p>
+<h3 id="branching">Branching</h3>
+<p>The following query will find a method with a foreach loop, a for loop, and a while loop in that order:</p>
+<pre><code>@ clair.comment
+method({depth: any}):
+  for_stmt
+  foreach_stmt
+  while_stmt
+</code></pre>
+
+<!--TODO(blakemscurr): Explain the <lexicon>.element fact-->
+
+<p><br /></p>
+<h3 id="negation">Negation</h3>
+<p>Negation allows queries to match children that <em>do not</em> have a given property or child fact. Negated facts and properties are prepended by "!". The following query finds all classes except those named "classA":</p>
+<pre><code>@ clair.comment
+class({depth: any}):
+  !name: &quot;classA&quot;
+</code></pre>
+
+<p>This query finds all classes with String methods:</p>
+<pre><code>@ clair.comment
+class({depth: any}):
+  !method:
+    name: “String”
+</code></pre>
+
+<p>The placement of the negation operator has a significant effect on the query's meaning - this similar query finds all methods with a method that is not called String:</p>
+<pre><code>@ clair.comment
+class({depth: any}):
+  method:
+    !name: “String”
+</code></pre>
+
+<p>Negating a fact does not affect its siblings. The following query finds all String methods that use an if statement, but don’t use a foreach statement:</p>
+<pre><code>@ clair.comment
+method({depth: any}):
+  name: “String”
+  if_stmt
+  !foreach_stmt
+</code></pre>
+
+<p>A fact cannot be both yielded and negated.</p>
+<p><br /></p>
+<h3 id="or">Or</h3>
+<p>A fact with multiple children will match against elements of the code that have child1 <em>and</em> child2 <em>and</em> child3 etc. The “or” operator overrides the implicit "and". The following query finds all String methods that use basic loops:</p>
+<pre><code>@ clair.comment
+method({depth: any}):
+  name: “String”
+  or:
+    foreach_stmt
+    while_stmt
+    for_stmt
+</code></pre>
+
+<!-- TODO(blakemscurr) depth-->
+
+<p><br /></p>
+<h3 id="variables">Variables</h3>
+<p>Facts that do not have a parent-child relationship can be compared by assigning their properties to variables. Any argument starting with “$” defines a variable. A query with a variable will only match a pattern in the code if all properties representing that variable are equal.</p>
+<p>The following query compares two classes (which do have a parent-child relationship) and returns the methods which both classes implement:</p>
+<pre><code>class({depth: any}):
+  name: “classA”
+  @ clair.comment
+  method:
+    name: $methodName
+class({depth: any}):
+  name: “classB”
+  method:
+    name: $methodName
+</code></pre>
+
+<p>The query above will only return methods of classA for which classB has a corresponding method.</p>
+<p><br /></p>
+<h3 id="interleaving">Interleaving</h3>
+<p>When writing a Tenet in a .lingo file read by CLAIR, only the AST lexicon facts are required:</p>
+<pre><code class="clql">lexicons:
+- vcs/codelingo/git
+- ast/codelingo/cs
+
+tenets:
+  - name: all-classes
+    match: 
+      project:
+        @ clair.comment
+        class
+</code></pre>
+
+<p>CLAIR adds the repository information to the query before searching the CodeLingo Platform:</p>
+<pre><code class="clql">lexicons:
+- vcs/codelingo/git
+- ast/codelingo/cs
+
+query:
+  git.repo:
+    name: “yourRepo”
+    owner: “you”
+    host: “local”
+    git.commit: 
+      sha: “HEAD”    
+      project:
+        @ clair.comment
+        class
+</code></pre>
+
+<p>Every query to the CodeLingo platform itself starts with VCS facts to instruct the CodeLingo Platform on where to retrieve the source code from.</p>
+<p>Git (and indeed any Version Control System) facts can be used to query for changes in the code over time. For example, the following query checks if a given method has increased its number of arguments:</p>
+<pre><code>git.repo:
+  name: “yourRepo”
+  owner: “you”
+  host: “local”
+  git.commit: 
+    sha: “HEAD^”
+    project:
+      method:
+        arg-num: $args
+  git.commit:
+    sha: “HEAD”    
+    project:
+      @ clair.comment
+      method:
+        arg-num: &gt; $args
+</code></pre>
+
+<h2 id="examples">Examples</h2>
+<p><br /></p>
+<h3 id="csharp">CSharp</h3>
+<p>Iterative code, such as the following, can be more safely expressed declaratively using LINQ. For example: </p>
+<pre><code>decimal total = 0;
+foreach (Account account in myAccounts) {
+  if (account.Status == &quot;active&quot;) {
+  total += account.Balance;
+  }
+}
+</code></pre>
+
+<p>can be expressed with:</p>
+<pre><code>decimal total = (from account in myAccounts
+          where account.Status == &quot;active&quot;
+          select account.Balance).Sum();
+</code></pre>
+
+<p>The CLQL to match this pattern should find all variables that are declared before a foreach statement, and are incremented within the loop. The facts for incrementing inside a foreach loop, and declaring a variable can be generated in the IDE:</p>
+<p><img alt="C# example Generation" src="../img/cs_decl.png" /></p>
+<p><img alt="C# example Generation" src="../img/cs_inc.png" /></p>
+<p>Then the generated code can be turned into a working query by combining the above queries under the same file and scope, removing extraneous facts, and using a CLQL variable to ensure that the <code>cs.variable</code> facts are refering to the same variable:</p>
+<pre><code>cs.file:
+  cs.block_stmt:
+    cs.assign_stmt:
+      cs.decl_stmt:
+        cs.variable:
+          name: $varName
+    @ clair.comment
+    cs.foreach_stmt:
+      cs.increment_by_expr:
+        cs.variable:
+          name: $varName
+</code></pre>
+
+<p><br /></p>
+<h3 id="c">C++</h3>
+<p>The following tenet asserts that functions should not return local objects by reference. When the function returns and the stack is unwrapped, that object will be destructed, and the reference will not point to anything.</p>
+<p>The following query finds this bug by matching all functions that return a reference type, and declare the returned value inside the function body:</p>
+<pre><code>&lt;cc.func_decl:
+  cc.func_header:
+    cc.return_type:
+      cc.reference
+  cc.block_stmt:
+    cc.declaration_stmt:
+      cc.variable:
+        name: $returnedReference
+    cc.return_stmt:
+      cc.variable:
+        name: $returnedReference
+</code></pre>
+
+<!--- 
+TODO(BlakeMScurr) fully fill out template
+
+We can write the same Tenet with the Common AST lexicon, which would catch the pattern in both languages as the Common lexicon lets us express facts that apply commonly across all languages:
+
+[common lexicon example]
+
+A Tenet can be made of interleaved facts from different lexicons.
+
+
+[update imports to begin with lexicon type: ast/codelingo/common]
+[add name matching to funcs above]
+
+[Explain above query]. In a similar fashion, a runtime fact can be interleaved with an AST fact:
+
+[example of code blocks that have > x memory allocated (run golang’s pprof to get an idea)]
+
+Further examples can be found in the [link to Tenet examples directory].
+
+
+--></div>
+        
+    </div>
+
+    <footer class="col-md-12 text-center">
+        <hr>
+        <p>
+        <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
+    </footer>
+
+    <script src="../js/jquery-1.10.2.min.js"></script>
+    <script src="../js/bootstrap-3.0.3.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>
+    var base_url = '..';
+    </script>
+    <script data-main="../mkdocs/js/search.js" src="../mkdocs/js/require.js"></script>
+    <script src="../js/base.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        From here you can search these documents. Enter your search terms below.
+                    </p>
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                        </div>
+                    </form>
+                    <div id="mkdocs-search-results"></div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </body>
+
+</html>

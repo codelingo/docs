@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">   
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+
+    <title>Tenets - CodeLingo Docs</title>
+
+    <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.018/css/hack.min.css">
+    <link href='//fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../../css/base.css" rel="stylesheet">
+    <link href="../../css/cinder.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
+    <script>
+    WebFont.load({
+        google: {
+            families: ['Open Sans', 'PT Sans']
+        }
+    });
+    </script>
+
+    
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="../..">CodeLingo Docs</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../..">Overview</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../tutorials/getting-started/">Getting Started</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../tutorials/cs-perforce/">C# and Perforce</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Concepts <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../search/">Search</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="./">Tenets</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../lexicons/">Lexicons</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../bots/">Bots</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../flows/">Flows</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../clql/">CLQL</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Use Cases <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../use-cases/ast/">AST</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../use-cases/vcs/">VCS</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../use-cases/runtime/">Runtime</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../use-cases/integration/">Integration</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li >
+                        <a rel="next" href="../search/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../lexicons/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="first-level active"><a href="#tenets">Tenets</a></li>
+        
+            <li class="second-level"><a href="#rules-to-guide-software-development">Rules to Guide Software Development</a></li>
+            
+        
+            <li class="second-level"><a href="#overview">Overview</a></li>
+            
+        
+    
+    </ul>
+</div></div>
+        <div class="col-md-9" role="main">
+
+<h1 id="tenets">Tenets</h1>
+<h4 id="rules-to-guide-software-development">Rules to Guide Software Development</h4>
+<p><br/></p>
+<h3 id="overview">Overview</h3>
+<p>A Tenet is a rule about a system written in <a href="../../clql">CLQL</a>. It is an underlying pattern which the CodeLingo <a href="concepts/bots.md">Bots</a> follow to guide development and safeguard systems. Tenets can be added directly to Bots or embedded in the resources they monitor. For example, CLAIR reads .lingo files that live along side source code in a code repository.</p>
+<p>Below is an example of a Tenet created from the search query <a href="concepts/search.md">example</a>:</p>
+<pre><code class="YAML">lexicons:
+  - codelingo/vcs/git
+  - codelingo/ast/golang as go
+
+tenets:
+  - match:
+    git.repo:
+      owner: &quot;username&quot;
+      host: &quot;myvcsgithost.com&quot;
+      name: &quot;myrepo&quot;
+      git.commit:
+        sha: &quot;HEAD&quot;
+        go.project:
+          @ clair.comment
+          go.func_decl:
+            arg_count: &gt; 4
+</code></pre>
+
+<p>The minimum requirement for a Tenet is the <code>match</code> statement. Extra metadata can be added to the Tenet to be used by the Bots that apply the Tenet:</p>
+<pre><code class="YAML">...
+tenets:
+  - comment: &quot;Please keep functions arguments to four or less&quot;
+    match:
+...
+</code></pre>
+
+<p>The <code>comment</code> metadata above can be used by a <a href="../bots/">Bot</a> to comment on a pull request review, for example.</p>
+<!-- TODO(JENNA) Can you think of a visual representation/diagram to explain how bots, tenets and lexicons fit together/work? -->
+
+<!-- [cascading Tenets] -->
+
+<!--TODO(JENNA) If you could explain more about these examples for my own knowledge, that would be great! :) -->
+
+<p>Examples of Tenets include:</p>
+<ul>
+<li>Anything a static linter expresses, with a fraction of the code</li>
+<li>Change management: large scale incremental refactoring</li>
+<li>Project specific practices: scaling the tacit knowledge of senior engineers to the whole team</li>
+<li>Infrastructure specific guidelines / safeguards: learning from failures</li>
+<li>Packaging the author’s guidance with a library</li>
+</ul></div>
+        
+    </div>
+
+    <footer class="col-md-12 text-center">
+        <hr>
+        <p>
+        <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
+    </footer>
+
+    <script src="../../js/jquery-1.10.2.min.js"></script>
+    <script src="../../js/bootstrap-3.0.3.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>
+    var base_url = '../..';
+    </script>
+    <script data-main="../../mkdocs/js/search.js" src="../../mkdocs/js/require.js"></script>
+    <script src="../../js/base.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        From here you can search these documents. Enter your search terms below.
+                    </p>
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                        </div>
+                    </form>
+                    <div id="mkdocs-search-results"></div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </body>
+
+</html>
