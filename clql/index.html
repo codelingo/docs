@@ -260,7 +260,7 @@
 <h3 id="querying-with-facts">Querying with Facts</h3>
 <!--Should we include systems that CLQL does not *yet* support? -->
 
-<p>CLQL can query many types of software related systems. But assume for simplicity that all queries in on this page are scoped to a single object oriented program.</p>
+<p>CLQL can query many types of software related systems. But assume for simplicity that all queries on this page are scoped to a single object oriented program.</p>
 <!--TODONOW link to fact definition section on lexicon page-->
 
 <p>Queries are made up of <a href="lexicons.md">Facts</a>. A CLQL query with just a single fact will match all elements of that type in the program. The following query matches and returns all classes in the queried program:</p>
@@ -268,9 +268,9 @@
 common.class({depth: any})
 </code></pre>
 
-<p>It consists of a single fact <code>common.class</code>. The fact name <code>class</code> indicates that the refers to a class, and the namespace <code>common</code> indicates that it may be a class from any language with classes. If the namespace were <code>csharp</code> this fact would only match classes from the C# <a href="lexicons.md">lexicon</a>. The depth range <code>{depth: any}</code> makes this fact match any class within the context of the query (a single C# program), no matter how deeply nested.
+<p>It consists of a single fact <code>common.class</code>. The name <code>class</code> indicates that the fact refers to a class, and the namespace <code>common</code> indicates that it may be a class from any language with classes. If the namespace were <code>csharp</code> this fact would only match classes from the C# <a href="lexicons.md">lexicon</a>. The depth range <code>{depth: any}</code> makes this fact match any class within the context of the query (a single C# program), no matter how deeply nested.
 The decorator <code>@ clair.comment</code> tells <a href="../concepts/bots/">CLAIR</a> (CodeLingo AI Reviewer) to make a comment on every class found.</p>
-<p>Note: for brevity we will omit the <code>common</code> namespace. This can be done in .lingo files by importing the common lexicon as an empty namespace: <code>import codelingo/ast/common/0.0.0 as _</code>.</p>
+<p>Note: for brevity we will omit the <code>common</code> namespace. This can be done in .lingo files by importing the common lexicon into the global namespace: <code>import codelingo/ast/common/0.0.0 as _</code>.</p>
 <p><br /></p>
 <h3 id="fact-properties">Fact Properties</h3>
 <p>To limit the above query to match classes with a particular name, add a "name" property as an argument to the <code>method</code> fact:</p>
@@ -362,7 +362,7 @@ method({depth: any}):
   if_stmt({depth: 5:})
 </code></pre>
 
-<p>The depth range on top level facts, like <code>method</code> in the previous examples, determine the depth from the root to that fact. The root can be thought of as the node all other data hangs off. The values hanging off the root depend on the context of the query, it could be a <code>git.repo</code>, <code>p4.repo</code>, or <code>project</code> for example. Example queries here use <code>({depth: any})</code> for top level facts to avoid context based ambiguity.</p>
+<p>Note: The depth range on top level facts, like <code>method</code> in the previous examples, determines the depth from the base context to that fact. In this case the base context contains a single program. However, it can be configured to refer to any context, typically a single repository or the root of the graph on which all queryable data hangs.</p>
 <p><br /></p>
 <h3 id="branching">Branching</h3>
 <p>The following query will find a method with a foreach loop, a for loop, and a while loop in that order:</p>

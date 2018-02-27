@@ -331,26 +331,22 @@ func main() {
 <h2 id="write-a-tenet">Write a Tenet</h2>
 <p>Continuing on from the first run above, open the .lingo file in your editor of choice and change it to the following:</p>
 <pre><code class="yaml">tenets:
-  - bots:
-      codelingo/clair:
-        comments: This is a function, name 'writeMsg', but you probably knew that.
-        name: first-tenet
-    query: |
-      import codelingo/ast/common/0.0.0 as _
-
-      @ clair.comment
-      func:
-        name: &quot;writeMsg&quot;
+- name: first-tenet
+  comment: This is a function, name 'writeMsg', but you probably knew that.
+  match:
+    @ clair.comment
+    func:
+      name: &quot;writeMsg&quot;
 </code></pre>
 
 <p>This will find funcs named "writeMsg". Save and close the file, then run <code>lingo review</code>. Try adding another func called "readMsg" and run a review. Only the "writeMsg" func should be highlighted. Now, update the Tenet to find all funcs that end in "Msg":</p>
-<pre><code class="yaml">query: |
-  @ clair.comment
-  func:
-    name: /.*Msg$/
+<pre><code class="yaml">  match:
+    @ clair.comment
+    func:
+      name: /.*Msg$/
 </code></pre>
 
-<p><a href="../../concepts/bots/">CLAIR</a> (CodeLingo AI Reviewer). If a query has no <code>@ clair.comment</code>, then no issue will be raised, even if the pattern is matched.</p>
+<p><a href="../../concepts/bots/">CLAIR</a> (CodeLingo AI Reviewer). Any fact  If a match statement has no "&lt;", then even if true, no issue will be raised.</p>
 <p>Vim has full support for the Lingo syntax, including CLQL. To set it up, <a href="../scripts/lingo.vim.readme">see here</a>. Other than the match statement, written in CLQL, the rest of a .lingo file is written in YAML. As such, you can set .lingo files to YAML syntax in your IDE to get partial highlighting.</p>
 <!-- 
 ## CLQL
