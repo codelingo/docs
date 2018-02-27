@@ -20,7 +20,7 @@ In the above example string literal is selected. The generated CLQL query will m
 ### Querying with Facts
 
 <!--Should we include systems that CLQL does not *yet* support? -->
-CLQL can query many types of software related systems. But assume for simplicity that all queries in on this page are scoped to a single object oriented program.
+CLQL can query many types of software related systems. But assume for simplicity that all queries on this page are scoped to a single object oriented program.
 
 <!--TODONOW link to fact definition section on lexicon page-->
 Queries are made up of [Facts](lexicons.md). A CLQL query with just a single fact will match all elements of that type in the program. The following query matches and returns all classes in the queried program:
@@ -30,10 +30,10 @@ Queries are made up of [Facts](lexicons.md). A CLQL query with just a single fac
 common.class({depth: any})
 ```
 
-It consists of a single fact `common.class`. The fact name `class` indicates that the refers to a class, and the namespace `common` indicates that it may be a class from any language with classes. If the namespace were `csharp` this fact would only match classes from the C# [lexicon](lexicons.md). The depth range `{depth: any}` makes this fact match any class within the context of the query (a single C# program), no matter how deeply nested.
+It consists of a single fact `common.class`. The name `class` indicates that the fact refers to a class, and the namespace `common` indicates that it may be a class from any language with classes. If the namespace were `csharp` this fact would only match classes from the C# [lexicon](lexicons.md). The depth range `{depth: any}` makes this fact match any class within the context of the query (a single C# program), no matter how deeply nested.
 The decorator `@ clair.comment` tells [CLAIR](/concepts/bots.md) (CodeLingo AI Reviewer) to make a comment on every class found.
 
-Note: for brevity we will omit the `common` namespace. This can be done in .lingo files by importing the common lexicon as an empty namespace: `import codelingo/ast/common/0.0.0 as _`.
+Note: for brevity we will omit the `common` namespace. This can be done in .lingo files by importing the common lexicon into the global namespace: `import codelingo/ast/common/0.0.0 as _`.
 
 <br />
 
@@ -162,7 +162,7 @@ method({depth: any}):
   if_stmt({depth: 5:})
 ```
 
-The depth range on top level facts, like `method` in the previous examples, determine the depth from the root to that fact. The root can be thought of as the node all other data hangs off. The values hanging off the root depend on the context of the query, it could be a `git.repo`, `p4.repo`, or `project` for example. Example queries here use `({depth: any})` for top level facts to avoid context based ambiguity.
+Note: The depth range on top level facts, like `method` in the previous examples, typically determines the depth from the base context to that fact. In this case the base context contains a single program. However, it can be configured to refer to any context, typically a single repository or the root of the graph on which all queryable data hangs.
 
 <br />
 
