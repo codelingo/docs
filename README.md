@@ -8,6 +8,6 @@ To build the site: `mkdocs build`
 
 This will create the html site under ./site
 
-To publish the docs: `mkdocs hg-deploy`
+To publish the docs: `mkdocs gh-deploy`
 
 Documentation on the individual repositories should be kept in sync with this repo. We should look to automate this in the future.
