@@ -162,7 +162,7 @@ method({depth: any}):
   if_stmt({depth: 5:})
 ```
 
-Note: The depth range on top level facts, like `method` in the previous examples, typically determines the depth from the base context to that fact. In this case the base context contains a single program. However, it can be configured to refer to any context, typically a single repository or the root of the graph on which all queryable data hangs.
+Note: The depth range on top level facts, like `method` in the previous examples, determines the depth from the base context to that fact. In this case the base context contains a single program. However, it can be configured to refer to any context, typically a single repository or the root of the graph on which all queryable data hangs.
 
 <br />
 
