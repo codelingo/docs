@@ -1,13 +1,26 @@
 site_name: CodeLingo Docs #- On Prem
 pages:
     - Overview: index.md
-    - Getting Started: getting-started.md
+    - Tutorials:
+      - Getting Started: tutorials/getting-started.md
+      - C# and Perforce: tutorials/cs-perforce.md
+    - Concepts: 
+      - Search: concepts/search.md
+      - Tenets: concepts/tenets.md
+      - Lexicons: concepts/lexicons.md
+      - Bots: concepts/bots.md
+      - Flows: concepts/flows.md
+    
     # - Platform: platform.md
     - CLQL: clql.md
-    - Tenets: tenets.md
-    - Lexicons: lexicons.md
-    - Bots: bots.md
+    # todo: use cases should be organised by: query and bot. The cases below
+    # should all be under query.
+    - Use Cases: 
+        - AST: use-cases/ast.md
+        - VCS: use-cases/vcs.md
+        - Runtime: use-cases/runtime.md
+        - Integration: use-cases/integration.md
     # - Lexicon SDK: lexicon-sdk.md
     # - Bot SDK: bot-sdk.md
-    
+
 theme: cinder
