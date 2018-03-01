@@ -349,11 +349,11 @@ The CLQL to match this pattern should find all variables that are declared befor
 
 ![C# example Generation](img/cs_decl.png)
 
-![C# example Generation](img/cs_inc.png)
-
 Note: the `csharp.variable_declarator` has the `identifier_token` field that can be used to identify the `total` variable, but it spans the whole thrid line, so the whole line must be selected to generate that fact. Since other elements are within that line, many extra facts are generated. This is largely a property of the C# parser used by the underlying [lexicon](lexicons.md).
 
-The generated code can be turned into a working query by combining the above queries under the same scope, removing extraneous facts, and using a CLQL variable to ensure that the `csharp.variable` facts are refering to the same variable:
+![C# example Generation](img/cs_inc.png)
+
+The generated code can be turned into a working query by combining the above queries under the same scope, removing extraneous facts, and using a CLQL variable to ensure that the `csharp.identifier_name` and `csharp.variable_declarator` facts refer to the same variable:
 
 ```
 csharp.method_declaration:
