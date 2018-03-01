@@ -223,20 +223,20 @@ method({depth: any}):
 A fact cannot be both yielded and negated.
 
 <br />
-### Or
+### any_of
 
-A fact with multiple children will match against elements of the code that have child1 *and* child2 *and* child3 etc. The “or” operator overrides the implicit "and". The following query finds all String methods that use basic loops:
+A fact with multiple children will match against elements of the code that have child1 *and* child2 *and* child3 etc. The `any_of` operator overrides the implicit "and". The following query finds all String methods that use basic loops:
 
 ```
 @ clair.comment
 method({depth: any}):
   name: “String”
-  or:
+  any_of:
     foreach_stmt
     while_stmt
     for_stmt
 ```
-<!-- TODO(blakemscurr) depth-->
+<!-- TODO(blakemscurr) n_of-->
 
 <br />
 
