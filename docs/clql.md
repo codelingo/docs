@@ -349,22 +349,25 @@ The CLQL to match this pattern should find all variables that are declared befor
 
 ![C# example Generation](img/cs_decl.png)
 
+Note: the `csharp.variable_declarator` has the `identifier_token` field that can be used to identify the `total` variable, but it spans the whole thrid line, so the whole line must be selected to generate that fact. Since other elements are within that line, many extra facts are generated. This is largely a property of the C# parser used by the underlying [lexicon](lexicons.md).
+
 ![C# example Generation](img/cs_inc.png)
 
-Then the generated code can be turned into a working query by combining the above queries under the same file and scope, removing extraneous facts, and using a CLQL variable to ensure that the `cs.variable` facts are refering to the same variable:
+The generated code can be turned into a working query by combining the above queries under the same scope, removing extraneous facts, and using a CLQL variable to ensure that the `csharp.identifier_name` and `csharp.variable_declarator` facts refer to the same variable:
 
 ```
-cs.file:
-  cs.block_stmt:
-    cs.assign_stmt:
-      cs.decl_stmt:
-        cs.variable:
-          name: $varName
-    @ clair.comment
-    cs.foreach_stmt:
-      cs.increment_by_expr:
-        cs.variable:
-          name: $varName
+csharp.method_declaration:
+  csharp.block:
+    csharp.local_declaration_statement:
+      csharp.variable_declaration:
+        @ clair.comment
+        csharp.variable_declarator:
+          identifier_token: $varName
+    csharp.for_each_statement:
+      csharp.add_assignment_expression({depth: any}):
+        @ clair.comment
+        csharp.identifier_name:
+          identifier_token: $varName
 ```
 
 <br />
@@ -376,7 +379,8 @@ The following tenet asserts that functions should not return local objects by re
 The following query finds this bug by matching all functions that return a reference type, and declare the returned value inside the function body:
 
 ```
-<cc.func_decl:
+@ clair.comment
+cc.func_decl:
   cc.func_header:
     cc.return_type:
       cc.reference
