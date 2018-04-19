@@ -51,8 +51,8 @@ In the above example string literal is selected. The generated CLQL query will m
 <br/>
 ## Lexicons
 
-The SDLC is built up of many different domains. With [CLQL](clql.md) patterns across all these domains are expressed as statements of facts. Those facts come from [Lexicons](concepts/lexicons.md), which are collections of terms about to a domain of knowledge. 
- 
+The SDLC is built up of many different domains. With [CLQL](#clql) patterns across all these domains are expressed as statements of facts. Those facts come from Lexicons, which are collections of terms about to a domain of knowledge.
+
 Lexicon SDK Requires License
 
 ### Source code (AST)
@@ -81,9 +81,9 @@ More information about each particular lexicon can be found:
 * via [the hub](insert url)
 
 
-## CLQL Reference
+## CLQL
 
-CodeLingo Query Language (CLQL) is a simple, lightweight language built for querying patterns across various software domains. It is what is used to write [Tenets](concepts/tenets.md).
+CodeLingo Query Language (CLQL) is a simple, lightweight language built for querying patterns across various software domains. It is what is used to write Tenets.
 
 It’s full grammar is under [70 lines of code](img/ebnf.png).
 
@@ -106,7 +106,7 @@ tenets:
 ...
 ```
 ### Metadata
-The `comment` metadata above can be used by a [Bot](/concepts/bots.md) to comment on a pull request review, for example.
+The `comment` metadata above can be used by a [Bot](/concepts/flows.md) to comment on a pull request review, for example.
 ```YAML
 ...
 tenets:
@@ -131,7 +131,7 @@ common.class({depth: any})
 ```
 
 It consists of a single fact `common.class`. The name `class` indicates that the fact refers to a class, and the namespace `common` indicates that it may be a class from any language with classes. If the namespace were `csharp` this fact would only match classes from the C# [lexicon](lexicons.md). The depth range `{depth: any}` makes this fact match any class within the context of the query (a single C# program), no matter how deeply nested.
-The decorator `@ clair.comment` tells [CLAIR](/concepts/bots.md) (CodeLingo AI Reviewer) to make a comment on every class found.
+The decorator `@ clair.comment` tells [CLAIR](/concepts/flows.md) (CodeLingo AI Reviewer) to make a comment on every class found.
 
 Note: for brevity we will omit the `common` namespace. This can be done in .lingo files by importing the common lexicon into the global namespace: `import codelingo/ast/common/0.0.0 as _`.
 
@@ -468,7 +468,7 @@ match:
           arg_count: > 4
 ```
 
-The query is made up of two sections: a list of [Lexicons](/concepts/lexicons.md) and a match statement. Lexicons get data into the CodeLingo Platform and provide a list of facts to query that data. In the above example, the git Lexicon finds and clones the "myrepo" repository from the "myvcsgithost.com" VCS host. The "myrepo" repository must be publicly accessible for the git lexicon to access it.
+The query is made up of two sections: a list of [Lexicons](#lexicons) and a match statement. Lexicons get data into the CodeLingo Platform and provide a list of facts to query that data. In the above example, the git Lexicon finds and clones the "myrepo" repository from the "myvcsgithost.com" VCS host. The "myrepo" repository must be publicly accessible for the git lexicon to access it.
 
 To access a private repository, the git credentials need to be added to the query:
 
@@ -484,7 +484,7 @@ match:
 ...
 ```
 
-The CodeLingo Platform can be queried directly with the the `$ lingo search` command or via [Bots](/concepts/bots.md) which use queries stored in [Tenets](/concepts/tenets.md).
+The CodeLingo Platform can be queried directly with the the `$ lingo search` command or via [Bots](/concepts/flows.md) which use queries stored in Tenets.
 ### Matching function name
 
 ```yaml

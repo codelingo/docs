@@ -2,7 +2,7 @@ site_name: CodeLingo Docs #- On Prem
 pages:
     - Home: index.md
     - User Guide:
-      - Getting Started: tutorials/getting-started.md
+      - Getting Started: getting-started.md
       - Tenets: concepts/tenets.md
       - Flows and Bots: concepts/flows.md
       - Help & Support: help.md

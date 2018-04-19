@@ -5,7 +5,7 @@ The guide provides instructions and documentation for installing and integrating
 
 ### Installation
 
-The lingo client is a command line interface (CLI) tool used to manage the [Lexicons](concepts/lexicons.md), [Tenets](concepts/lexicons.md) and [Bots](concepts/lexicons.md). The lingo client will help you find, create and run these resources.
+The lingo client is a command line interface (CLI) tool used to manage the [Lexicons](concepts/tenets.md#lexicons), [Tenets](concepts/tenets.md) and [Bots](concepts/flows.md). The lingo client will help you find, create and run these resources.
 
 [Download](https://github.com/codelingo/lingo/releases) a pre-built binary or, if you have [Golang setup](https://golang.org/doc/install), install from source:
 
