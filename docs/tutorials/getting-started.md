@@ -1,10 +1,11 @@
-# Getting Started with the lingo Client
+# Getting Started
+<br/>
+## Introduction
+The guide provides instructions and documentation for installing and integrating with CodeLingo.
+
+### Installation
 
 The lingo client is a command line interface (CLI) tool used to manage the [Lexicons](concepts/lexicons.md), [Tenets](concepts/lexicons.md) and [Bots](concepts/lexicons.md). The lingo client will help you find, create and run these resources.
-
-<br/>
-
-## Install
 
 [Download](https://github.com/codelingo/lingo/releases) a pre-built binary or, if you have [Golang setup](https://golang.org/doc/install), install from source:
 
@@ -18,29 +19,35 @@ This will download, build and place the `lingo` binary on your $PATH
 
 <br/>
 
-### Windows
+#### Windows
 
 Put the binary in a folder listed in your %PATH%. If you don't have an appropriate folder set up, create a new one (ie C:\Lingo) and append it to PATH with a ; in between by going to Control Panel\System and Security\System -> Advanced system settings -> Environment Variables
 
 <br/>
 
-### Linux / Unix
+#### Linux / Unix
 
 Place the lingo binary on your $PATH.
 
 <br/>
 
-## Setup
+### Authentication
 
 1. Create a CodeLingo account: [http://codelingo.io/join](http://codelingo.io/join)
 
-2. Setup lingo with your user account:
+2. Generate the token at codelingo.io/lingo-token
+
+3. Run $ lingo setup and follow the steps prompted there
 
 ```bash
 $ lingo setup
 ```
 
-You will be prompted to enter a username and token. You can generate the token at codelingo.io/lingo-token. That's it. The lingo tool is now setup on your computer.
+4. Enter your username (you can see it in the top right corner of codelingo.io)
+
+5. Enter your token, pasting from your clipboard
+
+You should see a success message. The client is now authenticated to talk to the CodeLingo platform.
 
 ---
 
@@ -48,55 +55,60 @@ You will be prompted to enter a username and token. You can generate the token a
 
 <br/>
 
-## Run a Review
+## Configuration
+
+All configuration for your project is driven by `.lingo` files. Each project requires at least one `.lingo` file at root, however multiple files can be used.
+
+TODO:
+
+- what is default
+- what can be modified
+- how to import / add
+
+## CLI Tool
+
+```bash
+$ lingo help
+```
+
+```
+COMMANDS:
+     describe-fact      Describe a fact belonging to a given lexicon.
+     list-facts         List available facts for a given lexicon.
+     list-lexicons      List available lexicons.
+     new                Create a .lingo file in the current directory.
+     query-from-offset  Generate CLQL query to match code in a specific section of a file.
+     review             Review code following tenets in .lingo.
+     search             Search code following queries in .lingo.
+     setup              Configure the lingo tool for the current environment on this machine.
+     update             Update the lingo client to the latest release.
+     use-env            Use the given environment.
+     which-env          Show the current environment.
+     help, h            Shows a list of commands or help for one command
+
+```
+
+### `lingo new`
+TODO: To be completed
+```bash
+$ lingo new
+
+```
+
+### `lingo review`
 
 <!-- TODO: add commands to discover and install CLAIR -->
 
-CodeLingo's flagship Bot is CLAIR, CodeLingo AI Reviewer. CLAIR uses Tenets to automatically review pull requests. With the `lingo` tool CLAIR can be run on a local repository from the command line. <!-- add image of CLI review --> CLAIR reads Tenets from .lingo files that live alongside the source code files. The `lingo new` command writes a .lingo file and adds a simple Tenet (which simply finds all functions).
-
----
-*Under The Hood*: The first time `lingo review` is run on a repository, `lingo` will automatically add the Codelingo git server as a remote, so that changes can be synced and analysed on the Codelingo platform.
-
-<br/>
-
-### First Run
-
-Setup a test repository:
-
+To run the project Tenets against your repository locally, run `review` commmand:
 ```bash
-mkdir myawesomepkg
-cd myawesomepkg
-git init
+$ lingo review
 ```
 
-Add a file, named “test.php”, with the following source code:
+By default, this will step through each occurence of each tenet. For example,
 
-```PHP
-<?php
-function writeMsg() {
-    echo "Hello world!";
-}
-
-writeMsg(); // call the function
-?>
-```
-
-Add your first Tenet and save it, unchanged:
 
 ```bash
-lingo new
-```
-
-Commit:
-
-```bash
-git add -A .
-git commit -m"initial commit"
-```
-
-Then run `lingo review`. You should see the following output:
-
-```bash
+$ lingo review
 test.php:2
 
     This is a function, but you probably already knew that.
@@ -113,67 +125,23 @@ test.php:2
 [o]pen [d]iscard [K]eep:
 ```
 
-As the Tenet is using the inbuilt common fact "func", it will match functions in both PHP and Golang (the two currently supported languages). Add a go file called "main.go" with the following source code:
-
-```go
-package main
-
-import (
-  "fmt"
-)
-
-func main() {
-  fmt.Println("Hello world")
-}
-```
-
-Run `$ lingo review` and you should now see two comments - one on the PHP function and the other on the Go function.
-
-Note: you don't have to commit this second file. From here on, lingo will be able to see all changes in your repository, whether they are committed or not.
+In this example, the Tenet is using the inbuilt common fact "func" which matches functions in both PHP and Golang.
 
 To open a file at the line of the issue, type `o` and hit return. It will give you an option (which it will remember) to set your editor, defaulting to vi.
 
-<br/>
 
-## Write a Tenet
+NB: The first time `lingo review` is run on a repository, `lingo` will automatically add the Codelingo git server as a remote, so that changes can be synced and analysed on the Codelingo platform.
 
-Continuing on from the first run above, open the .lingo file in your editor of choice and change it to the following:
+### `lingo search`
+The lingo client can be used to search any public repository on Github, printing any results back out to your command line in JSON format. Searching is a good way to experiment and play with CLQL (CodeLingo Query Language).
 
-```yaml
-tenets:
-- name: first-tenet
-  comment: This is a function, name 'writeMsg', but you probably knew that.
-  match:
-    @ clair.comment
-    func:
-      name: "writeMsg"
+```bash
+$ lingo search
 ```
 
-This will find funcs named "writeMsg". Save and close the file, then run `lingo review`. Try adding another func called "readMsg" and run a review. Only the "writeMsg" func should be highlighted. Now, update the Tenet to find all funcs that end in "Msg":
+You should seen a list of results found by tenets written in the .lingo file.
 
-```yaml
-  match:
-    @ clair.comment
-    func:
-      name: /.*Msg$/
-```
-
-[CLAIR](/concepts/bots.md) (CodeLingo AI Reviewer). Any fact  If a match statement has no "<", then even if true, no issue will be raised.
-
-Vim has full support for the Lingo syntax, including CLQL. To set it up, [see here](scripts/lingo.vim.readme). Other than the match statement, written in CLQL, the rest of a .lingo file is written in YAML. As such, you can set .lingo files to YAML syntax in your IDE to get partial highlighting.
-
-<!-- 
-## CLQL
-
-CLQL is the query language under the `match:` section of a Tenet. It stands for CodeLingo Query Language. The full spec can be found [here](https://docs.google.com/document/d/1NIw1J9u2hiez9ZYZ0S1sV8lJamdE9eyqWa8R9uho0MU/edit), but a practical to get acquainted with the language is to review the [examples](_examples).
-
-## Running Examples
-
-All examples under [examples/php](_examples/php) are working. The other examples have varying levels of completeness and serve as an implementation roadmap. To run the examples, copy the directory out of the repository and follow the same steps as in the tutorial above.
-
--->
-
-## Discovering Lexicons, Tenets and Bots
+### `lingo <resource> list`
 
 The CodeLingo Platform supports an eco-system of Lexicons, Tenets and Bots. The lingo client is used to discover them. For example, to list available lexicons run the following:
  
@@ -200,3 +168,35 @@ This lexicon is a list of facts about the C Sharp AST.
 ```
  
 To list all facts the lexicon provides, run `$ lingo lexicon list-facts ast/codelingo/cs`. To see the full list of commands available, please run `$ lingo --help`. The lingo CLI tool also powers IDE plugins, such as the [CLQL generation](/clql).
+<br/>
+<br/>
+
+## Integration
+### Pull requests (CLAIR)
+Setting up CLAIR on your repos is as easy as adding a new webhook on Github.
+
+1. Set the Payload URL to http://clair.codelingo.io.
+2. Ensure the content type is set to "application/json".
+3. Select the "Let me select individual events" option.
+4. Tick the "Pull request" box, leaving all others unchecked.
+5. Ensure the "Active" box is ticked.
+6. Click "Add webhook".
+
+**For private repos:**
+YOu will need to add the clairscent user as a collaborator to your repository. It may take a couple of minutes for CLAIR to accept the collaboration request.
+
+
+More details instructions can be found [here](https://codelingo.io/flow/github-pull-request-review)
+
+Once configured, CLAIR will comment on pull requests when the tenets for this project occur.
+
+CLAIR will only review pull requests and will never make changes to your codebase.
+
+### Build Failures / CI
+TODO: To be completed
+
+## Next Steps
+
+**[Explore existing Tenets to add to your project](hub)**
+
+**[View guide to importing and writing Tenets](/concepts/tenets.md)**

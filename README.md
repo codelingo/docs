@@ -11,3 +11,8 @@ This will create the html site under ./site
 To publish the docs: `mkdocs gh-deploy`
 
 Documentation on the individual repositories should be kept in sync with this repo. We should look to automate this in the future.
+
+
+SCRATCH
+
+[CLAIR](/concepts/bots.md) (CodeLingo AI Reviewer). Any fact  If a match statement has no "<", then even if true, no issue will be raised.

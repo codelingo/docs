@@ -1,3 +1,0 @@
-# Bot SDK
-
-Requires License
