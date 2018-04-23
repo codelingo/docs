@@ -1,7 +1,7 @@
 # Tenets
 ## Overview
 
-A Tenet is a rule about a system written in [CLQL](/clql) and based on libaries of facts called Lexicons. It is an underlying pattern or heurestic which the CodeLingo Platform can use to guide development and safeguard systems via [Flows and Bots](concepts/flows.md).
+A Tenet is a rule about a system written in [CLQL](/clql) and based on libraries of facts called Lexicons. It is an underlying pattern or heuristic which the CodeLingo Platform can use to guide development and safeguard systems via [Flows and Bots](concepts/flows.md).
 
 Tenets can be added directly to Bots or embedded in the resources they monitor.
 
@@ -18,7 +18,7 @@ Tenets are written in CLQL and are including in a project either directly in the
 
 **[Existing Tenets can be discovered via the hub](https://codelingo.io/hub/tenets)**
 
-To import an exiseting Tenet into your project, import the bundle via the url provided in the hub in your lingo file.
+To import an existing Tenet into your project, import the bundle via the url provided in the hub in your lingo file.
 
 TODO: add example of tenet import
 ```YAML
@@ -67,7 +67,7 @@ With Version Control System (VCS) lexicons, facts about the VCS itself can be qu
 
 Runtime lexicons are used to query the runtime data of a program. These are typically used to identify performance issues and common runtime problems.
 
-CodeLingo currently supports the follwing runtimes:
+CodeLingo currently supports the following runtimes:
 - TODO
 - TODO
 
@@ -151,7 +151,7 @@ method({depth: any}):
  
 This query returns all methods with the name "myFunc". Note that the yield tag is still on the `method` fact - properties cannot be returned, only their parent facts. Also note that properties are not namespaced, as their namespace is implied from their parent fact.
 
-Facts with arguments are proceeded by a colon.
+Facts with arguments are preceded by a colon.
 
 <br />
 
@@ -246,7 +246,7 @@ method({depth: any}):
   if_stmt({depth: 0})
 ```
 
-Indicies in a depth range can range from 0 to positive infinity. Positive infinity is represented by leaving the second index empty. This query finds all methods, and all their descendant if_statements from depth 5 onwards:
+Indices in a depth range can range from 0 to positive infinity. Positive infinity is represented by leaving the second index empty. This query finds all methods, and all their descendant if_statements from depth 5 onwards:
 
 ```
 method({depth: any}):
@@ -529,7 +529,7 @@ The CLQL to match this pattern should find all variables that are declared befor
 
 ![C# example Generation](img/cs_decl.png)
 
-Note: the `csharp.variable_declarator` has the `identifier_token` field that can be used to identify the `total` variable, but it spans the whole thrid line, so the whole line must be selected to generate that fact. Since other elements are within that line, many extra facts are generated. This is largely a property of the C# parser used by the underlying [lexicon](lexicons.md).
+Note: the `csharp.variable_declarator` has the `identifier_token` field that can be used to identify the `total` variable, but it spans the whole third line, so the whole line must be selected to generate that fact. Since other elements are within that line, many extra facts are generated. This is largely a property of the C# parser used by the underlying [lexicon](lexicons.md).
 
 ![C# example Generation](img/cs_inc.png)
 
@@ -582,7 +582,7 @@ StyleCop supports custom rules by providing a SourceAnalyzer class with CodeWalk
 
 CLQL can express all rules that can be expressed in StyleCop. By abstracting away the details of document walking, CLQL can express in 9 lines, [a rule](/style-enforcers/#empty-block-statements) that takes ~50 lines of StyleCop. In addition to being, on average, 5 times less code to express these patterns, CLQL queries can be [generated](/clql.md/#query-generation) by selecting the code code elements in an IDE.
 
-CLQL is not limited to C# like StyleCop. CLQL can express logic about other domains of logic otuside of the scope of StyleCop, like version control.
+CLQL is not limited to C# like StyleCop. CLQL can express logic about other domains of logic outside of the scope of StyleCop, like version control.
 
 #### Empty Block Statements
 
@@ -682,7 +682,7 @@ The above query will match against any block statement that does not contain any
 
 #### Access Modifier Declaration
 
-In this example, we'll exclude StyleCop's long setup and document traversal boilerplace and focus on the query, which raises a violation for all non-generated code that doesn't have a declared access modifier:
+In this example, we'll exclude StyleCop's long setup and document traversal boilerplate and focus on the query, which raises a violation for all non-generated code that doesn't have a declared access modifier:
 
 ```cs
 private bool VisitElement(CsElement element, CsElement parentElement, object context)
@@ -742,7 +742,7 @@ Sometime in the future we decide to update the underlying library to the latest 
 
 As we iterate over the issues, we see a steady increase in the memory consumed by the `getDBCon` function. Knowing that this didn't happen with the older version of the library, we suspect a memory leak may have been introduced in the update and further investigation is required.
 
-Note: CLQL is able to assist in pin-pointing the source of memory leaks, but that is outside the scope of this use case.
+Note: CLQL is able to assist in pinpointing the source of memory leaks, but that is outside the scope of this use case.
 
 <br />
 
@@ -809,6 +809,7 @@ cs.session:
 If an instance of the `importData` runs for more than 4 minutes with unusually low resource usage, an issue will be raised as the function is suspect of deadlock.
 
 <br />
+
 
 
 

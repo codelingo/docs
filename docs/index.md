@@ -14,7 +14,7 @@ For installation, and getting setup with the CLI tool and pull request integrati
 
 ## Tenets
 
-The CodeLingo platform is based on a key concept of Tenets. Tenets are patterns and heurestics that you apply to your software stack in the formed of stored queries. CLQL is the language used to write these queries, and is what allows you to treat you software stack as data.
+The CodeLingo platform is based on a key concept of Tenets. Tenets are patterns and heuristics that you apply to your software stack in the formed of stored queries. CLQL is the language used to write these queries, and is what allows you to treat you software stack as data.
 
 **[Explore Hub for existing Tenets](https://codelingo.io/hub/tenets)**
 
@@ -24,7 +24,7 @@ Tenets can be written for:
 * Version Control
 * Runtime
 
-Tenets can detect and manage patterns in: Best Practices,  Coding Style, Peformance, Security Vulnerabilities, Debugging, Gotchas, Complexity, Churn
+Tenets can detect and manage patterns in: Best Practices,  Coding Style, Performance, Security Vulnerabilities, Debugging, Gotchas, Complexity, Churn
 
 **[View guide to working with Tenets](concepts/tenets.md)**
 
@@ -33,7 +33,7 @@ Tenets can detect and manage patterns in: Best Practices,  Coding Style, Peforma
 ## Flows
 Flows automate common developer workflows.
 
-Flows can be configured directly in YAML or via the Flow Composer GUI. This allows you to build custom worktflows with your tenets, and integrations with your existing tools through Bots.
+Flows can be configured directly in YAML or via the Flow Composer GUI. This allows you to build custom workflows with your tenets, and integrations with your existing tools through Bots.
 
 Build custom debug dashboards, crash reports, code review UIs and monitoring systems.
 
@@ -54,3 +54,5 @@ Please contact pj@codelingo.io for all pricing inquiries.
 
 ## Getting help
 For all support requests please contact hello@codelingo.io
+
+

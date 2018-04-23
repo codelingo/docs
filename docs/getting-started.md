@@ -99,7 +99,7 @@ $ lingo new
 
 <!-- TODO: add commands to discover and install CLAIR -->
 
-To run the project Tenets against your repository locally, run `review` commmand:
+To run the project Tenets against your repository locally, run `review` command:
 ```bash
 $ lingo review
 ```
@@ -143,7 +143,7 @@ You should seen a list of results found by tenets written in the .lingo file.
 
 ### `lingo <resource> list`
 
-The CodeLingo Platform supports an eco-system of Lexicons, Tenets and Bots. The lingo client is used to discover them. For example, to list available lexicons run the following:
+The CodeLingo Platform supports an ecosystem of Lexicons, Tenets and Bots. The lingo client is used to discover them. For example, to list available lexicons run the following:
  
 ```bash
 $ lingo lexicon list
@@ -207,3 +207,6 @@ CLAIR will only review pull requests and will never make changes to your codebas
 **[Explore existing Tenets to add to your project](https://codelingo.io/hub/tenets)**
 
 **[View guide to importing and writing Tenets](/concepts/tenets.md)**
+
+
+
