@@ -18,7 +18,7 @@ $ lingo bot clair review --github-pull-request "https://github.com/example/prog/
 ```
 
 
-This will print out any patterns in the pull request that match those in the Tenets. In addition to being run directly, Bots can be added to a [Flow](concepts/flows.md). When part of a [Flow](/concepts/flows.md), Bots process the results and pass them onto an external service or other bots in the Flow.
+This will print out any patterns in the pull request that match those in the Tenets. In addition to being run directly, Bots can be added to a Flow. When part of a [Flow](/concepts/flows.md), Bots process the results and pass them onto an external service or other bots in the Flow.
 
 Other possible Bots include:
  

@@ -1,4 +1,10 @@
 site_name: CodeLingo Docs #- On Prem
+site_url: https://codelingo.io/Docs
+repo_url: null #= TODO: should we add this and have links to github?
+
+site_description: Documentation for the CodeLingo platform. # TODO SEO strategy
+google_analytics: ['UA-117506438-1', 'codelingo.io/docs'] #TODO: Turn this on...
+
 pages:
     - Home: index.md
     - User Guide:

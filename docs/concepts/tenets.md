@@ -1,7 +1,7 @@
-# Tenets
+C# Tenets
 ## Overview
 
-A Tenet is a rule about a system written in [CLQL](/clql) and based on libraries of facts called Lexicons. It is an underlying pattern or heuristic which the CodeLingo Platform can use to guide development and safeguard systems via [Flows and Bots](concepts/flows.md).
+A Tenet is a rule about a system written in [CLQL](#clql) and based on libraries of facts called Lexicons. It is an underlying pattern or heuristic which the CodeLingo Platform can use to guide development and safeguard systems via [Flows and Bots](flows.md).
 
 Tenets can be added directly to Bots or embedded in the resources they monitor.
 
@@ -57,7 +57,7 @@ Lexicon SDK Requires License
 
 ### Source code (AST)
 
-Abstract Syntax Tree (AST) [lexicons](/lexicons) are used to query static properties of source code. These are typically used to enforce project specific patterns such as layering violations as well as more general code smells.
+Abstract Syntax Tree (AST) lexicons are used to query static properties of source code. These are typically used to enforce project specific patterns such as layering violations as well as more general code smells.
 
 ### VCS
 
@@ -89,7 +89,7 @@ CodeLingo Query Language (CLQL) is a simple, lightweight language built for quer
 
 It’s full grammar is under [70 lines of code](../img/ebnf.png).
 
-Patterns in CLQL (Tenets), can be expressed as statements of facts from a particular lexicon. [Lexicons](concepts/lexicons.md) are libraries of facts about to a domain of knowledge. These domains include:
+Patterns in CLQL (Tenets), can be expressed as statements of facts from a particular lexicon. Lexicons are libraries of facts about to a domain of knowledge. These domains include:
 
 - Static facts about programming languages (AST): C#, Javascript, Java, PHP, Golang etc
 - Dynamic facts about languages (Runtime): values, race conditions, tracing, profiling etc
@@ -110,7 +110,7 @@ tenets:
 ...
 ```
 #### Metadata
-The `comment` metadata above can be used by a [Bot](/concepts/flows.md) to comment on a pull request review, for example.
+The `comment` metadata above can be used by a [Bot](flows.md) to comment on a pull request review, for example.
 ```YAML
 ...
 tenets:
@@ -127,13 +127,13 @@ tenets:
 CLQL can query many types of software related systems. But assume for simplicity that all queries on this page are scoped to a single object oriented program.
 
 <!--TODONOW link to fact definition section on lexicon page-->
-Queries are made up of [Facts](lexicons.md). A CLQL query with just a single fact will match all elements of that type in the program. The following query matches and returns all classes in the queried program:
+Queries are made up of Facts. A CLQL query with just a single fact will match all elements of that type in the program. The following query matches and returns all classes in the queried program:
 
 ```
 common.class({depth: any})
 ```
 
-It consists of a single fact `common.class`. The name `class` indicates that the fact refers to a class, and the namespace `common` indicates that it may be a class from any language with classes. If the namespace were `csharp` this fact would only match classes from the C# [lexicon](lexicons.md). The depth range `{depth: any}` makes this fact match any class within the context of the query (a single C# program), no matter how deeply nested.
+It consists of a single fact `common.class`. The name `class` indicates that the fact refers to a class, and the namespace `common` indicates that it may be a class from any language with classes. If the namespace were `csharp` this fact would only match classes from the C# lexicon. The depth range `{depth: any}` makes this fact match any class within the context of the query (a single C# program), no matter how deeply nested.
 The decorator `@ clair.comment` tells [CLAIR](/concepts/flows.md) (CodeLingo AI Reviewer) to make a comment on every class found.
 
 Note: for brevity we will omit the `common` namespace. This can be done in .lingo files by importing the common lexicon into the global namespace: `import codelingo/ast/common/0.0.0 as _`.
@@ -529,7 +529,7 @@ The CLQL to match this pattern should find all variables that are declared befor
 
 ![C# example Generation](../img/cs_decl.png)
 
-Note: the `csharp.variable_declarator` has the `identifier_token` field that can be used to identify the `total` variable, but it spans the whole third line, so the whole line must be selected to generate that fact. Since other elements are within that line, many extra facts are generated. This is largely a property of the C# parser used by the underlying [lexicon](lexicons.md).
+Note: the `csharp.variable_declarator` has the `identifier_token` field that can be used to identify the `total` variable, but it spans the whole third line, so the whole line must be selected to generate that fact. Since other elements are within that line, many extra facts are generated. This is largely a property of the C# parser used by the underlying [lexicon](#lexicons).
 
 ![C# example Generation](../img/cs_inc.png)
 
@@ -580,7 +580,7 @@ CLQL, like StyleCop, can express C# style rules and use them to analyze a projec
 
 StyleCop supports custom rules by providing a SourceAnalyzer class with CodeWalker methods. The rule author can iterate through elements of the document and raise violations when the code matches a certain pattern. 
 
-CLQL can express all rules that can be expressed in StyleCop. By abstracting away the details of document walking, CLQL can express in 9 lines, [a rule](/style-enforcers/#empty-block-statements) that takes ~50 lines of StyleCop. In addition to being, on average, 5 times less code to express these patterns, CLQL queries can be [generated](/clql.md/#query-generation) by selecting the code code elements in an IDE.
+CLQL can express all rules that can be expressed in StyleCop. By abstracting away the details of document walking, CLQL can express in 9 lines,a rule that takes ~50 lines of StyleCop. In addition to being, on average, 5 times less code to express these patterns, CLQL queries can be generated by selecting the code code elements in an IDE.
 
 CLQL is not limited to C# like StyleCop. CLQL can express logic about other domains of logic outside of the scope of StyleCop, like version control.
 
@@ -678,7 +678,7 @@ cs.block_stmt:
   !cs.element
 ```
 
-The above query will match against any block statement that does not contain anything at all. `cs.element` [matches all](/clql/#the-element-fact) C# elements, and the "!" operator performs [negation](/clql/#negation). 
+The above query will match against any block statement that does not contain anything at all. `cs.element` matches all C# elements, and the "!" operator performs negation.
 
 #### Access Modifier Declaration
 
@@ -699,7 +699,7 @@ private bool VisitElement(CsElement element, CsElement parentElement, object con
 }
 ```
 
-As in the [empty block statements](/comparison/ast/#empty-block-statements) example, to express the pattern in CLQL, the tenet author only needs to express conditions in the VisitElement body:
+As in the [empty block statements example below](#empty-block-statements), to express the pattern in CLQL, the tenet author only needs to express conditions in the VisitElement body:
 
 ```clql
 cs.element:
@@ -779,7 +779,7 @@ csprof.session:
         time: < $exitUpdate
 ```
 
-This query users [variables](clql.md#variables) If the `getUser` function is called while an instance of the `updateUser` function is in progress, the `getUser` function must return after the `updateUser` function to prevent a dirty read from the database. An issue will be raised if this does not hold true.
+This query users [variables](#variables) If the `getUser` function is called while an instance of the `updateUser` function is in progress, the `getUser` function must return after the `updateUser` function to prevent a dirty read from the database. An issue will be raised if this does not hold true.
 
 <br />
 
