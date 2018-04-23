@@ -44,7 +44,7 @@ Vim has full support for the Lingo syntax, including CLQL. To set it up, [see he
 
 CodeLingo's Integrated Development Environment (IDE) plugins can help build patterns in code by automatically generating queries to detect selected elements of programs. A generated query will describe the selected element and its position in the structure of the program:
 
-![Query Generation](img/queryGeneration.png)
+![Query Generation](../img/queryGeneration.png)
 
 In the above example string literal is selected. The generated CLQL query will match any literal directly inside an assignment statement, in a function declaration, matching the nested pattern of the selected literal.
 
@@ -87,7 +87,7 @@ More information about each particular lexicon can be found:
 
 CodeLingo Query Language (CLQL) is a simple, lightweight language built for querying patterns across various software domains. It is what is used to write Tenets.
 
-It’s full grammar is under [70 lines of code](img/ebnf.png).
+It’s full grammar is under [70 lines of code](../img/ebnf.png).
 
 Patterns in CLQL (Tenets), can be expressed as statements of facts from a particular lexicon. [Lexicons](concepts/lexicons.md) are libraries of facts about to a domain of knowledge. These domains include:
 
@@ -527,11 +527,11 @@ decimal total = (from account in myAccounts
 
 The CLQL to match this pattern should find all variables that are declared before a foreach statement, and are incremented within the loop. The facts for incrementing inside a foreach loop, and declaring a variable can be generated in the IDE:
 
-![C# example Generation](img/cs_decl.png)
+![C# example Generation](../img/cs_decl.png)
 
 Note: the `csharp.variable_declarator` has the `identifier_token` field that can be used to identify the `total` variable, but it spans the whole third line, so the whole line must be selected to generate that fact. Since other elements are within that line, many extra facts are generated. This is largely a property of the C# parser used by the underlying [lexicon](lexicons.md).
 
-![C# example Generation](img/cs_inc.png)
+![C# example Generation](../img/cs_inc.png)
 
 The generated code can be turned into a working query by combining the above queries under the same scope, removing extraneous facts, and using a CLQL variable to ensure that the `csharp.identifier_name` and `csharp.variable_declarator` facts refer to the same variable:
 
