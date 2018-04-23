@@ -8,13 +8,15 @@ The CodeLingo platform guide's software teams to build better code, faster. Code
 
 To get started with CodeLingo, you will first need to [create an account]()
 
-**[View detailed getting started guide](url:todo)**
+For installation, and getting setup with the CLI tool and pull request integration, please see the getting started guide. 
+
+**[View getting started guide](url:todo)**
 
 ## Tenets
 
 The CodeLingo platform is based on a key concept of Tenets. Tenets are patterns and heurestics that you apply to your software stack in the formed of stored queries. CLQL is the language used to write these queries, and is what allows you to treat you software stack as data.
 
-**[Explore existing tenets](url)**
+**[Explore Hub for existing Tenets](https://codelingo.io/hub/tenets)**
 
 Tenets can be written for:
 
@@ -24,7 +26,7 @@ Tenets can be written for:
 
 Tenets can detect and manage patterns in: Best Practices,  Coding Style, Peformance, Security Vulnerabilities, Debugging, Gotchas, Complexity, Churn
 
-**[Guide to working with Tenets](concepts/tenets.md)**
+**[View guide to working with Tenets](concepts/tenets.md)**
 
 
 
@@ -35,7 +37,7 @@ Flows can be configured directly in YAML or via the Flow Composer GUI. This allo
 
 Build custom debug dashboards, crash reports, code review UIs and monitoring systems.
 
-**[Explore existing flows](hub:flows)**
+**[Explore Hub existing flows](https://codelingo.io/hub/flows)**
 
 CodeLingo currently supports:
 
@@ -43,7 +45,7 @@ CodeLingo currently supports:
 * Build integration
 * Alerting
 
-**[Guide to Flows and Bots](concepts/flows.md)**
+**[View guide to Flows and Bots](concepts/flows.md)**
 
 
 
@@ -51,4 +53,4 @@ CodeLingo currently supports:
 Please contact pj@codelingo.io for all pricing inquiries.
 
 ## Getting help
-For all support requests please contact team@codelingo.io
+For all support requests please contact hello@codelingo.io

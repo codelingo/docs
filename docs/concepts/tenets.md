@@ -16,7 +16,7 @@ Examples:
 ## Importing Existing Tenets
 Tenets are written in CLQL and are including in a project either directly in the .lingo file, or via an include statement from an external bundle.
 
-**[Existing Tenets can be discovered via the hub](hub_url)**
+**[Existing Tenets can be discovered via the hub](https://codelingo.io/hub/tenets)**
 
 To import an exiseting Tenet into your project, import the bundle via the url provided in the hub in your lingo file.
 
@@ -78,10 +78,12 @@ More information about each particular lexicon can be found:
 
    `lingo list-facts codelingo/lexicons/runtime/finish`
 
-* via [the hub](insert url)
+* via [the hub](https://codelingo.io/hub/lexicons)
 
 
 ## CLQL
+
+### Overview
 
 CodeLingo Query Language (CLQL) is a simple, lightweight language built for querying patterns across various software domains. It is what is used to write Tenets.
 
@@ -95,7 +97,9 @@ Patterns in CLQL (Tenets), can be expressed as statements of facts from a partic
 - Facts about databases, networking, CI, CD, business rules, HR etc
 - Facts about running systems: logs, crash dumps, tracing etc
 
-### Match
+### Reference
+
+#### Match
 The minimum requirement for a Tenet is the `match` statement. Extra metadata can be added to the Tenet to be used by the Bots that apply the Tenet:
 
 ```YAML
@@ -105,7 +109,7 @@ tenets:
     match:
 ...
 ```
-### Metadata
+#### Metadata
 The `comment` metadata above can be used by a [Bot](/concepts/flows.md) to comment on a pull request review, for example.
 ```YAML
 ...
@@ -117,7 +121,7 @@ tenets:
 ```
 
 
-### Querying with Facts
+#### Querying with Facts
 
 <!--Should we include systems that CLQL does not *yet* support? -->
 CLQL can query many types of software related systems. But assume for simplicity that all queries on this page are scoped to a single object oriented program.
@@ -126,7 +130,6 @@ CLQL can query many types of software related systems. But assume for simplicity
 Queries are made up of [Facts](lexicons.md). A CLQL query with just a single fact will match all elements of that type in the program. The following query matches and returns all classes in the queried program:
 
 ```
-@ clair.comment
 common.class({depth: any})
 ```
 
@@ -137,12 +140,11 @@ Note: for brevity we will omit the `common` namespace. This can be done in .ling
 
 <br />
 
-### Fact Properties
+#### Fact Properties
 
 To limit the above query to match classes with a particular name, add a "name" property as an argument to the `method` fact:
  
 ```
-@ clair.comment
 method({depth: any}):
   name: "myFunc"
 ```
@@ -153,12 +155,11 @@ Facts with arguments are proceeded by a colon.
 
 <br />
 
-### Floats and Ints
+#### Floats and Ints
 <!--TODO(blakemscurr) explain boolean properties once syntax has been added to the ebnf-->
 Properties can be of type string, float, and int. The following finds all int literals with the value 8:
  
 ```
-@ clair.comment
 int_lit({depth: any}):
   value: 5
 ```
@@ -166,44 +167,40 @@ int_lit({depth: any}):
 This query finds float literals with the value 8.7:
  
 ```
-@ clair.comment
 float_lit({depth: any}):
   value: 8.7
 ```
 
 <br />
 
-### Comparison
+#### Comparison
 
 The comparison operators >, <, ==, >=, and <= are available for floats and ints. The following finds all int literals above negative 3:
 ```
-@ clair.comment
 int_lit({depth: any}):
   value: > -3
 ```
 
 <br />
 
-### Regex
+#### Regex
 
 Any string property can be queried with regex. The following finds methods with names longer than 25 characters:
  
 ```
-@ clair.comment
 method({depth: any}):
   name: /^.{25,}$/
 ```
 
 <br />
 
-### Fact Nesting
+#### Fact Nesting
 
 Facts can be take arbitrarily many other facts as arguments, forming a query with a tree struct of arbitrary depth. A parent-child fact pair will match any parent element even if the child is not a direct descendant. The following query finds all the if statements inside a method called "myMethod", even those nested inside intermediate scopes (for loops etc):
 
 ```
 method({depth: any}):
   name: "myMethod"
-  @ clair.comment
   if_stmt({depth: any})
 ```
  
@@ -212,7 +209,6 @@ Any fact in a query can be yielded. If `class` is yielded, this query returns al
 ```
 class({depth: any}):
   name: “myClass”
-  @ clair.comment
   method({depth: any})
 ```
  
@@ -221,18 +217,16 @@ Any fact in a query can have properties. The following query finds all methods n
 ```
 class({depth: any}):
   name: “myClass”
-  @ clair.comment
   method({depth: any}):
     Name: “myMethod”
 ```
 
-### Depth
+#### Depth
 
 Facts use depth ranges to specify the depth at which they can be found below their parent. Depth ranges have two zero based numbers, representing the minimum and maximum depth to find the result at, inclusive and exclusive respectively. The following query finds any if statements that are direct children of their parent method, in other words, if statements at depth zero from methods:
 
 ```
 method({depth: any}):
-  @ clair.comment
   if_stmt({depth: 0:1})
 ```
 
@@ -240,7 +234,6 @@ This query finds if statements at (zero based) depths 3, 4, and 5:
 
 ```
 method({depth: any}):
-  @ clair.comment
   if_stmt({depth: 3:6})
 ```
 
@@ -250,7 +243,6 @@ Depth ranges specifying a single depth can be described with a single number. Th
 
 ```
 method({depth: any}):
-  @ clair.comment
   if_stmt({depth: 0})
 ```
 
@@ -258,7 +250,6 @@ Indicies in a depth range can range from 0 to positive infinity. Positive infini
 
 ```
 method({depth: any}):
-  @ clair.comment
   if_stmt({depth: 5:})
 ```
 
@@ -266,12 +257,11 @@ Note: The depth range on top level facts, like `method` in the previous examples
 
 <br />
 
-### Branching
+#### Branching
 
 The following query will find a method with a foreach loop, a for loop, and a while loop in that order:
  
 ```
-@ clair.comment
 method({depth: any}):
   for_stmt
   foreach_stmt
@@ -282,12 +272,11 @@ method({depth: any}):
 
 <br />
 
-### Negation
+#### Negation
 
 Negation allows queries to match children that *do not* have a given property or child fact. Negated facts and properties are prepended by "!". The following query finds all classes except those named "classA":
 
 ```
-@ clair.comment
 class({depth: any}):
   !name: "classA"
 ```
@@ -295,7 +284,6 @@ class({depth: any}):
 This query finds all classes with String methods:
 
 ```
-@ clair.comment
 class({depth: any}):
   !method:
     name: “String”
@@ -304,7 +292,6 @@ class({depth: any}):
 The placement of the negation operator has a significant effect on the query's meaning - this similar query finds all methods with a method that is not called String:
 
 ```
-@ clair.comment
 class({depth: any}):
   method:
     !name: “String”
@@ -313,7 +300,6 @@ class({depth: any}):
 Negating a fact does not affect its siblings. The following query finds all String methods that use an if statement, but don’t use a foreach statement:
 
 ```
-@ clair.comment
 method({depth: any}):
   name: “String”
   if_stmt
@@ -323,12 +309,11 @@ method({depth: any}):
 A fact cannot be both yielded and negated.
 
 <br />
-### any_of
+#### any_of
 
 A fact with multiple children will match against elements of the code that have child1 *and* child2 *and* child3 etc. The `any_of` operator overrides the implicit "and". The following query finds all String methods that use basic loops:
 
 ```
-@ clair.comment
 method({depth: any}):
   name: “String”
   any_of:
@@ -340,7 +325,7 @@ method({depth: any}):
 
 <br />
 
-### Variables
+#### Variables
 
 Facts that do not have a parent-child relationship can be compared by assigning their properties to variables. Any argument starting with “$” defines a variable. A query with a variable will only match a pattern in the code if all properties representing that variable are equal.
 
@@ -349,7 +334,6 @@ The following query compares two classes (which do have a parent-child relations
 ```
 class({depth: any}):
   name: “classA”
-  @ clair.comment
   method:
     name: $methodName
 class({depth: any}):
@@ -362,7 +346,7 @@ The query above will only return methods of classA for which classB has a corres
 
 <br />
 
-### Interleaving
+#### Interleaving
 
 When writing a Tenet in a .lingo file read by CLAIR, only the AST lexicon facts are required:
 
@@ -444,10 +428,9 @@ Further examples can be found in the [link to Tenet examples directory].
 
 -->
 
-
-## Basic Examples
-
-### Argument count
+## Examples
+### basic
+#### Argument count
 Below is an example of a query that returns all functions in a repository with more than 4 arguments:
 
 ```YAML
@@ -485,7 +468,7 @@ match:
 ```
 
 The CodeLingo Platform can be queried directly with the the `$ lingo search` command or via [Bots](/concepts/flows.md) which use queries stored in Tenets.
-### Matching function name
+#### Matching function name
 
 ```yaml
 tenets:
@@ -519,9 +502,9 @@ All examples under [examples/php](_examples/php) are working. The other examples
 </br>
 
 
-## AST Examples
+### AST
 
-### CSharp
+#### CSharp
 
 Iterative code, such as the following, can be more safely expressed declaratively using LINQ. For example: 
 
@@ -569,7 +552,7 @@ csharp.method_declaration:
 
 <br />
 
-### C++
+#### C++
 
 The following tenet asserts that functions should not return local objects by reference. When the function returns and the stack is unwrapped, that object will be destructed, and the reference will not point to anything.
 
@@ -591,7 +574,7 @@ cc.func_decl:
 ```
 
 
-### CLQL vs StyleCop
+#### CLQL vs StyleCop
 
 CLQL, like StyleCop, can express C# style rules and use them to analyze a project, file, repository, or pull request. CLQL, like StyleCop can customize a set of predefined rules to determine how they should apply to a given project, and both can define custom rules.
 
@@ -601,7 +584,7 @@ CLQL can express all rules that can be expressed in StyleCop. By abstracting awa
 
 CLQL is not limited to C# like StyleCop. CLQL can express logic about other domains of logic otuside of the scope of StyleCop, like version control.
 
-### Empty Block Statements
+#### Empty Block Statements
 
 StyleCop can use a custom rule to raise a violation for all empty block statements:
 
@@ -697,7 +680,7 @@ cs.block_stmt:
 
 The above query will match against any block statement that does not contain anything at all. `cs.element` [matches all](/clql/#the-element-fact) C# elements, and the "!" operator performs [negation](/clql/#negation). 
 
-### Access Modifier Declaration
+#### Access Modifier Declaration
 
 In this example, we'll exclude StyleCop's long setup and document traversal boilerplace and focus on the query, which raises a violation for all non-generated code that doesn't have a declared access modifier:
 
@@ -728,9 +711,9 @@ cs.element:
 The above query matches all C# elements that are not generated, whose declaration does not have an access modifier.
 
 
-## Runtime examples
+### Runtime
 
-### Detecting Memory Leaks
+#### Detecting Memory Leaks
 
 In the example below we have a database manager class that wraps up a third party library we use to return connections to a database.
 
@@ -763,7 +746,7 @@ Note: CLQL is able to assist in pin-pointing the source of memory leaks, but tha
 
 <br />
 
-### Detecting Race Conditions
+#### Detecting Race Conditions
 In the example below we have a database manager class that we use to update and read user records.
 
 Our application has a number of different workers that operate asynchronously, making calls to the database manager at any time.
@@ -800,7 +783,7 @@ This query users [variables](clql.md#variables) If the `getUser` function is cal
 
 <br />
 
-### Detecting Deadlocks
+#### Detecting Deadlocks
 
 In the example below, we have an application used for importing data into a database from a number of different sources asynchronously. The `importData` function is particularly resource heavy on our server due to the raw amount of data that needs to be processed. Knowing this, we decide to write a Tenet to catch any idle instances of the `importData` function:
 

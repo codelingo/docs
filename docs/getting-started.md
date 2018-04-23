@@ -171,8 +171,12 @@ To list all facts the lexicon provides, run `$ lingo lexicon list-facts ast/code
 <br/>
 <br/>
 
-## Integration
+## Setting up Flows
 ### Pull requests (CLAIR)
+
+- TODO: explain exactly what it is
+- TODO: update payload URL
+
 Setting up CLAIR on your repos is as easy as adding a new webhook on Github.
 
 1. Set the Payload URL to http://clair.codelingo.io.
@@ -192,11 +196,14 @@ Once configured, CLAIR will comment on pull requests when the tenets for this pr
 
 CLAIR will only review pull requests and will never make changes to your codebase.
 
-### Build Failures / CI
-TODO: To be completed
+### Configuring a custom flow
+
+- TODO: finish
+- Flows can be used to build any custom... 
+- Contact: hello@codelingo.io for help getting your own custom flow set up.
 
 ## Next Steps
 
-**[Explore existing Tenets to add to your project](hub)**
+**[Explore existing Tenets to add to your project](https://codelingo.io/hub/tenets)**
 
 **[View guide to importing and writing Tenets](/concepts/tenets.md)**
