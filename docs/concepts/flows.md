@@ -3,25 +3,24 @@ Flows automate common developer and sysadmin tasks by chaining together a pipeli
 
 Flows can be configured directly in YAML or via the Flow Composer GUI. This allows custom debug dashboards, crash reports, code review UIs and monitoring systems to be composed quickly and easily.
 
+For example, CodeLingo AI Reviewer (CLAIR) is a Flow that performs a review on a pull request:
+
+<img src="/img/clair_review_simple.png" alt="CLAIR (CodeLingo AI Reviewer) commenting on a pull-request" style="width: 80%;"/>
+
 Below are several examples of different Flows.
 
 
 ## Bots
-Bots watch resources and look for patterns in them based on the [Tenets](/concepts/tenets.md) associated with the resource. For example, CodeLingo AI Reviewer (CLAIR) is a Bot that performs a review on a pull request:
+Bots watch resources and look for patterns in them based on the Tenets associated with the resource.
 
-<img src="/img/clair_review_simple.png" alt="CLAIR (CodeLingo AI Reviewer) commenting on a pull-request" style="width: 80%;"/>
-
-CLAIR reads the Tenets written in .lingo files in the repository and queries the platform with them. She can be called directly via the command line:
-
+All available bots can be accessed through the CLI:
 ```bash
-$ lingo bot clair review --github-pull-request "https://github.com/example/prog/pull/272"
+$ lingo bots --owner codelingo
 ```
 
+Bots can either inject information (such as pull request info or log files) or output information to a service (github comments or dashboard panels)
 
-This will print out any patterns in the pull request that match those in the Tenets. In addition to being run directly, Bots can be added to a Flow. When part of a [Flow](/concepts/flows.md), Bots process the results and pass them onto an external service or other bots in the Flow.
-
-Other possible Bots include:
- 
+Possble Bots include:
 - A forensic Bot that analyses logs and finds event B happened before A, which violates a Tenet
 - A project overview Bot that graphs Tech Debt burndown chart and delegates based on ownership
 - A Copilot Bot that gives real time feedback to a developer in their IDE as they’re coding

@@ -198,9 +198,10 @@ CLAIR will only review pull requests and will never make changes to your codebas
 
 ### Configuring a custom flow
 
-- TODO: finish
-- Flows can be used to build any custom... 
-- Contact: hello@codelingo.io for help getting your own custom flow set up.
+Flows can be used to build any custom workflows. Whether that's dashboarding through panel Bots, or intergations with your existing tools and services through Bots. 
+
+If you are interested in building custom flows and integrations, please contact us directly at: 
+ [hello@codelingo.io](hello@codelingo.io).
 
 ## Next Steps
 
