@@ -1,26 +1,16 @@
 site_name: CodeLingo Docs #- On Prem
+site_url: https://codelingo.io/Docs
+repo_url: null #= TODO: should we add this and have links to github?
+
+site_description: Documentation for the CodeLingo platform. # TODO SEO strategy
+google_analytics: ['UA-117506438-1', 'codelingo.io/docs'] #TODO: Turn this on...
+
 pages:
-    - Overview: index.md
-    - Tutorials:
-      - Getting Started: tutorials/getting-started.md
-      - C# and Perforce: tutorials/cs-perforce.md
-    - Concepts: 
-      - Search: concepts/search.md
+    - Home: index.md
+    - User Guide:
+      - Getting Started: getting-started.md
       - Tenets: concepts/tenets.md
-      - Lexicons: concepts/lexicons.md
-      - Bots: concepts/bots.md
-      - Flows: concepts/flows.md
-    
-    # - Platform: platform.md
-    - CLQL: clql.md
-    # todo: use cases should be organised by: query and bot. The cases below
-    # should all be under query.
-    - Use Cases: 
-        - AST: use-cases/ast.md
-        - VCS: use-cases/vcs.md
-        - Runtime: use-cases/runtime.md
-        - Integration: use-cases/integration.md
-    # - Lexicon SDK: lexicon-sdk.md
-    # - Bot SDK: bot-sdk.md
+      - Flows and Bots: concepts/flows.md
+      - Help & Support: help.md
 
 theme: cinder
