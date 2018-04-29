@@ -1,7 +1,12 @@
 # Getting Started
 <br/>
 ## Introduction
-The guide provides instructions and documentation for installing and integrating with CodeLingo.
+This guide provides instructions and documentation for:
+- installing the CodeLingo command line interface (CLI)
+- configuring CodeLingo for your repositories
+- integrating CodeLingo into your workflow
+
+For information about writing and discovering Tenets, please see the [Tenet guide](concepts/tenets.md)
 
 ### Installation
 
@@ -144,7 +149,7 @@ You should seen a list of results found by tenets written in the .lingo file.
 ### `lingo <resource> list`
 
 The CodeLingo Platform supports an ecosystem of Lexicons, Tenets and Bots. The lingo client is used to discover them. For example, to list available lexicons run the following:
- 
+
 ```bash
 $ lingo lexicon list
 
@@ -156,17 +161,16 @@ vcs/codelingo/perforce
 ...
 ```
 
- 
 To see a description of a lexicon run  `$ lingo lexicon describe`. For example:
- 
+
 ```bash
 $ lingo lexicon describe ast/codelingo/cs
- 
+
 C Sharp AST Lexicon
- 
+
 This lexicon is a list of facts about the C Sharp AST.
 ```
- 
+
 To list all facts the lexicon provides, run `$ lingo lexicon list-facts ast/codelingo/cs`. To see the full list of commands available, please run `$ lingo --help`. The lingo CLI tool also powers IDE plugins, such as the [CLQL generation](/clql).
 <br/>
 <br/>
