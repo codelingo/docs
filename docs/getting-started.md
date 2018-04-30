@@ -38,11 +38,11 @@ Place the lingo binary on your $PATH.
 
 ### Authentication
 
-1. Create a CodeLingo account: [http://codelingo.io/join](http://codelingo.io/join)
+1. Create a CodeLingo account: [https://codelingo.io/join](https://codelingo.io/join)
 
-2. Generate the token at codelingo.io/lingo-token
+2. Generate the token at codelingo.io/lingo-token and copy it to your clipboard
 
-3. Run $ lingo setup and follow the steps prompted there
+3. Run `lingo setup` and follow the steps prompted there
 
 ```bash
 $ lingo setup
@@ -62,7 +62,7 @@ You should see a success message. The client is now authenticated to talk to the
 
 ## Configuration
 
-All configuration for your project is driven by `.lingo` files. Each project requires at least one `.lingo` file at root, however multiple files can be used.
+All configuration for your project is driven by `.lingo` files. Each project requires at least one `.lingo` file, however multiple files can be used.
 
 TODO:
 
@@ -73,31 +73,27 @@ TODO:
 ## CLI Tool
 
 ```bash
-$ lingo help
+$ lingo --help
 ```
 
 ```
 COMMANDS:
-     describe-fact      Describe a fact belonging to a given lexicon.
-     list-facts         List available facts for a given lexicon.
-     list-lexicons      List available lexicons.
-     new                Create a .lingo file in the current directory.
-     query-from-offset  Generate CLQL query to match code in a specific section of a file.
-     review             Review code following tenets in .lingo.
-     search             Search code following queries in .lingo.
-     setup              Configure the lingo tool for the current environment on this machine.
-     update             Update the lingo client to the latest release.
-     use-env            Use the given environment.
-     which-env          Show the current environment.
-     help, h            Shows a list of commands or help for one command
+     bots      List Bots
+     config    Show summary of config
+     flows     List Flows
+     lexicons  List Lexicons
+     init      Create a .lingo file in the current directory.
+     tenets    List Tenets
+     update    Update the lingo client to the latest release.
+     help, h   Shows a list of commands or help for one command
 
 ```
 
-### `lingo new`
+### `lingo init`
 TODO: To be completed
-```bash
-$ lingo new
 
+```bash
+$ lingo init
 ```
 
 ### `lingo review`
@@ -105,15 +101,15 @@ $ lingo new
 <!-- TODO: add commands to discover and install CLAIR -->
 
 To run the project Tenets against your repository locally, run `review` command:
+
 ```bash
 $ lingo review
 ```
 
-By default, this will step through each occurence of each tenet. For example,
-
+By default, this will step through each occurence of each Tenet. For example,
 
 ```bash
-$ lingo review
+$ lingo review -i
 test.php:2
 
     This is a function, but you probably already knew that.
@@ -130,7 +126,7 @@ test.php:2
 [o]pen [d]iscard [K]eep:
 ```
 
-In this example, the Tenet is using the inbuilt common fact "func" which matches functions in both PHP and Golang.
+In this example, the Tenet is using the inbuilt php fact "stmt_function" which matches functions in PHP. See [Tenet](concepts/tenets.md) for more details.
 
 To open a file at the line of the issue, type `o` and hit return. It will give you an option (which it will remember) to set your editor, defaulting to vi.
 
@@ -144,7 +140,7 @@ The lingo client can be used to search any public repository on Github, printing
 $ lingo search
 ```
 
-You should seen a list of results found by tenets written in the .lingo file.
+You should see a list of results found by Tenets written in the .lingo file.
 
 ### `lingo <resource> list`
 
@@ -183,7 +179,7 @@ To list all facts the lexicon provides, run `$ lingo lexicon list-facts ast/code
 
 Setting up CLAIR on your repos is as easy as adding a new webhook on Github.
 
-1. Set the Payload URL to http://clair.codelingo.io.
+1. Set the Payload URL to https://clair.codelingo.io.
 2. Ensure the content type is set to "application/json".
 3. Select the "Let me select individual events" option.
 4. Tick the "Pull request" box, leaving all others unchecked.
@@ -196,7 +192,7 @@ YOu will need to add the clairscent user as a collaborator to your repository. I
 
 More details instructions can be found [here](https://codelingo.io/flow/github-pull-request-review)
 
-Once configured, CLAIR will comment on pull requests when the tenets for this project occur.
+Once configured, CLAIR will comment on pull requests when the Tenets for this project occur.
 
 CLAIR will only review pull requests and will never make changes to your codebase.
 
