@@ -71,12 +71,13 @@ CodeLingo currently supports the following runtimes:
 - TODO
 - TODO
 
+<br/>
 More information about each particular lexicon can be found:
 
 * via the CLI tool
 
 
-   `lingo list-facts codelingo/lexicons/runtime/finish`
+    `lingo lexicons list-facts codelingo/go`
 
 * via [the hub](https://codelingo.io/hub/lexicons)
 
@@ -99,27 +100,66 @@ Patterns in CLQL (Tenets), can be expressed as statements of facts from a partic
 
 ### Reference
 
-#### Match
-The minimum requirement for a Tenet is the `match` statement. Extra metadata can be added to the Tenet to be used by the Bots that apply the Tenet:
+A Tenet consists of [Metadata](#metadata), [Bots](#bots), and a [Query](#query)
 
-```YAML
-...
-tenets:
-  - name: four-or-less
-    match:
-...
-```
 #### Metadata
-The `comment` metadata above can be used by a [Bot](flows.md) to comment on a pull request review, for example.
+
+Metadata describes the Tenet itself. The two main fields are `name` and `doc`, for example:
+
 ```YAML
 ...
 tenets:
   - name: four-or-less
-    comment: "Please keep functions arguments to four or less"
-    match:
+    doc: Functions in this module should take a maximum of four arguments.
 ...
 ```
 
+#### Bots
+
+Bots are agents that integrate with your infrastructure. They are orchestrated in [Flows](flows) and extract features from Tenet queries.
+
+In the example below, the review Bot builds a comment from a Tenet query which can be used by a Flow to comment on a pull request made to github, bitbucket, gitlab or the like. It does this by extracting the file name, start line and end line to attach the comment to via the `@ review.comment` query decorator. See [Query Decorators as Feature Extractors](#query_decorators) for more details.
+
+```YAML
+...
+tenets:
+  - name: four-or-less
+    doc: Functions in this module should take a maximum of four arguments.
+    bots:
+      codelingo/review:
+        comments: Root lingo message
+    query:
+      import codelingo/ast/php
+      @ review.comment
+      php.stmt_function({depth: any})
+...
+```
+
+#### Query
+The query is made up of three sections:
+
+- [Lexicon(s)](#lexicons) to be imported
+- Decorators which extract features of interest to Bots
+- A match statement
+
+For example:
+
+```YAML
+...
+query:
+  import codelingo/ast/php
+  @ review.comment
+  php.stmt_function({depth: any})
+...
+```
+Here we've imported the php lexicon and are looking for function statements at any depth, which is to say we're looking for functions defined anywhere in the target repository. Once one is found, the review bot is going to attach it's comment to the file and line number of that function.
+
+#### Query Decorators as Feature Extractors
+
+Query decorators are metadata on queries that bots use to extract named information from the query result.
+
+- Decorator `@ review.comment` tells [CLAIR](/concepts/flows.md) (CodeLingo AI Reviewer) to make a comment on the following fact. See [here](#querying-with-facts) for an example.
+<!-- TODO add more decorators example -->
 
 #### Querying with Facts
 
@@ -130,13 +170,15 @@ CLQL can query many types of software related systems. But assume for simplicity
 Queries are made up of Facts. A CLQL query with just a single fact will match all elements of that type in the program. The following query matches and returns all classes in the queried program:
 
 ```
+...
+@ review.comment
 common.class({depth: any})
 ```
 
 It consists of a single fact `common.class`. The name `class` indicates that the fact refers to a class, and the namespace `common` indicates that it may be a class from any language with classes. If the namespace were `csharp` this fact would only match classes from the C# lexicon. The depth range `{depth: any}` makes this fact match any class within the context of the query (a single C# program), no matter how deeply nested.
-The decorator `@ clair.comment` tells [CLAIR](/concepts/flows.md) (CodeLingo AI Reviewer) to make a comment on every class found.
+A comment is made on every class found as there is a decorator `@ review.comment` directly above the single fact `common.class`.
 
-Note: for brevity we will omit the `common` namespace. This can be done in .lingo files by importing the common lexicon into the global namespace: `import codelingo/ast/common/0.0.0 as _`.
+Note: for brevity we will omit the `common` namespace. This can be done in .lingo files by importing the common lexicon into the global namespace: `import codelingo/ast/common as _`.
 
 <br />
 
@@ -237,7 +279,7 @@ method({depth: any}):
   if_stmt({depth: 3:6})
 ```
 
-A depth range where the maximum is not larger than the minimum, i.e., `({depth: 5:5})` or `({depth: 6:0})`, will give an error.
+A depth range where the maximum is not greater than the minimum, i.e. `({depth: 5:5})` or `({depth: 6:0})`, will give an error.
 
 Depth ranges specifying a single depth can be described with a single number. This query finds direct children at depth zero:
 
@@ -351,35 +393,34 @@ The query above will only return methods of classA for which classB has a corres
 When writing a Tenet in a .lingo file read by CLAIR, only the AST lexicon facts are required:
 
 ```clql
-lexicons:
-- vcs/codelingo/git
-- ast/codelingo/cs
-
 tenets:
   - name: all-classes
-    match: 
-      project:
-        @ clair.comment
-        class
+    doc: Documentation for all-classes
+    bots:
+      codelingo/review:
+        comments: This is a class, but you probably already knew that.
+    query:
+      import codelingo/ast/csharp as cs
+      cs.project:
+        @ review.comment
+        cs.class
 ```
 
 CLAIR adds the repository information to the query before searching the CodeLingo Platform:
 
 ```clql
-lexicons:
-- vcs/codelingo/git
-- ast/codelingo/cs
-
 query:
+  import codelingo/vcs/git
+  import codelingo/ast/csharp as cs
   git.repo:
     name: “yourRepo”
     owner: “you”
     host: “local”
     git.commit: 
       sha: “HEAD”    
-      project:
-        @ clair.comment
-        class
+      cs.project:
+        @ review.comment
+        cs.class
 ```
 
 Every query to the CodeLingo platform itself starts with VCS facts to instruct the CodeLingo Platform on where to retrieve the source code from.
@@ -399,7 +440,7 @@ git.repo:
   git.commit:
     sha: “HEAD”    
     project:
-      @ clair.comment
+      @ review.comment
       method:
         arg-num: > $args
 ```
@@ -416,7 +457,7 @@ We can write the same Tenet with the Common AST lexicon, which would catch the p
 A Tenet can be made of interleaved facts from different lexicons.
  
 
-[update imports to begin with lexicon type: ast/codelingo/common]
+[update imports to begin with lexicon type: codelingo/ast/common]
 [add name matching to funcs above]
  
 [Explain above query]. In a similar fashion, a runtime fact can be interleaved with an AST fact:
@@ -434,11 +475,10 @@ Further examples can be found in the [link to Tenet examples directory].
 Below is an example of a query that returns all functions in a repository with more than 4 arguments:
 
 ```YAML
-lexicons:
-  - codelingo/vcs/git
-  - codelingo/ast/golang as go
 
-match:
+query:
+  import codelingo/vcs/git
+  import codelingo/ast/go
   git.repo:
     owner: "username"
     host: "myvcsgithost.com"
@@ -446,18 +486,18 @@ match:
     git.commit:
       sha: "HEAD"
       go.project:
-        @ clair.comment
+        @ review.comment
         go.func_decl:
           arg_count: > 4
 ```
 
-The query is made up of two sections: a list of [Lexicons](#lexicons) and a match statement. Lexicons get data into the CodeLingo Platform and provide a list of facts to query that data. In the above example, the git Lexicon finds and clones the "myrepo" repository from the "myvcsgithost.com" VCS host. The "myrepo" repository must be publicly accessible for the git lexicon to access it.
+Lexicons get data into the CodeLingo Platform and provide a list of facts to query that data. In the above example, the git Lexicon finds and clones the "myrepo" repository from the "myvcsgithost.com" VCS host. The "myrepo" repository must be publicly accessible for the git lexicon to access it.
 
 To access a private repository, the git credentials need to be added to the query:
 
 ```YAML
 ...
-match:
+query:
   git.repo:
     auth:
       token: "abctoken"
@@ -473,32 +513,27 @@ The CodeLingo Platform can be queried directly with the the `$ lingo search` com
 ```yaml
 tenets:
 - name: first-tenet
-  comment: This is a function, name 'writeMsg', but you probably knew that.
-  match:
-    @ clair.comment
-    func:
+  doc: example doc
+  bots:
+    codelingo/review:
+      comments: This is a function, name 'writeMsg', but you probably knew that.
+  query:
+    import codelingo/ast/go
+    @ review.comment
+    go.func_decl:
       name: "writeMsg"
 ```
 
 This will find funcs named "writeMsg". Save and close the file, then run `lingo review`. Try adding another func called "readMsg" and run a review. Only the "writeMsg" func should be highlighted. Now, update the Tenet to find all funcs that end in "Msg":
 
 ```yaml
-  match:
-    @ clair.comment
-    func:
+  query:
+    import codelingo/ast/go
+    @ review.comment
+    go.func_decl:
       name: /.*Msg$/
 ```
 
-<!-- 
-## CLQL
-
-CLQL is the query language under the `match:` section of a Tenet. It stands for CodeLingo Query Language. The full spec can be found [here](https://docs.google.com/document/d/1NIw1J9u2hiez9ZYZ0S1sV8lJamdE9eyqWa8R9uho0MU/edit), but a practical to get acquainted with the language is to review the [examples](_examples).
-
-## Running Examples
-
-All examples under [examples/php](_examples/php) are working. The other examples have varying levels of completeness and serve as an implementation roadmap. To run the examples, copy the directory out of the repository and follow the same steps as in the tutorial above.
-
--->
 </br>
 
 
@@ -506,7 +541,7 @@ All examples under [examples/php](_examples/php) are working. The other examples
 
 #### CSharp
 
-Iterative code, such as the following, can be more safely expressed declaratively using LINQ. For example: 
+Iterative code, such as the following, can be more safely expressed declaratively using LINQ. For example:
 
 ```
 decimal total = 0;
@@ -540,12 +575,12 @@ csharp.method_declaration:
   csharp.block:
     csharp.local_declaration_statement:
       csharp.variable_declaration:
-        @ clair.comment
+        @ review.comment
         csharp.variable_declarator:
           identifier_token: $varName
     csharp.for_each_statement:
       csharp.add_assignment_expression({depth: any}):
-        @ clair.comment
+        @ review.comment
         csharp.identifier_name:
           identifier_token: $varName
 ```
@@ -559,7 +594,8 @@ The following tenet asserts that functions should not return local objects by re
 The following query finds this bug by matching all functions that return a reference type, and declare the returned value inside the function body:
 
 ```
-@ clair.comment
+import codelingo/ast/cpp
+@ review.comment
 cc.func_decl:
   cc.func_header:
     cc.return_type:
@@ -648,7 +684,7 @@ The same rule can be expressed in CLQL as the following [tenet](tenets.md):
 
 ```clql
 lexicons: 
-  - ast/codelingo/csharp as cs
+  - codelingo/ast/csharp as cs
 tenets:
   - Name: "EmptyBlock"
     Comment: "A block statement should always contain child statements."
@@ -731,7 +767,7 @@ csprof.session:
     args: "/host:127.0.0.1 /db:testing"
   cs.file:
     filename: "./db/manager.cs"
-    @ clair.comment
+    @ review.comment
     cs.method:
       name: "getDBCon"
       csprof.exit:
@@ -770,7 +806,7 @@ csprof.session:
         time: $startUpdate
       csprof.block_exit:
         time: $exitUpdate
-    @ clair.comment
+    @ review.comment
     cs.method:
       name: "getUser"
       csprof.block_start:
@@ -797,7 +833,7 @@ cs.session:
     args: "/host:127.0.0.1 /db:testing"
   cs.file:
     filename: "./db/manager.cs"
-    @ clair.comment
+    @ review.comment
     cs.method:
       name: "importData"
       csprof.duration:
