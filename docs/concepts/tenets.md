@@ -13,6 +13,11 @@ Examples:
 - Infrastructure specific guidelines / safeguards: learning from failures
 - Packaging the author’s guidance with a library
 
+
+## Configuration
+
+All Tenets are written in CLQL and stored in `.lingo` files. They can be added to your project either by writing custom Tenets, or importing existing Tenets. Tenets are integrated into your workflow through Flows. The flagship Flow is Review, which integrates Tenets into your code review process.
+
 ## Importing Existing Tenets
 Tenets are written in CLQL and are including in a project either directly in the .lingo file, or via an include statement from an external bundle.
 
@@ -20,89 +25,45 @@ Tenets are written in CLQL and are including in a project either directly in the
 
 To import an existing Tenet into your project, import the bundle via the url provided in the hub in your lingo file.
 
-TODO: add example of tenet import
+Here is an an example of a basic tenet import
 ```YAML
 ...
+tenets:
+  - import: codelingo/go/bool-param
 ...
 ```
 
-_to be completed_
-_to be completed_
-_to be completed_
-_to be completed_
-
-Additional Tenets for your projects can be discovered via the Hub. 
-
-See here for more information on importing Tenets [see here]
-
-
-
-
-
-```yaml
+Bundles of tenets can also be imported. For example:
+```YAML
+...
 tenets:
-  - import: codelingo/modica/default
-
+  - import: codelingo/go
+...
 ```
 
-```yaml
-lexicons: # import any particular lexicons to be used in your tenets
-  - codelingo/common
-  - codelingo/csharp
-tenets:
-  - import: modica/default
-  - import: modica/default/null-check
-  - import: codelingo/default
-  - name: find-funcs #name of the tenet
-    doc: Example tenet that finds all functions.
-    comment: This is a function, but you probably already knew that.
-    match: |
-      @ clair.comment
-      csharp.method_declaration({depth: any})
-  - name: same-other-tenet
-    doc: Some documentation
-    comment: This is the comment left by the bot
-    bots:
-      # bots here ...
-    query:
-      # query here ...
-```
+Additional Tenets for your projects can be discovered via the Hub.
 
 
-```yaml
-tenets:
-  - import: modica/default/null-check
-    bots:
-      - codelingo/review
-          comment: "this overrides null-check default comment"
-```
-
-
-
-
-
-
-<br/>
-
-## Running a Tenet
-TODO
-```bash
-$ lingo run
-```
 <br/>
 
 ## Writing Custom Tenets
-_to be completed_
 
-<br/>
-## IDE Integration
-Vim has full support for the Lingo syntax, including CLQL. To set it up, [see here](scripts/lingo.vim.readme). Other than the match statement, written in CLQL, the rest of a .lingo file is written in YAML. As such, you can set .lingo files to YAML syntax in your IDE to get partial highlighting.
+Custom Tenets require the use of Lexicons and CLQL. See below for more details regarding each. The following steps are followed for writing any custom Tenet.
 
-CodeLingo's Integrated Development Environment (IDE) plugins can help build patterns in code by automatically generating queries to detect selected elements of programs. A generated query will describe the selected element and its position in the structure of the program:
+1. Define meta data for the Tenet (name, doc)
 
-![Query Generation](../img/queryGeneration.png)
+1. Identify when Lexicons you be using (can be explored via [hub](https://codelingo.io/hub))
 
-In the above example string literal is selected. The generated CLQL query will match any literal directly inside an assignment statement, in a function declaration, matching the nested pattern of the selected literal.
+3. Import the relevant lexicon into your .lingo file. e.g.
+```yaml
+...
+query:
+  import codelingo/ast/csharp
+...
+```
+
+4. Write the specific query you are interested in using the facts provided by the Lexicon.
+
 
 <br/>
 ## Lexicons
@@ -213,8 +174,19 @@ Query decorators are metadata on queries that bots use to extract named informat
 - Decorator `@ review.comment` tells [CLAIR](/concepts/flows.md) (CodeLingo AI Reviewer) to make a comment on the following fact. See [here](#querying-with-facts) for an example.
 <!-- TODO add more decorators example -->
 
+<br/>
+
+## IDE Integration
+Vim has full support for the Lingo syntax, including CLQL. To set it up, [see here](scripts/lingo.vim.readme). Other than the match statement, written in CLQL, the rest of a .lingo file is written in YAML. As such, you can set .lingo files to YAML syntax in your IDE to get partial highlighting.
+
+CodeLingo's Integrated Development Environment (IDE) plugins can help build patterns in code by automatically generating queries to detect selected elements of programs. A generated query will describe the selected element and its position in the structure of the program:
+
+![Query Generation](../img/queryGeneration.png)
+
+In the above example string literal is selected. The generated CLQL query will match any literal directly inside an assignment statement, in a function declaration, matching the nested pattern of the selected literal.
 
 ## Examples
+
 ### Simple examples
 #### Argument count
 Below is an example of a query that returns all functions in a repository with more than 4 arguments:
