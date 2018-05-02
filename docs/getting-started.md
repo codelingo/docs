@@ -96,7 +96,7 @@ Integrating Tenets into your existing developer workflow is done through Flows. 
   $ lingo run review
 ```
 
-Note, the first run of any Flow can take a little longer as your repoistory is injested for the first time.
+Note, the first run of any Flow can take a little longer as your repository is ingested for the first time.
 
 
 ## Adding Tenets
@@ -115,7 +115,7 @@ tenets:
   - import: codelingo/go/bool-param
 ```
 
-For more information about importing Tenets please see the [Tenet guide](concepts/tenets.md#importing). Existing Tenets driven by best practices and the community can be found via [the Hub](https://codelingo.io/hub/tenets)
+For more information about importing Tenets please see the [Tenet guide](concepts/tenets.md#importing). Existing Tenets to import (driven by best practices and the community) can be found [on the Hub](https://codelingo.io/hub/tenets)
 
 To write custom Tenets requires use of CodeLingo Query Language (CLQL). CLQL relies on importing Lexicons, which provide a set of domain specific facts to work with. All Tenets require at minimum a `name` and `query`.
 
@@ -143,14 +143,14 @@ Once configured, CLAIR will comment on pull requests when the Tenets for this pr
 
 CLAIR will only review pull requests and will never make changes to your codebase.
 
-Flows can be used to build any custom workflows. Whether that's dashboarding through panel Bots, or intergations with your existing tools and services through Bots.
+Flows can be used to build any custom workflows. Whether that's dashboarding through panel Bots, or integrations with your existing tools and services through Bots.
 
 If you are interested in building custom flows and integrations, please contact us directly at: 
  [hello@codelingo.io](hello@codelingo.io).
 
 ## Next Steps
 
-Now that you have basic integration with CodeLingo into your project, you can start to add aditional Tenets and build custom workflow augmentation.
+Now that you have basic integration with CodeLingo into your project, you can start to add additional Tenets and build custom workflow augmentation.
 
 **[Explore existing Tenets to add to your project](https://codelingo.io/hub/tenets)**
 
@@ -198,7 +198,7 @@ GLOBAL OPTIONS:
 ```bash
 $ lingo init
 ```
-Initialize a new .lingo file inside the current directory. If there is already an existing .lingo file this command will fail. The. default lingo file comes with a single go tenet matches any fuctions.
+Initialize a new .lingo file inside the current directory. If there is already an existing .lingo file this command will fail. The. default lingo file comes with a single go tenet matches any functions.
 
 
 ### `lingo run review`
@@ -237,3 +237,4 @@ To open a file at the line of the issue, type `o` and hit return. It will give y
 
 
 NB: The first time `lingo run review` is run on a repository, `lingo` will automatically add the Codelingo git server as a remote, so that changes can be synced and analysed on the Codelingo platform.
+
