@@ -12,5 +12,6 @@ pages:
       - Tenets: concepts/tenets.md
       - Flows and Bots: concepts/flows.md
       - Help & Support: help.md
+    - Hub: https://codelingo.io/hub
 
 theme: cinder
