@@ -405,7 +405,8 @@ tenets:
     Doc: "Validates that the code does not contain any empty block statements."
     Match: 
       cs.block_stmt:
-        !cs.element
+        exclude:
+          cs.element
 ```
 
 The VisitStatement function contains the core logic of this StyleCop rule:
@@ -425,10 +426,11 @@ In CLQL, the match statement expresses the logic of the query. Traversal is enti
 
 ```clql
 cs.block_stmt:
-  !cs.element
+  exclude:
+    cs.element
 ```
 
-The above query will match against any block statement that does not contain anything at all. `cs.element` matches all C# elements, and the "!" operator performs negation.
+The above query will match against any block statement that does not contain anything at all. `cs.element` matches all C# elements, and the `exclude` operator performs exclusion.
 
 #### Access Modifier Declaration
 
@@ -716,41 +718,45 @@ method({depth: any}):
 
 <br />
 
-#### Negation
+#### Exclude
 
-Negation allows queries to match children that *do not* have a given property or child fact. Negated facts and properties are prepended by "!". The following query finds all classes except those named "classA":
+Exlude allows queries to match children that *do not* have a given property or child fact. Excluded facts and properties are children of an `exclude` operator. The following query finds all classes except those named "classA":
 
 ```
 class({depth: any}):
-  !name: "classA"
+  exclude:
+    name: "classA"
 ```
  
 This query finds all classes with String methods:
 
 ```
 class({depth: any}):
-  !method:
-    name: “String”
+  exlude:
+    method:
+      name: “String”
 ```
  
-The placement of the negation operator has a significant effect on the query's meaning - this similar query finds all methods with a method that is not called String:
+The placement of the exclude operator has a significant effect on the query's meaning - this similar query finds all methods with a method that is not called String:
 
 ```
 class({depth: any}):
   method:
-    !name: “String”
+    exclude:
+      name: “String”
 ```
  
-Negating a fact does not affect its siblings. The following query finds all String methods that use an if statement, but don’t use a foreach statement:
+Excluding a fact does not affect its siblings. The following query finds all String methods that use an if statement, but don’t use a foreach statement:
 
 ```
 method({depth: any}):
   name: “String”
   if_stmt
-  !foreach_stmt
+  exclude:
+    foreach_stmt
 ```
  
-A fact cannot be both yielded and negated.
+A fact cannot be both yielded and excluded.
 
 <br />
 #### any_of
