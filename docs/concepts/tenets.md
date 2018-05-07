@@ -728,16 +728,7 @@ class({depth: any}):
     name: "classA"
 ```
  
-This query finds all classes with String methods:
-
-```
-class({depth: any}):
-  exlude:
-    method:
-      name: “String”
-```
- 
-The placement of the exclude operator has a significant effect on the query's meaning - this similar query finds all methods with a method that is not called String:
+This query finds all methods with a method that is not called String:
 
 ```
 class({depth: any}):
@@ -745,7 +736,18 @@ class({depth: any}):
     exclude:
       name: “String”
 ```
- 
+
+The placement of the exclude operator has a significant effect on the query's meaning - this similar query finds all classes without String methods:
+
+```
+class({depth: any}):
+  exlude:
+    method:
+      name: “String”
+```
+
+The exclude operator in the above query can be read as excluding all methods with the name string. Arbitrarily many facts, properties, and operators can be added as children of the exclude operator to further specify the pattern to be excluded.
+
 Excluding a fact does not affect its siblings. The following query finds all String methods that use an if statement, but don’t use a foreach statement:
 
 ```
@@ -755,8 +757,24 @@ method({depth: any}):
   exclude:
     foreach_stmt
 ```
- 
-A fact cannot be both yielded and excluded.
+
+An excluded fact will not return a result and therefore cannot be decorated.
+
+<br />
+#### Nested Exclude
+
+Exclusions can be arbitrarily nested. The following query finds methods which only return nil or return nothing, that is, it finds all methods except those with non-nil values in their return statements:
+
+```
+method:
+  exclude:
+    return_stmt({depth: any}):
+      literal:
+        exclude:
+          name: "nil"
+```
+
+Values nested under multiple excludes still do not return results and cannot be decorated.
 
 <br />
 #### any_of
