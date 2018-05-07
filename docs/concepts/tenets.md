@@ -405,7 +405,8 @@ tenets:
     Doc: "Validates that the code does not contain any empty block statements."
     Match: 
       cs.block_stmt:
-        !cs.element
+        exclude:
+          cs.element
 ```
 
 The VisitStatement function contains the core logic of this StyleCop rule:
@@ -425,10 +426,11 @@ In CLQL, the match statement expresses the logic of the query. Traversal is enti
 
 ```clql
 cs.block_stmt:
-  !cs.element
+  exclude:
+    cs.element
 ```
 
-The above query will match against any block statement that does not contain anything at all. `cs.element` matches all C# elements, and the "!" operator performs negation.
+The above query will match against any block statement that does not contain anything at all. `cs.element` matches all C# elements, and the `exclude` operator performs [exclusion](#exclude).
 
 #### Access Modifier Declaration
 
@@ -716,41 +718,84 @@ method({depth: any}):
 
 <br />
 
-#### Negation
+#### Exclude
 
-Negation allows queries to match children that *do not* have a given property or child fact. Negated facts and properties are prepended by "!". The following query finds all classes except those named "classA":
-
-```
-class({depth: any}):
-  !name: "classA"
-```
- 
-This query finds all classes with String methods:
+Exlude allows queries to match children that *do not* have a given property or child fact. Excluded facts and properties are children of an `exclude` operator. The following query finds all classes except those named "classA":
 
 ```
 class({depth: any}):
-  !method:
-    name: “String”
+  exclude:
+    name: "classA"
 ```
  
-The placement of the negation operator has a significant effect on the query's meaning - this similar query finds all methods with a method that is not called String:
+This query finds all classes with a method that is not called String:
 
 ```
 class({depth: any}):
   method:
-    !name: “String”
+    exclude:
+      name: “String”
 ```
- 
-Negating a fact does not affect its siblings. The following query finds all String methods that use an if statement, but don’t use a foreach statement:
+
+The placement of the exclude operator has a significant effect on the query's meaning - this similar query finds all classes without String methods:
+
+```
+class({depth: any}):
+  exlude:
+    method:
+      name: “String”
+```
+
+The exclude operator in the above query can be read as excluding all methods with the name string - the `method` fact and `name` property combine to form a more complex pattern to be excluded. In the same way, arbitrarily many facts, properties, and operators can be added as children of the exclude operator to further specify the pattern to be excluded.
+
+Excluding a fact does not affect its siblings. The following query finds all String methods that use an if statement, but don’t use a foreach statement:
 
 ```
 method({depth: any}):
   name: “String”
   if_stmt
-  !foreach_stmt
+  exclude:
+    foreach_stmt
 ```
- 
-A fact cannot be both yielded and negated.
+
+An excluded fact will not return a result and therefore cannot be decorated.
+
+<br />
+#### Nested Exclude
+
+Exclusions can be arbitrarily nested. The following query finds methods which only return nil or return nothing, that is, it finds all methods except those with non-nil values in their return statements:
+
+```
+method:
+  exclude:
+    return_stmt({depth: any}):
+      literal:
+        exclude:
+          name: "nil"
+```
+
+Facts nested under multiple excludes still do not return results and cannot be decorated.
+
+<br />
+#### Include
+
+Include allows queries to match patterns without a given parent. The following query is a simple attempt at finding infinitely recursing functions. It works by finding functions that call themselves without an if statement to halt recursion:
+
+```
+func:
+  name: $funcName
+  exclude:
+    if_stmt:
+      include:
+        func_call:
+          name: $funcName
+```
+
+It can be read as matching all functions that call themselves with no if statement between the definition and the call site. `$funcName` is a [variable](#variables) that ensures the definition and call site refer to the same function.
+
+Include statements must have an exclude ancestor. Exclude/include pairs can be arbitrarily nested.
+
+Results under include statements appear as children of the parent of the corresponding exclude statement, and therefore *can* be decorated. In the above example, the `func_call` result will appear as a direct child of the `func` result.
 
 <br />
 #### any_of
