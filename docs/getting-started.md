@@ -78,7 +78,7 @@ To initialize a default lingo file, run `$ lingo init`. The default file contain
       common.func({depth: any})
 ```
 
-This default lingo file has a single Tenet which find functions across any language. In this case, the Lexicon import has been inlined into the Tenet definition (`import codelingo/ast/common`)
+This default lingo file has a single Tenet which find functions across any language.
 
 As can be seen here, the key parts of each Tenet are:
 
@@ -90,7 +90,7 @@ As can be seen here, the key parts of each Tenet are:
 
 ## Running a review
 
-Integrating Tenets into your existing developer workflow is done through Flows. The review flow can be used. All flows are run via `$lingo run <flow_name>`.
+Integrating Tenets into your existing developer workflow is done through Flows. The review flow can be used. All flows are run via `$ lingo run <flow_name>`.
 
 ```bash
   $ lingo run review
@@ -151,9 +151,9 @@ If you are interested in building custom flows and integrations, please contact 
 ## Next Steps
 
 Now that you have basic integration with CodeLingo into your project, you can start to add additional Tenets and build custom workflow augmentation.
-
+<br/><br/><br/>
 **[Explore existing Tenets to add to your project](https://codelingo.io/hub/tenets)**
-
+<br/><br/><br/>
 **[View guide to importing and writing Tenets](/concepts/tenets.md)**
 
 <br/>

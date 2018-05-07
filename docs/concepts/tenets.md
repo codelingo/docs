@@ -1,11 +1,12 @@
 C# Tenets
+
 ## Overview
 
-A Tenet is a rule about a system written in [CLQL](#clql) and based on libraries of facts called Lexicons. It is an underlying pattern or heuristic which the CodeLingo Platform can use to guide development and safeguard systems via [Flows and Bots](flows.md).
+A Tenet is a rule about a system written in [CLQL](#clql) and based on libraries of facts called [Lexicons](#lexicons). It is an underlying pattern or heuristic which provide deep analysis of software systems, and can be used to guide development and safeguard systems via [Flows and Bots](flows.md).
 
-Tenets can be added directly to Bots or embedded in the resources they monitor.
+<!-- Tenets can be added directly to Bots or embedded in the resources they monitor. -->
 
-Examples:
+Some examples of Tenets:
 
 - Anything a static linter expresses, with a fraction of the code
 - Change management: large scale incremental refactoring
@@ -13,119 +14,95 @@ Examples:
 - Infrastructure specific guidelines / safeguards: learning from failures
 - Packaging the author’s guidance with a library
 
+<!-- Tenets from  are written in CLQL and are including in a project either directly in the .lingo file, or via an include statement from an external bundle. -->
 
-## Configuration
+CodeLingo Query Language (CLQL) is a simple, lightweight language built for writing Tenets. It allows high levels queries and patterns to be defined across various software domains with ease.
 
-All Tenets are written in CLQL and stored in `.lingo` files. They can be added to your project either by writing custom Tenets, or importing existing Tenets. Tenets are integrated into your workflow through Flows. The flagship Flow is Review, which integrates Tenets into your code review process.
+It’s full grammar is under [70 lines of code](../img/ebnf.png)!
 
-## Importing Existing Tenets
-Tenets are written in CLQL and are including in a project either directly in the .lingo file, or via an include statement from an external bundle.
+Patterns in CLQL (Tenets), can be expressed as statements of facts imported from a particular lexicon.
+<br/>
 
-**[Existing Tenets can be discovered via the hub](https://codelingo.io/hub/tenets)**
+All Tenets are either written directly in `.lingo` files within your project, or imported from the CodeLingo Hub into your `.lingo` file. See the [Getting Started guide](getting-started.md) for more information on configuring your `.lingo` file.
 
-To import an existing Tenet into your project, import the bundle via the url provided in the hub in your lingo file.
+<br/>
 
-Here is an an example of a basic tenet import
+##  Structure
+A Tenet is a CLQL Query, and consists of [Metadata](#metadata), [Bots](#bots), and the [Query](#query) itself.
 ```YAML
 ...
 tenets:
-  - import: codelingo/go/bool-param
+  - name: ...
+    doc: ...
+    bots: ...
+    query: ...
 ...
 ```
-
-Bundles of tenets can also be imported. For example:
-```YAML
-...
-tenets:
-  - import: codelingo/go
-...
-```
-
-Additional Tenets for your projects can be discovered via the Hub.
-
-
-<br/>
-
-## Writing Custom Tenets
-
-Custom Tenets require the use of Lexicons and CLQL. See below for more details regarding each. The following steps are followed for writing any custom Tenet.
-
-1. Define meta data for the Tenet (name, doc)
-
-1. Identify when Lexicons you be using (can be explored via [hub](https://codelingo.io/hub))
-
-3. Import the relevant lexicon into your .lingo file. e.g.
-```yaml
-...
-query:
-  import codelingo/ast/csharp
-...
-```
-
-4. Write the specific query you are interested in using the facts provided by the Lexicon.
-
-
-<br/>
-## Lexicons
-
-The SDLC is built up of many different domains. With [CLQL](#clql) patterns across all these domains are expressed as statements of facts. Those facts come from Lexicons, which are collections of terms about to a domain of knowledge.
-
-Lexicon SDK Requires License
-
-### Source code (AST)
-
-Abstract Syntax Tree (AST) lexicons are used to query static properties of source code. These are typically used to enforce project specific patterns such as layering violations as well as more general code smells.
-
-### VCS
-
-With Version Control System (VCS) lexicons, facts about the VCS itself can be queried: commit comments, commit SHAs, authorship and other metadata.
-
-### Runtime
-
-Runtime lexicons are used to query the runtime data of a program. These are typically used to identify performance issues and common runtime problems.
-
-CodeLingo currently supports the following runtimes:
-- TODO
-- TODO
-
-<br/>
-More information about each particular lexicon can be found:
-
-* via the CLI tool
-
-
-    `lingo lexicons list-facts codelingo/go`
-
-* via [the hub](https://codelingo.io/hub/lexicons)
-
-
-## CLQL
-
-CodeLingo Query Language (CLQL) is a simple, lightweight language built for querying patterns across various software domains. It is what is used to write Tenets.
-
-It’s full grammar is under [70 lines of code](../img/ebnf.png).
-
-Patterns in CLQL (Tenets), can be expressed as statements of facts from a particular lexicon. Lexicons are libraries of facts about to a domain of knowledge. These domains include:
-
-- Static facts about programming languages (AST): C#, Javascript, Java, PHP, Golang etc
-- Dynamic facts about languages (Runtime): values, race conditions, tracing, profiling etc
-- Facts about VCSs: perforce, git, hg, commits, comments, ownership etc
-- Facts about databases, networking, CI, CD, business rules, HR etc
-- Facts about running systems: logs, crash dumps, tracing etc
-
-A Tenet consists of [Metadata](#metadata), [Bots](#bots), and a [Query](#query)
 
 ### Metadata
 
-Metadata describes the Tenet itself. The two main fields are `name` and `doc`, for example:
+Metadata describes the Tenet. It is used for discovery, integration, and documentation. The two main fields are `name` and `doc`, for example:
 
 ```YAML
 ...
 tenets:
   - name: four-or-less
     doc: Functions in this module should take a maximum of four arguments.
+    bots: ...
+    query: ...
+    ...
 ...
 ```
+
+<!-- Additional fields are:  -->
+
+
+### Query
+The query is made up of three parts:
+
+- Import statement to include the relevant [Lexicon(s)](#lexicons)
+- Decorators which extract features of interest to Bots
+- A match statement
+
+For example:
+
+```YAML
+...
+tenets:
+  - name: four-or-less
+    doc: Functions in this module should take a maximum of four arguments.
+    bots: ...
+    query:
+      import codelingo/ast/php              // import statement
+      @ review.comment                      // feature extraction decorator
+      php.stmt_function({depth: any})       // the match statement
+...
+```
+
+Here we've imported the php lexicon and are looking for function statements at any depth, which is to say we're looking for functions defined anywhere in the target repository. Once one is found, the review bot is going to attach it's comment to the file and line number of that function.
+
+Here is a more complex example:
+```YAML
+...
+tenets:
+  - name: debug-prints
+    doc: ...
+    bots: ...
+    query: |
+      import codelingo/ast/python36
+      @ review.comment
+      python36.expr({depth: any}):
+        python36.call:
+          python36.name:
+            id: "print"
+...
+```
+
+This particular Tenet looks for debug prints in python code.
+
+
+Note, the decorator `@ review.comment` is what integrates the Tenet into the Review Flow, detailing where the comment should be made when the pattern matches. Generally speaking, query decorators are metadata on queries that bots use to extract named information from the query result.
+<!-- TODO add more decorators example -->
 
 ### Bots
 
@@ -140,7 +117,7 @@ tenets:
     doc: Functions in this module should take a maximum of four arguments.
     bots:
       codelingo/review:
-        comments: Root lingo message
+        comments: Please write functions that only take a maximum of four arguments.
     query:
       import codelingo/ast/php
       @ review.comment
@@ -148,31 +125,86 @@ tenets:
 ...
 ```
 
-### Query
-The query is made up of three sections:
+## Writing Custom Tenets
 
-- [Lexicon(s)](#lexicons) to be imported
-- Decorators which extract features of interest to Bots
-- A match statement
+By understaand the structure of a Tenet it should now be possible to write your own custom Tenets for your own particular requirements.
 
-For example:
+Follow the belows steps to write your own custom Tenet.
+
+1. Define metadata for the Tenet (`name`, `doc`)
+
+1. Identify when Lexicon(s) you be using (can be explored via [hub](https://codelingo.io/hub/lexicons)) and import into your Tenet. (e.g.`import codelingo/ast/csharp`)
+
+4. Write the specific `query` you are interested in using the facts provided by the Lexicon.
+
+5. Integrate the relevant `bots`.
+
+6. (_optional_) Deploy your Tenet to the Hub.
+
+
+<br/>
+## Lexicons
+
+All Tenets require the use of Lexicons. The SDLC is built up of many different domains and patterns across all these domains can be expressed as statements of facts. Those facts come from Lexicons, which are collections of terms about to a domain of knowledge.
+
+More information about each particular lexicon can be found via [the hub](https://codelingo.io/hub/lexicons)
+
+There are currently the following types of Lexicons:
+
+### Source code (AST)
+
+Abstract Syntax Tree (AST) lexicons are used to query static properties of source code. These are typically used to enforce project specific patterns such as layering violations as well as more general code smells.
+
+### Version Control (VCS)
+
+With Version Control System (VCS) lexicons, facts about the VCS itself can be queried: commit comments, commit SHAs, authorship and other metadata.
+
+### Runtime
+
+Runtime lexicons are used to query the runtime data of a program. These are typically used to identify performance issues and common runtime problems.
+
+### Other
+We are currently working to extend the Lexicons libraries to include:
+- Lexicons for databases, networking, CI, CD, business rules, HR
+- Lexicons for running systems: logs, crash dumps, tracing
+
+If you are interested in any of these other types of Lexicons, or are interested in writing your own custom Lexicons please [contact us directly.](hello@codelingo.io)
+
+
+
+## Importing Existing Tenets
+
+It is possible to import Tenets from other projects. All Existing Tenets can be discovered via **[the hub](https://codelingo.io/hub/tenets)**.
+
+To import an existing Tenet into your project, add the url of the Tenet (provided in the hub) in your lingo file. Here is an an example:
 
 ```YAML
 ...
-query:
-  import codelingo/ast/php
-  @ review.comment
-  php.stmt_function({depth: any})
+tenets:
+  - import: codelingo/go/bool-param
 ...
 ```
-Here we've imported the php lexicon and are looking for function statements at any depth, which is to say we're looking for functions defined anywhere in the target repository. Once one is found, the review bot is going to attach it's comment to the file and line number of that function.
+This imports the `bool-param` Tenet from the `codelingo/go` bundle.
 
-#### Query Decorators as Feature Extractors
+Entire bundles of Tenets can also be imported. For example, to import all of the `codelingo/go` Tenets:
+```YAML
+...
+tenets:
+  - import: codelingo/go
+...
+```
 
-Query decorators are metadata on queries that bots use to extract named information from the query result.
+Note: import statements and custom Tenets can exist within the same .lingo file.
 
-- Decorator `@ review.comment` tells [CLAIR](/concepts/flows.md) (CodeLingo AI Reviewer) to make a comment on the following fact. See [here](#querying-with-facts) for an example.
-<!-- TODO add more decorators example -->
+Existing Tenets to import into your projects can be found and discovered via [the Hub](https://codelingo.io/hub).
+
+
+<br/>
+
+## Deploying Tenets to the Hub
+
+All public Tenets are stored in our [public GitHub repo](https://github.com/codelingo/hub). Please raise a Pull Request on this repo with your `.lingo` files, or [contact us directly](hello@codelingo.io)
+
 
 <br/>
 
@@ -185,6 +217,319 @@ CodeLingo's Integrated Development Environment (IDE) plugins can help build patt
 
 In the above example string literal is selected. The generated CLQL query will match any literal directly inside an assignment statement, in a function declaration, matching the nested pattern of the selected literal.
 
+<br/>
+
+## CLQL Reference
+
+### Reference
+
+#### Querying with Facts
+
+<!--Should we include systems that CLQL does not *yet* support? -->
+CLQL can query many types of software related systems. But assume for simplicity that all queries on this page are scoped to a single object oriented program.
+
+<!--TODONOW link to fact definition section on lexicon page-->
+Queries are made up of Facts. A CLQL query with just a single fact will match all elements of that type in the program. The following query matches and returns all classes in the queried program:
+
+```
+...
+common.class({depth: any})
+```
+
+It consists of a single fact `common.class`. The name `class` indicates that the fact refers to a class, and the namespace `common` indicates that it may be a class from any language with classes. If the namespace were `csharp` this fact would only match classes from the C# lexicon. The depth range `{depth: any}` makes this fact match any class within the context of the query (a single C# program), no matter how deeply nested.
+A comment is made on every class found as there is a decorator `@ review.comment` directly above the single fact `common.class`.
+
+Note: for brevity we will omit the `common` namespace. This can be done in .lingo files by importing the common lexicon into the global namespace: `import codelingo/ast/common as _`.
+
+<br />
+
+#### Fact Properties
+
+To limit the above query to match classes with a particular name, add a "name" property as an argument to the `method` fact:
+ 
+```
+method({depth: any}):
+  name: "myFunc"
+```
+ 
+This query returns all methods with the name "myFunc". Note that the yield tag is still on the `method` fact - properties cannot be returned, only their parent facts. Also note that properties are not namespaced, as their namespace is implied from their parent fact.
+
+Facts with arguments are preceded by a colon.
+
+<br />
+
+#### Floats and Ints
+<!--TODO(blakemscurr) explain boolean properties once syntax has been added to the ebnf-->
+Properties can be of type string, float, and int. The following finds all int literals with the value 8:
+ 
+```
+int_lit({depth: any}):
+  value: 5
+```
+ 
+This query finds float literals with the value 8.7:
+ 
+```
+float_lit({depth: any}):
+  value: 8.7
+```
+
+<br />
+
+#### Comparison
+
+The comparison operators >, <, ==, >=, and <= are available for floats and ints. The following finds all int literals above negative 3:
+```
+int_lit({depth: any}):
+  value: > -3
+```
+
+<br />
+
+#### Regex
+
+Any string property can be queried with regex. The following finds methods with names longer than 25 characters:
+ 
+```
+method({depth: any}):
+  name: /^.{25,}$/
+```
+
+<br />
+
+#### Fact Nesting
+
+Facts can be take arbitrarily many other facts as arguments, forming a query with a tree struct of arbitrary depth. A parent-child fact pair will match any parent element even if the child is not a direct descendant. The following query finds all the if statements inside a method called "myMethod", even those nested inside intermediate scopes (for loops etc):
+
+```
+method({depth: any}):
+  name: "myMethod"
+  if_stmt({depth: any})
+```
+ 
+Any fact in a query can be yielded. If `class` is yielded, this query returns all classes named "myClass", but only if it has at least one method:
+ 
+```
+class({depth: any}):
+  name: “myClass”
+  method({depth: any})
+```
+ 
+Any fact in a query can have properties. The following query finds all methods named "myMethod" on the all classes named "myClass":
+ 
+```
+class({depth: any}):
+  name: “myClass”
+  method({depth: any}):
+    Name: “myMethod”
+```
+
+#### Depth
+
+Facts use depth ranges to specify the depth at which they can be found below their parent. Depth ranges have two zero based numbers, representing the minimum and maximum depth to find the result at, inclusive and exclusive respectively. The following query finds any if statements that are direct children of their parent method, in other words, if statements at depth zero from methods:
+
+```
+method({depth: any}):
+  if_stmt({depth: 0:1})
+```
+
+This query finds if statements at (zero based) depths 3, 4, and 5:
+
+```
+method({depth: any}):
+  if_stmt({depth: 3:6})
+```
+
+A depth range where the maximum is not greater than the minimum, i.e. `({depth: 5:5})` or `({depth: 6:0})`, will give an error.
+
+Depth ranges specifying a single depth can be described with a single number. This query finds direct children at depth zero:
+
+```
+method({depth: any}):
+  if_stmt({depth: 0})
+```
+
+Indices in a depth range can range from 0 to positive infinity. Positive infinity is represented by leaving the second index empty. This query finds all methods, and all their descendant if_statements from depth 5 onwards:
+
+```
+method({depth: any}):
+  if_stmt({depth: 5:})
+```
+
+Note: The depth range on top level facts, like `method` in the previous examples, determines the depth from the base context to that fact. In this case the base context contains a single program. However, it can be configured to refer to any context, typically a single repository or the root of the graph on which all queryable data hangs.
+
+<br />
+
+#### Branching
+
+The following query will find a method with a foreach loop, a for loop, and a while loop in that order:
+ 
+```
+method({depth: any}):
+  for_stmt
+  foreach_stmt
+  while_stmt
+```
+
+<!--TODO(blakemscurr): Explain the <lexicon>.element fact-->
+
+<br />
+
+#### Negation
+
+Negation allows queries to match children that *do not* have a given property or child fact. Negated facts and properties are prepended by "!". The following query finds all classes except those named "classA":
+
+```
+class({depth: any}):
+  !name: "classA"
+```
+ 
+This query finds all classes with String methods:
+
+```
+class({depth: any}):
+  !method:
+    name: “String”
+```
+ 
+The placement of the negation operator has a significant effect on the query's meaning - this similar query finds all methods with a method that is not called String:
+
+```
+class({depth: any}):
+  method:
+    !name: “String”
+```
+ 
+Negating a fact does not affect its siblings. The following query finds all String methods that use an if statement, but don’t use a foreach statement:
+
+```
+method({depth: any}):
+  name: “String”
+  if_stmt
+  !foreach_stmt
+```
+ 
+A fact cannot be both yielded and negated.
+
+<br />
+#### any_of
+
+A fact with multiple children will match against elements of the code that have child1 *and* child2 *and* child3 etc. The `any_of` operator overrides the implicit "and". The following query finds all String methods that use basic loops:
+
+```
+method({depth: any}):
+  name: “String”
+  any_of:
+    foreach_stmt
+    while_stmt
+    for_stmt
+```
+<!-- TODO(blakemscurr) n_of-->
+
+<br />
+
+#### Variables
+
+Facts that do not have a parent-child relationship can be compared by assigning their properties to variables. Any argument starting with “$” defines a variable. A query with a variable will only match a pattern in the code if all properties representing that variable are equal.
+
+The following query compares two classes (which do have a parent-child relationship) and returns the methods which both classes implement:
+
+```
+class({depth: any}):
+  name: “classA”
+  method:
+    name: $methodName
+class({depth: any}):
+  name: “classB”
+  method:
+    name: $methodName
+```
+
+The query above will only return methods of classA for which classB has a corresponding method.
+
+<br />
+
+#### Interleaving
+
+When writing a Tenet in a .lingo file read by CLAIR, only the AST lexicon facts are required:
+
+```clql
+tenets:
+  - name: all-classes
+    doc: Documentation for all-classes
+    bots:
+      codelingo/review:
+        comments: This is a class, but you probably already knew that.
+    query:
+      import codelingo/ast/csharp as cs
+      cs.project:
+        @ review.comment
+        cs.class
+```
+
+CLAIR adds the repository information to the query before searching the CodeLingo Platform:
+
+```clql
+query:
+  import codelingo/vcs/git
+  import codelingo/ast/csharp as cs
+  git.repo:
+    name: “yourRepo”
+    owner: “you”
+    host: “local”
+    git.commit: 
+      sha: “HEAD”    
+      cs.project:
+        @ review.comment
+        cs.class
+```
+
+Every query to the CodeLingo platform itself starts with VCS facts to instruct the CodeLingo Platform on where to retrieve the source code from.
+
+Git (and indeed any Version Control System) facts can be used to query for changes in the code over time. For example, the following query checks if a given method has increased its number of arguments:
+ 
+```
+git.repo:
+  name: “yourRepo”
+  owner: “you”
+  host: “local”
+  git.commit: 
+    sha: “HEAD^”
+    project:
+      method:
+        arg-num: $args
+  git.commit:
+    sha: “HEAD”    
+    project:
+      @ review.comment
+      method:
+        arg-num: > $args
+```
+
+
+
+<!--- 
+TODO(BlakeMScurr) fully fill out template
+ 
+We can write the same Tenet with the Common AST lexicon, which would catch the pattern in both languages as the Common lexicon lets us express facts that apply commonly across all languages:
+ 
+[common lexicon example]
+ 
+A Tenet can be made of interleaved facts from different lexicons.
+ 
+
+[update imports to begin with lexicon type: codelingo/ast/common]
+[add name matching to funcs above]
+ 
+[Explain above query]. In a similar fashion, a runtime fact can be interleaved with an AST fact:
+ 
+[example of code blocks that have > x memory allocated (run golang’s pprof to get an idea)]
+ 
+Further examples can be found in the [link to Tenet examples directory].
+
+
+-->
+<br/>
 ## Examples
 
 ### Simple examples
@@ -559,314 +904,3 @@ cs.session:
 If an instance of the `importData` runs for more than 4 minutes with unusually low resource usage, an issue will be raised as the function is suspect of deadlock.
 
 <br />
-
-## CLQL Reference
-
-### Reference
-
-#### Querying with Facts
-
-<!--Should we include systems that CLQL does not *yet* support? -->
-CLQL can query many types of software related systems. But assume for simplicity that all queries on this page are scoped to a single object oriented program.
-
-<!--TODONOW link to fact definition section on lexicon page-->
-Queries are made up of Facts. A CLQL query with just a single fact will match all elements of that type in the program. The following query matches and returns all classes in the queried program:
-
-```
-...
-common.class({depth: any})
-```
-
-It consists of a single fact `common.class`. The name `class` indicates that the fact refers to a class, and the namespace `common` indicates that it may be a class from any language with classes. If the namespace were `csharp` this fact would only match classes from the C# lexicon. The depth range `{depth: any}` makes this fact match any class within the context of the query (a single C# program), no matter how deeply nested.
-A comment is made on every class found as there is a decorator `@ review.comment` directly above the single fact `common.class`.
-
-Note: for brevity we will omit the `common` namespace. This can be done in .lingo files by importing the common lexicon into the global namespace: `import codelingo/ast/common as _`.
-
-<br />
-
-#### Fact Properties
-
-To limit the above query to match classes with a particular name, add a "name" property as an argument to the `method` fact:
- 
-```
-method({depth: any}):
-  name: "myFunc"
-```
- 
-This query returns all methods with the name "myFunc". Note that the yield tag is still on the `method` fact - properties cannot be returned, only their parent facts. Also note that properties are not namespaced, as their namespace is implied from their parent fact.
-
-Facts with arguments are preceded by a colon.
-
-<br />
-
-#### Floats and Ints
-<!--TODO(blakemscurr) explain boolean properties once syntax has been added to the ebnf-->
-Properties can be of type string, float, and int. The following finds all int literals with the value 8:
- 
-```
-int_lit({depth: any}):
-  value: 5
-```
- 
-This query finds float literals with the value 8.7:
- 
-```
-float_lit({depth: any}):
-  value: 8.7
-```
-
-<br />
-
-#### Comparison
-
-The comparison operators >, <, ==, >=, and <= are available for floats and ints. The following finds all int literals above negative 3:
-```
-int_lit({depth: any}):
-  value: > -3
-```
-
-<br />
-
-#### Regex
-
-Any string property can be queried with regex. The following finds methods with names longer than 25 characters:
- 
-```
-method({depth: any}):
-  name: /^.{25,}$/
-```
-
-<br />
-
-#### Fact Nesting
-
-Facts can be take arbitrarily many other facts as arguments, forming a query with a tree struct of arbitrary depth. A parent-child fact pair will match any parent element even if the child is not a direct descendant. The following query finds all the if statements inside a method called "myMethod", even those nested inside intermediate scopes (for loops etc):
-
-```
-method({depth: any}):
-  name: "myMethod"
-  if_stmt({depth: any})
-```
- 
-Any fact in a query can be yielded. If `class` is yielded, this query returns all classes named "myClass", but only if it has at least one method:
- 
-```
-class({depth: any}):
-  name: “myClass”
-  method({depth: any})
-```
- 
-Any fact in a query can have properties. The following query finds all methods named "myMethod" on the all classes named "myClass":
- 
-```
-class({depth: any}):
-  name: “myClass”
-  method({depth: any}):
-    Name: “myMethod”
-```
-
-#### Depth
-
-Facts use depth ranges to specify the depth at which they can be found below their parent. Depth ranges have two zero based numbers, representing the minimum and maximum depth to find the result at, inclusive and exclusive respectively. The following query finds any if statements that are direct children of their parent method, in other words, if statements at depth zero from methods:
-
-```
-method({depth: any}):
-  if_stmt({depth: 0:1})
-```
-
-This query finds if statements at (zero based) depths 3, 4, and 5:
-
-```
-method({depth: any}):
-  if_stmt({depth: 3:6})
-```
-
-A depth range where the maximum is not greater than the minimum, i.e. `({depth: 5:5})` or `({depth: 6:0})`, will give an error.
-
-Depth ranges specifying a single depth can be described with a single number. This query finds direct children at depth zero:
-
-```
-method({depth: any}):
-  if_stmt({depth: 0})
-```
-
-Indices in a depth range can range from 0 to positive infinity. Positive infinity is represented by leaving the second index empty. This query finds all methods, and all their descendant if_statements from depth 5 onwards:
-
-```
-method({depth: any}):
-  if_stmt({depth: 5:})
-```
-
-Note: The depth range on top level facts, like `method` in the previous examples, determines the depth from the base context to that fact. In this case the base context contains a single program. However, it can be configured to refer to any context, typically a single repository or the root of the graph on which all queryable data hangs.
-
-<br />
-
-#### Branching
-
-The following query will find a method with a foreach loop, a for loop, and a while loop in that order:
- 
-```
-method({depth: any}):
-  for_stmt
-  foreach_stmt
-  while_stmt
-```
-
-<!--TODO(blakemscurr): Explain the <lexicon>.element fact-->
-
-<br />
-
-#### Negation
-
-Negation allows queries to match children that *do not* have a given property or child fact. Negated facts and properties are prepended by "!". The following query finds all classes except those named "classA":
-
-```
-class({depth: any}):
-  !name: "classA"
-```
- 
-This query finds all classes with String methods:
-
-```
-class({depth: any}):
-  !method:
-    name: “String”
-```
- 
-The placement of the negation operator has a significant effect on the query's meaning - this similar query finds all methods with a method that is not called String:
-
-```
-class({depth: any}):
-  method:
-    !name: “String”
-```
- 
-Negating a fact does not affect its siblings. The following query finds all String methods that use an if statement, but don’t use a foreach statement:
-
-```
-method({depth: any}):
-  name: “String”
-  if_stmt
-  !foreach_stmt
-```
- 
-A fact cannot be both yielded and negated.
-
-<br />
-#### any_of
-
-A fact with multiple children will match against elements of the code that have child1 *and* child2 *and* child3 etc. The `any_of` operator overrides the implicit "and". The following query finds all String methods that use basic loops:
-
-```
-method({depth: any}):
-  name: “String”
-  any_of:
-    foreach_stmt
-    while_stmt
-    for_stmt
-```
-<!-- TODO(blakemscurr) n_of-->
-
-<br />
-
-#### Variables
-
-Facts that do not have a parent-child relationship can be compared by assigning their properties to variables. Any argument starting with “$” defines a variable. A query with a variable will only match a pattern in the code if all properties representing that variable are equal.
-
-The following query compares two classes (which do have a parent-child relationship) and returns the methods which both classes implement:
-
-```
-class({depth: any}):
-  name: “classA”
-  method:
-    name: $methodName
-class({depth: any}):
-  name: “classB”
-  method:
-    name: $methodName
-```
-
-The query above will only return methods of classA for which classB has a corresponding method.
-
-<br />
-
-#### Interleaving
-
-When writing a Tenet in a .lingo file read by CLAIR, only the AST lexicon facts are required:
-
-```clql
-tenets:
-  - name: all-classes
-    doc: Documentation for all-classes
-    bots:
-      codelingo/review:
-        comments: This is a class, but you probably already knew that.
-    query:
-      import codelingo/ast/csharp as cs
-      cs.project:
-        @ review.comment
-        cs.class
-```
-
-CLAIR adds the repository information to the query before searching the CodeLingo Platform:
-
-```clql
-query:
-  import codelingo/vcs/git
-  import codelingo/ast/csharp as cs
-  git.repo:
-    name: “yourRepo”
-    owner: “you”
-    host: “local”
-    git.commit: 
-      sha: “HEAD”    
-      cs.project:
-        @ review.comment
-        cs.class
-```
-
-Every query to the CodeLingo platform itself starts with VCS facts to instruct the CodeLingo Platform on where to retrieve the source code from.
-
-Git (and indeed any Version Control System) facts can be used to query for changes in the code over time. For example, the following query checks if a given method has increased its number of arguments:
- 
-```
-git.repo:
-  name: “yourRepo”
-  owner: “you”
-  host: “local”
-  git.commit: 
-    sha: “HEAD^”
-    project:
-      method:
-        arg-num: $args
-  git.commit:
-    sha: “HEAD”    
-    project:
-      @ review.comment
-      method:
-        arg-num: > $args
-```
-
-
-
-<!--- 
-TODO(BlakeMScurr) fully fill out template
- 
-We can write the same Tenet with the Common AST lexicon, which would catch the pattern in both languages as the Common lexicon lets us express facts that apply commonly across all languages:
- 
-[common lexicon example]
- 
-A Tenet can be made of interleaved facts from different lexicons.
- 
-
-[update imports to begin with lexicon type: codelingo/ast/common]
-[add name matching to funcs above]
- 
-[Explain above query]. In a similar fashion, a runtime fact can be interleaved with an AST fact:
- 
-[example of code blocks that have > x memory allocated (run golang’s pprof to get an idea)]
- 
-Further examples can be found in the [link to Tenet examples directory].
-
-
--->
