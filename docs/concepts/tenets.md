@@ -430,7 +430,7 @@ cs.block_stmt:
     cs.element
 ```
 
-The above query will match against any block statement that does not contain anything at all. `cs.element` matches all C# elements, and the `exclude` operator performs exclusion.
+The above query will match against any block statement that does not contain anything at all. `cs.element` matches all C# elements, and the `exclude` operator performs [exclusion](#exclude).
 
 #### Access Modifier Declaration
 
