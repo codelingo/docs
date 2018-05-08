@@ -4,8 +4,8 @@ repo_url: null #= TODO: should we add this and have links to github?
 
 extra_css:
   - css/nav.css 
-# extra_javascript:
-  # - js/drift.js
+extra_javascript:
+  - js/drift.js
 site_description: Documentation for the CodeLingo platform. # TODO SEO strategy
 google_analytics: ['UA-117506438-1', 'codelingo.io/docs'] #TODO: Turn this on...
 

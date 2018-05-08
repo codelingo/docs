@@ -28,7 +28,7 @@ All Tenets are either written directly in `.lingo` files within your project, or
 <br/>
 
 ##  Structure
-A Tenet is a CLQL Query, and consists of [Metadata](#metadata), [Bots](#bots), and the [Query](#query) itself.
+A Tenet is a CLQL Query, and consists of [Metadata](#metadata) (name and doc), [Bots](#bots), and the [Query](#query) itself.
 ```YAML
 ...
 tenets:
@@ -73,9 +73,9 @@ tenets:
     doc: Functions in this module should take a maximum of four arguments.
     bots: ...
     query:
-      import codelingo/ast/php              // import statement
-      @ review.comment                      // feature extraction decorator
-      php.stmt_function({depth: any})       // the match statement
+      import codelingo/ast/php              # import statement
+      @ review.comment                      # feature extraction decorator
+      php.stmt_function({depth: any})       # the match statement
 ...
 ```
 
@@ -127,19 +127,19 @@ tenets:
 
 ## Writing Custom Tenets
 
-By understaand the structure of a Tenet it should now be possible to write your own custom Tenets for your own particular requirements.
-
-Follow the belows steps to write your own custom Tenet.
+Follow these steps for writing Tenets for your own requirements:
 
 1. Define metadata for the Tenet (`name`, `doc`)
 
-1. Identify when Lexicon(s) you be using (can be explored via [hub](https://codelingo.io/hub/lexicons)) and import into your Tenet. (e.g.`import codelingo/ast/csharp`)
+2. Identify what Lexicon(s) will be required (view availlable Lexicons via [the Hub](https://codelingo.io/hub/lexicons))
+
+3. Import the Lexicon(s) into your Tenet. (e.g.`import codelingo/ast/csharp`)
 
 4. Write the specific `query` you are interested in using the facts provided by the Lexicon.
 
 5. Integrate the relevant `bots`.
 
-6. (_optional_) Deploy your Tenet to the Hub.
+6. (_optional_) [Deploy your Tenet to the Hub](#deploying-tenets-to-the-hub).
 
 
 <br/>
@@ -165,6 +165,7 @@ Runtime lexicons are used to query the runtime data of a program. These are typi
 
 ### Other
 We are currently working to extend the Lexicons libraries to include:
+
 - Lexicons for databases, networking, CI, CD, business rules, HR
 - Lexicons for running systems: logs, crash dumps, tracing
 
@@ -172,9 +173,9 @@ If you are interested in any of these other types of Lexicons, or are interested
 
 
 
-## Importing Existing Tenets
+## Importing Published Tenets
 
-It is possible to import Tenets from other projects. All Existing Tenets can be discovered via **[the hub](https://codelingo.io/hub/tenets)**.
+It is possible to import Tenets from other projects. All Published Tenets can be discovered via **[the hub](https://codelingo.io/hub/tenets)**.
 
 To import an existing Tenet into your project, add the url of the Tenet (provided in the hub) in your lingo file. Here is an an example:
 
@@ -196,7 +197,7 @@ tenets:
 
 Note: import statements and custom Tenets can exist within the same .lingo file.
 
-Existing Tenets to import into your projects can be found and discovered via [the Hub](https://codelingo.io/hub).
+Published Tenets to import into your projects can be found and discovered via [the Hub](https://codelingo.io/hub).
 
 
 <br/>
@@ -209,13 +210,41 @@ All public Tenets are stored in our [public GitHub repo](https://github.com/code
 <br/>
 
 ## IDE Integration
-Vim has full support for the Lingo syntax, including CLQL. To set it up, [see here](scripts/lingo.vim.readme). Other than the match statement, written in CLQL, the rest of a .lingo file is written in YAML. As such, you can set .lingo files to YAML syntax in your IDE to get partial highlighting.
+
+CodeLingo integrates with your IDE to provide support for writing and running CLQL queries (Tenets):
+
+### Sublime
+
+<a href="https://github.com/codelingo/ideplugins/tree/master/sublime" target="_blank">View Subline pulugin README</a>
 
 CodeLingo's Integrated Development Environment (IDE) plugins can help build patterns in code by automatically generating queries to detect selected elements of programs. A generated query will describe the selected element and its position in the structure of the program:
 
 ![Query Generation](../img/queryGeneration.png)
 
 In the above example string literal is selected. The generated CLQL query will match any literal directly inside an assignment statement, in a function declaration, matching the nested pattern of the selected literal.
+
+### Vistual Studio
+
+<a href="https://github.com/codelingo/ideplugins/tree/master/vs" target="_blank">View Visual Studio extension README</a>
+
+### VIM
+
+Vim has also full support for the Lingo syntax, including CLQL. To set it up:
+
+- Download [lingo.vim](../resources/lingo.vim) 
+- Copy to `~/.vim/syntax/lingo.vim`
+- Enable in vim with `:set syntax=lingo`
+- Auto enable on `.lingo` file open by adding the following line to `~/.vimrc`
+
+```
+au BufRead,BufNewFile *.lingo set syntax=lingo
+```
+
+Other than the match statement, written in CLQL, the rest of a .lingo file is written in YAML. As such, you can set .lingo files to YAML syntax in your IDE to get partial highlighting.
+
+
+
+
 
 <br/>
 

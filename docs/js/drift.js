@@ -22,3 +22,41 @@
 }();
 drift.SNIPPET_VERSION = '0.3.1';
 drift.load('znt7yw7xwvs3');
+
+(function() {
+var DRIFT_CHAT_SELECTOR = '.drift-open-chat'
+  /* http://youmightnotneedjquery.com/#ready */
+  function ready(fn) {
+    if (document.readyState != 'loading') {
+      fn();
+    } else if (document.addEventListener) {
+      document.addEventListener('DOMContentLoaded', fn);
+    } else {
+      document.attachEvent('onreadystatechange', function() {
+        if (document.readyState != 'loading')
+          fn();
+      });
+    }
+  }
+  /* http://youmightnotneedjquery.com/#each */
+  function forEachElement(selector, fn) {
+    var elements = document.querySelectorAll(selector);
+    for (var i = 0; i < elements.length; i++)
+      fn(elements[i], i);
+  }
+  function openSidebar(driftApi, event) {
+    debugger
+    event.preventDefault();
+    driftApi.sidebar.open();
+    return false;
+  }
+  ready(function() {
+    drift.on('ready', function(api) {
+      var handleClick = openSidebar.bind(this, api)
+      forEachElement(DRIFT_CHAT_SELECTOR, function(el) {
+        el.addEventListener('click', handleClick);
+      });
+    });
+  });
+})()
+
