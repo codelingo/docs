@@ -205,7 +205,7 @@ If you are interested in building custom flows and integrations, please contact 
 
 ## Next Steps
 
-**[Explore existing Tenets to add to your project](https://codelingo.io/hub/tenets)**
+**[Explore existing Tenets to add to your project](https://dev.codelingo.io/hub/tenet)**
 
 **[View guide to importing and writing Tenets](/concepts/tenets.md)**
 

@@ -16,7 +16,7 @@ Examples:
 ## Importing Existing Tenets
 Tenets are written in CLQL and are including in a project either directly in the .lingo file, or via an include statement from an external bundle.
 
-**[Existing Tenets can be discovered via the hub](https://codelingo.io/hub/tenets)**
+**[Existing Tenets can be discovered via the hub](https://dev.codelingo.io/hub/tenet)**
 
 To import an existing Tenet into your project, import the bundle via the url provided in the hub in your lingo file.
 
@@ -79,7 +79,7 @@ More information about each particular lexicon can be found:
 
     `lingo lexicons list-facts codelingo/go`
 
-* via [the hub](https://codelingo.io/hub/lexicons)
+* via [the hub](https://dev.codelingo.io/hub/lexicon)
 
 
 ## CLQL
