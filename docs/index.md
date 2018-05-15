@@ -6,7 +6,7 @@ The CodeLingo platform guide's software teams to build better code, faster. Code
 
 ## Getting started
 
-To get started with CodeLingo, you will first need to [create an account]()
+To get started with CodeLingo, you will first need to [create an account](https://codelingo.io/join)
 
 For installation, and getting setup with the CLI tool and pull request integration, please see the getting started guide.
 
@@ -28,7 +28,7 @@ Tenets are the patterns and heuristics that you apply to your software stack in 
 
 Tenets can detect and manage patterns in: Best Practices, Coding Style, Performance, Security Vulnerabilities, Debugging, Gotchas, Complexity, Churn
 
-**[Explore published Tenets on the Hub](https://codelingo.io/hub/tenets)**
+**[Explore published Tenets on the Hub](https://dev.codelingo.io/hub/tenets)**
 
 **[View guide and docs for working with Tenets](concepts/tenets.md)**
 
@@ -46,7 +46,7 @@ Build custom debug dashboards, crash reports, code review UIs and monitoring sys
 
 **[View guide to Flows and Bots](concepts/flows.md)**
 
-**[Explore Hub existing flows](https://codelingo.io/hub/flows)**
+**[Explore Hub existing flows](https://dev.codelingo.io/hub/flows)**
 
 
 ## Pricing

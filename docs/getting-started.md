@@ -98,7 +98,7 @@ tenets:
   - import: codelingo/go
 ```
 
-Published Tenets to import (driven by best practices and the community) can be found [on the Hub](https://codelingo.io/hub/tenets).
+Published Tenets to import (driven by best practices and the community) can be found [on the Hub](https://dev.codelingo.io/hub/tenets).
 
 **[View more information on importing published Tenets](concepts/tenets.md#importing).**
 
@@ -197,6 +197,6 @@ If you are interested in building custom flows and integrations, please contact 
 
 Now that you have basic integration with CodeLingo into your project, you can start to add additional Tenets and build custom workflow augmentation.
 <br/><br/>
-**[Explore published Tenets to add to your project](https://codelingo.io/hub/tenets)**
+**[Explore published Tenets to add to your project](https://dev.codelingo.io/hub/tenets)**
 <br/><br/>
 **[View guide to importing and writing Tenets](/concepts/tenets.md)**

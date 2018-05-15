@@ -127,7 +127,7 @@ Follow these steps for writing Tenets for your own requirements:
 
 1. Define metadata for the Tenet (`name`, `doc`)
 
-2. Identify what Lexicon(s) will be required (view availlable Lexicons via [the Hub](https://codelingo.io/hub/lexicons))
+2. Identify what Lexicon(s) will be required (view availlable Lexicons via [the Hub](https://dev.codelingo.io/hub/lexicons))
 
 3. Import the Lexicon(s) into your Tenet. (e.g.`import codelingo/ast/csharp`)
 
@@ -143,7 +143,7 @@ Follow these steps for writing Tenets for your own requirements:
 
 All Tenets require the use of Lexicons. The SDLC is built up of many different domains and patterns across all these domains can be expressed as statements of facts. Those facts come from Lexicons, which are collections of terms about to a domain of knowledge.
 
-More information about each particular lexicon can be found via [the hub](https://codelingo.io/hub/lexicons)
+More information about each particular lexicon can be found via [the hub](https://dev.codelingo.io/hub/lexicons)
 
 There are currently the following types of Lexicons:
 
@@ -171,7 +171,7 @@ If you are interested in any of these other types of Lexicons, or are interested
 
 ## Importing Published Tenets
 
-It is possible to import Tenets from other projects. All Published Tenets can be discovered via **[the hub](https://codelingo.io/hub/tenets)**.
+It is possible to import Tenets from other projects. All Published Tenets can be discovered via **[the hub](https://dev.codelingo.io/hub/tenets)**.
 
 To import an existing Tenet into your project, add the url of the Tenet (provided in the hub) in your lingo file. Here is an an example:
 
@@ -193,7 +193,7 @@ tenets:
 
 Note: import statements and custom Tenets can exist within the same .lingo file.
 
-Published Tenets to import into your projects can be found and discovered via [the Hub](https://codelingo.io/hub).
+Published Tenets to import into your projects can be found and discovered via [the Hub](https://dev.codelingo.io/hub).
 
 
 <br/>
@@ -227,7 +227,7 @@ In the above example string literal is selected. The generated CLQL query will m
 
 Vim has also full support for the Lingo syntax, including CLQL. To set it up:
 
-- Download [lingo.vim](../resources/lingo.vim) 
+- Download [lingo.vim](../resources/lingo.vim)
 - Copy to `~/.vim/syntax/lingo.vim`
 - Enable in vim with `:set syntax=lingo`
 - Auto enable on `.lingo` file open by adding the following line to `~/.vimrc`
@@ -647,12 +647,12 @@ Note: for brevity we will omit the `common` namespace. This can be done in .ling
 #### Fact Properties
 
 To limit the above query to match classes with a particular name, add a "name" property as an argument to the `method` fact:
- 
+
 ```
 method({depth: any}):
   name: "myFunc"
 ```
- 
+
 This query returns all methods with the name "myFunc". Note that the yield tag is still on the `method` fact - properties cannot be returned, only their parent facts. Also note that properties are not namespaced, as their namespace is implied from their parent fact.
 
 Facts with arguments are preceded by a colon.
@@ -662,14 +662,14 @@ Facts with arguments are preceded by a colon.
 #### Floats and Ints
 <!--TODO(blakemscurr) explain boolean properties once syntax has been added to the ebnf-->
 Properties can be of type string, float, and int. The following finds all int literals with the value 8:
- 
+
 ```
 int_lit({depth: any}):
   value: 5
 ```
- 
+
 This query finds float literals with the value 8.7:
- 
+
 ```
 float_lit({depth: any}):
   value: 8.7
@@ -690,7 +690,7 @@ int_lit({depth: any}):
 #### Regex
 
 Any string property can be queried with regex. The following finds methods with names longer than 25 characters:
- 
+
 ```
 method({depth: any}):
   name: /^.{25,}$/
@@ -707,17 +707,17 @@ method({depth: any}):
   name: "myMethod"
   if_stmt({depth: any})
 ```
- 
+
 Any fact in a query can be yielded. If `class` is yielded, this query returns all classes named "myClass", but only if it has at least one method:
- 
+
 ```
 class({depth: any}):
   name: “myClass”
   method({depth: any})
 ```
- 
+
 Any fact in a query can have properties. The following query finds all methods named "myMethod" on the all classes named "myClass":
- 
+
 ```
 class({depth: any}):
   name: “myClass”
@@ -764,7 +764,7 @@ Note: The depth range on top level facts, like `method` in the previous examples
 #### Branching
 
 The following query will find a method with a foreach loop, a for loop, and a while loop in that order:
- 
+
 ```
 method({depth: any}):
   for_stmt
@@ -785,7 +785,7 @@ class({depth: any}):
   exclude:
     name: "classA"
 ```
- 
+
 This query finds all classes with a method that is not called String:
 
 ```
@@ -921,8 +921,8 @@ query:
     name: “yourRepo”
     owner: “you”
     host: “local”
-    git.commit: 
-      sha: “HEAD”    
+    git.commit:
+      sha: “HEAD”
       cs.project:
         @ review.comment
         cs.class
@@ -931,19 +931,19 @@ query:
 Every query to the CodeLingo platform itself starts with VCS facts to instruct the CodeLingo Platform on where to retrieve the source code from.
 
 Git (and indeed any Version Control System) facts can be used to query for changes in the code over time. For example, the following query checks if a given method has increased its number of arguments:
- 
+
 ```
 git.repo:
   name: “yourRepo”
   owner: “you”
   host: “local”
-  git.commit: 
+  git.commit:
     sha: “HEAD^”
     project:
       method:
         arg-num: $args
   git.commit:
-    sha: “HEAD”    
+    sha: “HEAD”
     project:
       @ review.comment
       method:
@@ -952,23 +952,23 @@ git.repo:
 
 
 
-<!--- 
+<!---
 TODO(BlakeMScurr) fully fill out template
- 
+
 We can write the same Tenet with the Common AST lexicon, which would catch the pattern in both languages as the Common lexicon lets us express facts that apply commonly across all languages:
- 
+
 [common lexicon example]
- 
+
 A Tenet can be made of interleaved facts from different lexicons.
- 
+
 
 [update imports to begin with lexicon type: codelingo/ast/common]
 [add name matching to funcs above]
- 
+
 [Explain above query]. In a similar fashion, a runtime fact can be interleaved with an AST fact:
- 
+
 [example of code blocks that have > x memory allocated (run golang’s pprof to get an idea)]
- 
+
 Further examples can be found in the [link to Tenet examples directory].
 
 
