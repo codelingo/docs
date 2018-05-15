@@ -15,7 +15,7 @@ CodeLingo Query Language (CLQL) is a simple, lightweight language built for writ
 Patterns in CLQL (Tenets) can be expressed as statements of facts imported from a particular lexicon.
 <br/>
 
-All Tenets are either written directly in `.lingo` files within your project, or imported from the CodeLingo Hub into your `.lingo` file. See the [Getting Started guide](getting-started.md) for more information on configuring your `.lingo` file.
+All Tenets are either written directly in `.lingo` files within your project, or imported from the CodeLingo Hub into your `.lingo` file. See the [Getting Started guide](../getting-started.md) for more information on configuring your `.lingo` file.
 
 <br/>
 
