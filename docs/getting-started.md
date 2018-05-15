@@ -5,7 +5,7 @@ This guide provides instructions and documentation for:
 
 - Installation and usage of the CodeLingo command line interface (CLI)
 - Configuration of CodeLingo for your repositories via .lingo files
-- Importing and Writing of Tenets
+- Importing and writing of Tenets
 - Instructions for integrating CodeLingo into your workflow for automated code reviews
 
 ## Installation
@@ -53,7 +53,7 @@ You should see a success message. The client is now authenticated to talk to the
 
 ## Adding Tenets
 
-Writing and running Tenets is driven via configuration stored in your repository's `.lingo` files. Each `.lingo` file specifies a collection of Tenets to apply to all code under the directory it's written in. A project requires at least one `.lingo` file, however multiple files can be used. All `.lingo` files in a repository will be run with the client, with configuration in children directories only being scoped to that directory's files. `.lingo` files use based on the YAML format.
+Writing and running Tenets is driven via configuration stored in your repository's `.lingo` files. Each `.lingo` file specifies a collection of Tenets to apply to all code under the directory it's written in. A project requires at least one `.lingo` file, however multiple files can be used. All `.lingo` files in a repository will be run with the client, with configuration in children directories only being scoped to that directory's files. `.lingo` files are based on the YAML format.
 
 To initialize a default `.lingo` file, run `$ lingo init`. The default file contains an example Tenet as follows:
 
@@ -71,7 +71,7 @@ To initialize a default `.lingo` file, run `$ lingo init`. The default file cont
       common.func({depth: any})
 ```
 
-This single Tenet which will find functions across any language.
+This single Tenet will find functions across any language.
 
 Tenets can be added to a project's `.lingo` file via two methods:
 
@@ -137,7 +137,7 @@ The key parts of each Tenet are:
 Integrating Tenets into your existing developer workflow is done through Flows. The review flow is the default flow that comes preinstalled with the lingo CLI. All flows are run via `$ lingo run <flow_name>`.
 
 ```bash
-  $ lingo run review
+  $ lingo run review -i
 ```
 
 By default, this will step through each occurence of each Tenet. For example,
@@ -168,7 +168,7 @@ Note: The first time `lingo run review` is run on a repository, `lingo` will aut
 
 ## Integrating the Review Flow
 
-To integrate CodeLingo into your workflow, Flows are used. The Review Flow uses the comment extracted from the Tenets by the review Bot to comment on Pull Requests. This helps teams best practices are followed by all developers on a team.
+Flows are used to integrate CodeLingo into your workflow. The Review Flow uses the comment extracted from the Tenets by the review Bot to comment on Pull Requests. This helps teams best practices are followed by all developers on a team.
 
 Setting up the Review Flow on a repos is as easy as adding a new webhook on Github.
 
@@ -179,10 +179,7 @@ Setting up the Review Flow on a repos is as easy as adding a new webhook on Gith
 5. Ensure the "Active" box is ticked.
 6. Click "Add webhook".
 
-**For private repos:**
-YOu will need to add the clairscent user as a collaborator to your repository. It may take a couple of minutes for CLAIR to accept the collaboration request.
-
-More details instructions can be found [here](https://codelingo.io/flow/github-pull-request-review)
+Note that CLAIR only supports public repos at this time.
 
 Once configured, CLAIR will comment on pull requests when the Tenets for this project occur.
 

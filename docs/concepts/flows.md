@@ -1,6 +1,6 @@
 <div class="alert alert-info">
   <p style="font-size:16px;">
-  Please note: Flows and Bots are currently under heavily development. If you are interested in working with more complex Flows than are currently available please do not hesitate to <a href="/help" class="drift-open-chat">contact us</a>
+  Please note: Flows and Bots are currently under heavily development. If you are interested in working with more complex Flows than are currently available please do not hesitate to <a href="/help" class="drift-open-chat">contact us.</a>
 </p>
 </div>
 # Flows
@@ -16,6 +16,7 @@ Bots watch resources and look for patterns in them based on the Tenets associate
 Bots can either inject information (such as pull request info or log files) or output information to a service (github comments or dashboard panels)
 
 Possible Bots include:
+
 - A forensic Bot that analyses logs and finds event B happened before A, which violates a Tenet
 - A project overview Bot that graphs Tech Debt burndown chart and delegates based on ownership
 - A Copilot Bot that gives real time feedback to a developer in their IDE as they’re coding
@@ -28,7 +29,7 @@ Possible Bots include:
 
 This Flow builds a simple search dashboard with three panels: a CLQL search field, a list of file and line matches and a graph.
 
-<img src="/img/search_flow.jpg" style="width: 100%;"/>
+<img src="../img/search_flow.jpg" style="width: 100%;"/>
 
 In this example, the executed query is searching runtime and AST information about a CSharp repository stored in a GitHub repository. To answer the query, the CodeLingo Platform fires up three lexicons: the Git Lexicon retrieves the code from the GitHub repository, the AST lexicon queries the code and the Runtime lexicon builds and runs the code and queries its runtime information.
 
@@ -36,7 +37,7 @@ In this example, the executed query is searching runtime and AST information abo
 
 Interacting with Flows is not restricted to the Flow Dashboard. Bots can receive input and give output to other external services.
 
-<img src="/img/ide_search_flow.jpg" style="width: 100%;"/>
+<img src="../img/ide_search_flow.jpg" style="width: 100%;"/>
 
 In this example a CodeLingo IDE plugin allows the user to query code within their IDE and navigate to the result, while also generating a graph of the results on the Flow Dashboard.
 
@@ -45,7 +46,7 @@ In this example a CodeLingo IDE plugin allows the user to query code within thei
 
 This is an example of a fully automated flow with no dashboard. When a pull request is made to the monitored repository, GitHub sends a webhook to the Bot. That Bot then queries the pull request and repository for any Tenets.
 
-<img src="/img/review_flow.jpg" style="width: 100%;"/>
+<img src="../img/review_flow.jpg" style="width: 100%;"/>
 
 The next Bot in the Flow then queries the pull request with the Tenets. Any issues found are added as comments on the pull request.
 
@@ -54,7 +55,7 @@ The next Bot in the Flow then queries the pull request with the Tenets. Any issu
 
 This is the same flow as above except a Bot waits for a human to confirm each found issue, via the dashboard, before commenting on the pull request.
 
-<img src="/img/review_confirm_flow.jpg" style="width: 100%;"/>
+<img src="../img/review_confirm_flow.jpg" style="width: 100%;"/>
 
 Further customization of this Flow might include categorizing the issues and keeping track of which Tenets where kept and discarded.
 
@@ -63,7 +64,7 @@ Further customization of this Flow might include categorizing the issues and kee
 
 The crashed program has a single function added to it which sends the stack trace and any other data to the Bot in the Flow. The team is notified via Slack and a crash report is generated, ready to be analysed by a human.
 
-<img src="/img/crash_report_flow.jpg" style="width: 100%;"/>
+<img src="../img/crash_report_flow.jpg" style="width: 100%;"/>
 
 Similar to the example above, this is a long running Flow which waits to be triggered by an external resource.
 
@@ -73,12 +74,4 @@ This Flow extends the above crash report Flow to add in debugging, fixing and pr
 
 Along with the report panels, debug panels are added to help narrow down the cause of the crash and generate a Tenet to protect against future occurrences. The Lexicons reproduce a running state of the software, which matches, as close as possible, that of the crashed program with the information provided.
 
-
-<img src="/img/crash_redeploy_flow.jpg" style="width: 100%;"/>
-
-
-<!-- 
-Note that the developer did not have to anything outside of their direct debug workflow and yet the issue was logged and marked as resolved. -->
-
-
-
+<img src="../img/crash_redeploy_flow.jpg" style="width: 100%;"/>
