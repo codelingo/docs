@@ -1,7 +1,11 @@
 site_name: CodeLingo Docs #- On Prem
-site_url: https://codelingo.io/Docs
+site_url: https://codelingo.io/docs
 repo_url: null #= TODO: should we add this and have links to github?
 
+extra_css:
+  - css/nav.css
+extra_javascript:
+  - js/drift.js
 site_description: Documentation for the CodeLingo platform. # TODO SEO strategy
 google_analytics: ['UA-117506438-1', 'codelingo.io/docs'] #TODO: Turn this on...
 
@@ -13,6 +17,6 @@ pages:
       - Flows and Bots: concepts/flows.md
       - Help & Support: help.md
     # todo (junyu) mkdocs fails to build with external links
-    # - Hub: https://codelingo.io/hub
+    # - Hub: https://dev.codelingo.io/hub
 
 theme: cinder

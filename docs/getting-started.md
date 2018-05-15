@@ -2,18 +2,17 @@
 <br/>
 ## Introduction
 This guide provides instructions and documentation for:
-- installing the CodeLingo command line interface (CLI)
-- configuring CodeLingo for your repositories
-- integrating CodeLingo into your workflow
 
-For information about writing and discovering Tenets, please see the [Tenet guide](concepts/tenets.md)
+- Installation and usage of the CodeLingo command line interface (CLI)
+- Configuration of CodeLingo for your repositories via .lingo files
+- Importing and Writing of Tenets
+- Instructions for integrating CodeLingo into your workflow for automated code reviews
 
-### Installation
+## Installation
 
-The lingo client is a command line interface (CLI) tool used to manage the [Lexicons](concepts/tenets.md#lexicons), [Tenets](concepts/tenets.md) and [Bots](concepts/flows.md). The lingo client will help you find, create and run these resources.
+The lingo CLI tool can be used to manage [Lexicons](concepts/tenets.md#lexicons), [Tenets](concepts/tenets.md) and [Bots](concepts/flows.md) for your repositories.
 
-[Download](https://github.com/codelingo/lingo/releases) a pre-built binary or, if you have [Golang setup](https://golang.org/doc/install), install from source:
-
+<a href="https://github.com/codelingo/lingo/releases" target="_blank">Download</a> a pre-built binary or, if you have <a href="https://golang.org/doc/install" target="_blank">Golang setup</a>, install from source:
 ```bash
 $ git clone https://github.com/codelingo/lingo $GOPATH/src/github.com/codelingo/lingo
 $ cd $GOPATH/src/github.com/codelingo/lingo
@@ -22,33 +21,27 @@ $ make install
 
 This will download, build and place the `lingo` binary on your $PATH
 
-<br/>
-
 #### Windows
 
 Put the binary in a folder listed in your %PATH%. If you don't have an appropriate folder set up, create a new one (ie C:\Lingo) and append it to PATH with a ; in between by going to Control Panel\System and Security\System -> Advanced system settings -> Environment Variables
-
-<br/>
 
 #### Linux / Unix
 
 Place the lingo binary on your $PATH.
 
-<br/>
+## Authentication
 
-### Authentication
+In order to run Tenets against your repository, your lingo client will need to authenticate with the CodeLingo servers. To do so, you are required to have an account. Please follow these steps to set up your client:
 
-1. Create a CodeLingo account: [https://codelingo.io/join](https://codelingo.io/join)
-
-2. Generate the token at codelingo.io/lingo-token and copy it to your clipboard
-
-3. Run `lingo setup` and follow the steps prompted there
+1. Create a CodeLingo account <a href="https://codelingo.io/join" target="_blank">here</a>
+2. Generate the token from the  <a href="https://codelingo.io/lingo-token" target="_blank">web app here</a>, and copy it to your clipboard
+3. Run `$ lingo config setup` and follow the prompts.
 
 ```bash
-$ lingo setup
+$ lingo config setup
 ```
 
-4. Enter your username (you can see it in the top right corner of codelingo.io)
+4. Enter your username (you can see it in the top right corner of codelingo.io, this should be the CodeLingo account username you created in step 1)
 
 5. Enter your token, pasting from your clipboard
 
@@ -58,58 +51,99 @@ You should see a success message. The client is now authenticated to talk to the
 
 *Under The Hood*: The setup command creates a ~/.codelingo folder in which it stores credentials and configuration details to push code up and get issues back from the CodeLingo platform. You'll note it also adds a ~/.codelingo/config/git-credentials file. This is used by the lingo tool, via git, to sync code to the CodeLingo git server.
 
-<br/>
+## Adding Tenets
 
-## Configuration
+Writing and running Tenets is driven via configuration stored in your repository's `.lingo` files. Each `.lingo` file specifies a collection of Tenets to apply to all code under the directory it's written in. A project requires at least one `.lingo` file, however multiple files can be used. All `.lingo` files in a repository will be run with the client, with configuration in children directories only being scoped to that directory's files. `.lingo` files use based on the YAML format.
 
-All configuration for your project is driven by `.lingo` files. Each project requires at least one `.lingo` file, however multiple files can be used.
+To initialize a default `.lingo` file, run `$ lingo init`. The default file contains an example Tenet as follows:
 
-TODO:
+``` yaml
+  tenets:
+  - name: find-funcs
+    doc: Example tenet that finds all functions.
+    bots:
+      codelingo/review:
+        comments: This is a function, but you probably already knew that.
+    query: |
+      import codelingo/ast/common
 
-- what is default
-- what can be modified
-- how to import / add
+      @ review.comment
+      common.func({depth: any})
+```
 
-## CLI Tool
+This single Tenet which will find functions across any language.
+
+Tenets can be added to a project's `.lingo` file via two methods:
+
+- Importing published Tenets
+- Writing custom Tenets
+
+Note: a `.lingo` file can contain a combination of both custom Tenets and imported Tenets.
+
+### Importing Tenets
+
+To import a published Tenet, add the url to your `.lingo` file:
+
+```
+# example of importing an individual Tenet from the CodeLingo's go bundle
+tenets:
+  - import: codelingo/go/marshelling
+```
+
+Tenets can be imported individually (as above), or as a bundle:
+
+```
+#  example of importing the whole go bundle
+tenets:
+  - import: codelingo/go
+```
+
+Published Tenets to import (driven by best practices and the community) can be found [on the Hub](https://dev.codelingo.io/hub/tenets).
+
+**[View more information on importing published Tenets](concepts/tenets.md#importing).**
+
+### Writing Custom Tenets
+
+
+Custom Tenets can be written from scratch directly in `.lingo` files using CodeLingo Query Language (CLQL). CLQL relies on importing Lexicons, which provide a set of domain specific facts to work with. Here is an example of a custom Tenet that find all functions in a repository:
+
+```
+# example of a Tenet written directly in a .lingo file
+tenets:
+  - name: find-funcs
+    bots:
+       codelingo/review
+          comment: "this is a func"
+    query: |
+       import codelingo/go
+       @ review.comment
+       go.func_decl
+
+```
+
+The key parts of each Tenet are:
+- **`name`** meta data for the identification of the Tenet
+- **`doc`** meta data for the usage of the Tenet
+- **`bots`** The metadata for bots the Tenet integrates with. In this case, for the review bot, we provide a comment for the review.
+- **`query`** - this is the pattern the Tenet is looking for and core to all Tenets.
+- **`@ review.comment`** - is a query decorator which extracts the information needed from the query result for the Review Flow. In this case, it'll return the filename and line number for every function declaration found in the repository.
+
+
+**[View more information on writing custom Tenets](concepts/tenets.md#writing-custom-tenets)**
+
+
+## Running the Review Flow
+
+Integrating Tenets into your existing developer workflow is done through Flows. The review flow is the default flow that comes preinstalled with the lingo CLI. All flows are run via `$ lingo run <flow_name>`.
 
 ```bash
-$ lingo --help
-```
-
-```
-COMMANDS:
-     bots      List Bots
-     config    Show summary of config
-     flows     List Flows
-     lexicons  List Lexicons
-     init      Create a .lingo file in the current directory.
-     tenets    List Tenets
-     update    Update the lingo client to the latest release.
-     help, h   Shows a list of commands or help for one command
-
-```
-
-### `lingo init`
-TODO: To be completed
-
-```bash
-$ lingo init
-```
-
-### `lingo review`
-
-<!-- TODO: add commands to discover and install CLAIR -->
-
-To run the project Tenets against your repository locally, run `review` command:
-
-```bash
-$ lingo review
+  $ lingo run review
 ```
 
 By default, this will step through each occurence of each Tenet. For example,
 
 ```bash
-$ lingo review -i
+$ lingo run review -i
 test.php:2
 
     This is a function, but you probably already knew that.
@@ -130,56 +164,15 @@ In this example, the Tenet is using the inbuilt php fact "stmt_function" which m
 
 To open a file at the line of the issue, type `o` and hit return. It will give you an option (which it will remember) to set your editor, defaulting to vi.
 
+Note: The first time `lingo run review` is run on a repository, `lingo` will automatically add the Codelingo git server as a remote, so that changes can be synced and analysed on the Codelingo platform.
 
-NB: The first time `lingo review` is run on a repository, `lingo` will automatically add the Codelingo git server as a remote, so that changes can be synced and analysed on the Codelingo platform.
+## Integrating the Review Flow
 
-### `lingo search`
-The lingo client can be used to search any public repository on Github, printing any results back out to your command line in JSON format. Searching is a good way to experiment and play with CLQL (CodeLingo Query Language).
+To integrate CodeLingo into your workflow, Flows are used. The Review Flow uses the comment extracted from the Tenets by the review Bot to comment on Pull Requests. This helps teams best practices are followed by all developers on a team.
 
-```bash
-$ lingo search
-```
+Setting up the Review Flow on a repos is as easy as adding a new webhook on Github.
 
-You should see a list of results found by Tenets written in the .lingo file.
-
-### `lingo <resource> list`
-
-The CodeLingo Platform supports an ecosystem of Lexicons, Tenets and Bots. The lingo client is used to discover them. For example, to list available lexicons run the following:
-
-```bash
-$ lingo lexicon list
-
-ast/codelingo/cs
-ast/codelingo/php
-ast/codelingo/golang
-vcs/codelingo/git
-vcs/codelingo/perforce
-...
-```
-
-To see a description of a lexicon run  `$ lingo lexicon describe`. For example:
-
-```bash
-$ lingo lexicon describe ast/codelingo/cs
-
-C Sharp AST Lexicon
-
-This lexicon is a list of facts about the C Sharp AST.
-```
-
-To list all facts the lexicon provides, run `$ lingo lexicon list-facts ast/codelingo/cs`. To see the full list of commands available, please run `$ lingo --help`. The lingo CLI tool also powers IDE plugins, such as the [CLQL generation](/clql).
-<br/>
-<br/>
-
-## Setting up Flows
-### Pull requests (CLAIR)
-
-- TODO: explain exactly what it is
-- TODO: update payload URL
-
-Setting up CLAIR on your repos is as easy as adding a new webhook on Github.
-
-1. Set the Payload URL to https://flow.codelingo.io/codelingo/clair/github.
+1. Set the Payload URL to https://flow.codelingo.io/clair/github
 2. Ensure the content type is set to "application/json".
 3. Select the "Let me select individual events" option.
 4. Tick the "Pull request" box, leaving all others unchecked.
@@ -189,25 +182,21 @@ Setting up CLAIR on your repos is as easy as adding a new webhook on Github.
 **For private repos:**
 YOu will need to add the clairscent user as a collaborator to your repository. It may take a couple of minutes for CLAIR to accept the collaboration request.
 
-
 More details instructions can be found [here](https://codelingo.io/flow/github-pull-request-review)
 
 Once configured, CLAIR will comment on pull requests when the Tenets for this project occur.
 
 CLAIR will only review pull requests and will never make changes to your codebase.
 
-### Configuring a custom flow
-
-Flows can be used to build any custom workflows. Whether that's dashboarding through panel Bots, or intergations with your existing tools and services through Bots. 
+Flows can be used to build any custom workflow. Whether that's generating custom reports on your project dashboard, or integrations with your existing tools and services through Bots.
 
 If you are interested in building custom flows and integrations, please contact us directly at: 
  [hello@codelingo.io](hello@codelingo.io).
 
 ## Next Steps
 
-**[Explore existing Tenets to add to your project](https://dev.codelingo.io/hub/tenet)**
-
+Now that you have basic integration with CodeLingo into your project, you can start to add additional Tenets and build custom workflow augmentation.
+<br/><br/>
+**[Explore published Tenets to add to your project](https://dev.codelingo.io/hub/tenets)**
+<br/><br/>
 **[View guide to importing and writing Tenets](/concepts/tenets.md)**
-
-
-
