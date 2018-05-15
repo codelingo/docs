@@ -1,8 +1,6 @@
-C# Tenets
-
 ## Overview
 
-A Tenet is a rule about a system written in [CLQL](#clql) and based on libraries of facts called [Lexicons](#lexicons). It is an underlying pattern or heuristic which provide deep analysis of software systems, and can be used to guide development and safeguard systems via [Flows and Bots](flows.md).
+A Tenet is a rule about a system written in [CLQL](#clql-reference) and based on libraries of facts called [Lexicons](#lexicons). It is an underlying pattern or heuristic which provide deep analysis of software systems, and can be used to guide development and safeguard systems via [Flows and Bots](flows.md).
 
 Some examples of Tenets:
 
@@ -14,9 +12,7 @@ Some examples of Tenets:
 
 CodeLingo Query Language (CLQL) is a simple, lightweight language built for writing Tenets. It allows high levels queries and patterns to be defined across various software domains with ease.
 
-It’s full grammar is under [70 lines of code](../img/ebnf.png)!
-
-Patterns in CLQL (Tenets), can be expressed as statements of facts imported from a particular lexicon.
+Patterns in CLQL (Tenets) can be expressed as statements of facts imported from a particular lexicon.
 <br/>
 
 All Tenets are either written directly in `.lingo` files within your project, or imported from the CodeLingo Hub into your `.lingo` file. See the [Getting Started guide](getting-started.md) for more information on configuring your `.lingo` file.
@@ -165,7 +161,7 @@ We are currently working to extend the Lexicons libraries to include:
 - Lexicons for databases, networking, CI, CD, business rules, HR
 - Lexicons for running systems: logs, crash dumps, tracing
 
-If you are interested in any of these other types of Lexicons, or are interested in writing your own custom Lexicons please [contact us directly.](hello@codelingo.io)
+If you are interested in any of these other types of Lexicons, or are interested in writing your own custom Lexicons please [contact us directly](mailto:hello@codelingo.io).
 
 
 
@@ -200,7 +196,7 @@ Published Tenets to import into your projects can be found and discovered via [t
 
 ## Deploying Tenets to the Hub
 
-All public Tenets are stored in our [public GitHub repo](https://github.com/codelingo/hub). Please raise a Pull Request on this repo with your `.lingo` files, or [contact us directly](hello@codelingo.io)
+All public Tenets are stored in our [public GitHub repo](https://github.com/codelingo/hub). Please raise a Pull Request on this repo with your `.lingo` files, or [contact us directly](mailto:hello@codelingo.io).
 
 
 <br/>
@@ -217,7 +213,7 @@ CodeLingo's Integrated Development Environment (IDE) plugins can help build patt
 
 ![Query Generation](../img/queryGeneration.png)
 
-In the above example string literal is selected. The generated CLQL query will match any literal directly inside an assignment statement, in a function declaration, matching the nested pattern of the selected literal.
+In the above example, a string literal is selected. The generated CLQL query will match any literal directly inside an assignment statement, in a function declaration, matching the nested pattern of the selected literal.
 
 ### Vistual Studio
 
@@ -262,25 +258,12 @@ query:
       sha: "HEAD"
       go.project:
         @ review.comment
-        go.func_decl:
-          arg_count: > 4
+        go.func_type({depth: any}):
+          go.field_list:
+            child_count: >4
 ```
 
 Lexicons get data into the CodeLingo Platform and provide a list of facts to query that data. In the above example, the git Lexicon finds and clones the "myrepo" repository from the "myvcsgithost.com" VCS host. The "myrepo" repository must be publicly accessible for the git lexicon to access it.
-
-To access a private repository, the git credentials need to be added to the query:
-
-```YAML
-...
-query:
-  git.repo:
-    auth:
-      token: "abctoken"
-    owner: "username"
-    host: "myvcsgithost.com"
-    name: "myrepo"
-...
-```
 
 The CodeLingo Platform can be queried directly with the the `$ lingo search` command or via [Bots](/concepts/flows.md) which use queries stored in Tenets.
 #### Matching function name
@@ -295,7 +278,7 @@ tenets:
   query:
     import codelingo/ast/go
     @ review.comment
-    go.func_decl:
+    go.func_decl({depth: any}):
       name: "writeMsg"
 ```
 
@@ -455,14 +438,16 @@ namespace Testing.EmptyBlockRule {
 The same rule can be expressed in CLQL as the following [tenet](tenets.md):
 
 ```clql
-lexicons: 
-  - codelingo/ast/csharp as cs
 tenets:
-  - Name: "EmptyBlock"
-    Comment: "A block statement should always contain child statements."
-    Doc: "Validates that the code does not contain any empty block statements."
-    Match: 
-      cs.block_stmt:
+  - name: "EmptyBlock"
+    doc: "Validates that the code does not contain any empty block statements."
+    bots:
+      codelingo/review:
+        comments: This is a function, name 'writeMsg', but you probably knew that.
+    query:
+      import codelingo/ast/cpp
+      @ review.comment
+      cs.block_stmt({depth: any}):
         exclude:
           cs.element
 ```
@@ -622,8 +607,6 @@ If an instance of the `importData` runs for more than 4 minutes with unusually l
 
 ## CLQL Reference
 
-### Reference
-
 #### Querying with Facts
 
 <!--Should we include systems that CLQL does not *yet* support? -->
@@ -649,13 +632,13 @@ Note: for brevity we will omit the `common` namespace. This can be done in .ling
 To limit the above query to match classes with a particular name, add a "name" property as an argument to the `method` fact:
 
 ```
+@ review.comment
 method({depth: any}):
   name: "myFunc"
 ```
 
-This query returns all methods with the name "myFunc". Note that the yield tag is still on the `method` fact - properties cannot be returned, only their parent facts. Also note that properties are not namespaced, as their namespace is implied from their parent fact.
+This query returns all methods with the name "myFunc". Note that the query decorator is still on the `method` fact - properties cannot be returned, only their parent facts. Also note that properties are not namespaced, as their namespace is implied from their parent fact.
 
-Facts with arguments are preceded by a colon.
 
 <br />
 
@@ -665,7 +648,7 @@ Properties can be of type string, float, and int. The following finds all int li
 
 ```
 int_lit({depth: any}):
-  value: 5
+  value: 8
 ```
 
 This query finds float literals with the value 8.7:
@@ -679,7 +662,7 @@ float_lit({depth: any}):
 
 #### Comparison
 
-The comparison operators >, <, ==, >=, and <= are available for floats and ints. The following finds all int literals above negative 3:
+The comparison operators >, <, >=, and <= are available for floats and ints. The following finds all int literals above negative 3:
 ```
 int_lit({depth: any}):
   value: > -3
@@ -700,7 +683,7 @@ method({depth: any}):
 
 #### Fact Nesting
 
-Facts can be take arbitrarily many other facts as arguments, forming a query with a tree struct of arbitrary depth. A parent-child fact pair will match any parent element even if the child is not a direct descendant. The following query finds all the if statements inside a method called "myMethod", even those nested inside intermediate scopes (for loops etc):
+Facts can take any number of facts and properties as children, forming a query with a tree struct of arbitrary depth. A parent-child fact pair will match any parent element even if the child is not a direct descendant. The following query finds all the if statements inside a method called "myMethod", even those nested inside intermediate scopes (for loops etc):
 
 ```
 method({depth: any}):
@@ -708,7 +691,7 @@ method({depth: any}):
   if_stmt({depth: any})
 ```
 
-Any fact in a query can be yielded. If `class` is yielded, this query returns all classes named "myClass", but only if it has at least one method:
+Any fact in a query can be decorated. If `class` is decorated, this query returns all classes named "myClass", but only if it has at least one method:
 
 ```
 class({depth: any}):
@@ -722,7 +705,7 @@ Any fact in a query can have properties. The following query finds all methods n
 class({depth: any}):
   name: “myClass”
   method({depth: any}):
-    Name: “myMethod”
+    name: “myMethod”
 ```
 
 #### Depth
@@ -906,9 +889,8 @@ tenets:
         comments: This is a class, but you probably already knew that.
     query:
       import codelingo/ast/csharp as cs
-      cs.project:
-        @ review.comment
-        cs.class
+      @ review.comment
+      cs.class({depth: any})
 ```
 
 CLAIR adds the repository information to the query before searching the CodeLingo Platform:
@@ -925,7 +907,7 @@ query:
       sha: “HEAD”
       cs.project:
         @ review.comment
-        cs.class
+        cs.class({depth: any})
 ```
 
 Every query to the CodeLingo platform itself starts with VCS facts to instruct the CodeLingo Platform on where to retrieve the source code from.
