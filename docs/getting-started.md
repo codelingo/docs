@@ -172,7 +172,7 @@ Flows are used to integrate CodeLingo into your workflow. The Review Flow uses t
 
 Setting up the Review Flow on a repos is as easy as adding a new webhook on Github.
 
-1. Set the Payload URL to https://flow.codelingo.io/clair/github
+1. Set the Payload URL to https://flow.codelingo.io/codelingo/review/github
 2. Ensure the content type is set to "application/json".
 3. Select the "Let me select individual events" option.
 4. Tick the "Pull request" box, leaving all others unchecked.
