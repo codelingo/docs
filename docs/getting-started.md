@@ -34,7 +34,7 @@ Place the lingo binary on your $PATH.
 In order to run Tenets against your repository, your lingo client will need to authenticate with the CodeLingo servers. To do so, you are required to have an account. Please follow these steps to set up your client:
 
 1. Create a CodeLingo account <a href="https://codelingo.io/join" target="_blank">here</a>
-2. Generate the token from the  <a href="https://codelingo.io/lingo-token" target="_blank">web app here</a>, and copy it to your clipboard
+2. Generate the token from the  <a href="https://www.codelingo.io/settings/profile" target="_blank">web app here</a>, and copy it to your clipboard
 3. Run `$ lingo config setup` and follow the prompts.
 
 ```bash
