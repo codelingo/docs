@@ -1,10 +1,17 @@
 #!/usr/bin/env bash
 
-# make sure you have private key added to access the EC2
+tag=$1
+if [ -z "$tag" ]
+then
+    tag=latest
+fi
 
-instance=52.27.143.86
-scp -r ./site ubuntu@$instance:~/site
-ssh ubuntu@$instance "sudo rm -rf /site"
-ssh ubuntu@$instance "sudo mv ~/site /"
-ssh ubuntu@$instance "sudo chown -R nginx:nginx /site"
+set -xe
 
+registry=531831122766.dkr.ecr.us-west-2.amazonaws.com
+image=docs
+
+mkdocs build
+
+docker build -t $registry/$image:$tag .
+docker push $registry/$image:$tag
