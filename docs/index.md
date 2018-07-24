@@ -12,7 +12,7 @@ For installation, and getting setup with the CLI tool and pull request integrati
 
 **[View getting started guide](getting-started.md)**
 
-The CodeLingo platform is based on the key concepts of Lexicons, Tenets, Bots and Flows. These can be used for deep analysis of code quality of the entire software stack, and augmentation of the software development lifecycle.
+The CodeLingo platform is based on the key concepts of Lexicons, Tenets, Functions and Flows. These can be used for deep analysis of code quality of the entire software stack, and augmentation of the software development lifecycle.
 
 ## Lexicons
 
@@ -33,18 +33,18 @@ Tenets can detect and manage patterns in: Best Practices, Coding Style, Performa
 **[View guide and docs for working with Tenets](concepts/tenets.md)**
 
 
-## Bots
-Bots are agents that integrate with your infrastructure. They can either be used to extract particular Tenets from your software stack, or push results to different tools that you use. Bots are core to building Flows and are used to integrate your analysis from Tenets.
+## Functions
+Functions are agents that integrate with your infrastructure. They can either be used to extract particular Tenets from your software stack, or push results to different tools that you use. Functions are core to building Flows and are used to integrate your analysis from Tenets.
 
 
 ## Flows
 Flows automate and augment common developer workflows. In the context of Tenets, they can be used to fail builds, comment on pull requests, send error notifications, or expose dashboarding.
 
-Flows can be configured directly in YAML or via the Flow Composer GUI. This allows you to build custom workflows with your tenets, and integrations with your existing tools through Bots.
+Flows can be configured directly in YAML or via the Flow Composer GUI. This allows you to build custom workflows with your tenets, and integrations with your existing tools through Functions.
 
 Build custom debug dashboards, crash reports, code review UIs, and monitoring systems.
 
-**[View guide to Flows and Bots](concepts/flows.md)**
+**[View guide to Flows and Functions](concepts/flows.md)**
 
 **[Explore Hub existing flows](https://dev.codelingo.io/hub/flows)**
 

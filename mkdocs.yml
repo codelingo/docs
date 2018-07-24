@@ -14,7 +14,7 @@ pages:
     - User Guide:
       - Getting Started: getting-started.md
       - Tenets: concepts/tenets.md
-      - Flows and Bots: concepts/flows.md
+      - Flows and Functions: concepts/flows.md
       - Help & Support: help.md
     # todo (junyu) mkdocs fails to build with external links
     # - Hub: https://dev.codelingo.io/hub

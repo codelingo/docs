@@ -12,9 +12,9 @@ tenets:
       csharp.method_declaration({depth: any})
   - name: same-other-tenet
     doc: Some documentation
-    comment: This is the comment left by the bot
-    bots:
-      # bots here ...
+    comment: This is the comment left by the flow
+    flows:
+      # functions here ...
     query:
       # query here ...
 ```
@@ -23,7 +23,7 @@ tenets:
 ```yaml
 tenets:
   - import: modica/default/null-check
-    bots:
+    flows:
       - codelingo/review
           comment: "this overrides null-check default comment"
 ```

@@ -1,6 +1,6 @@
 ## Overview
 
-A Tenet is a rule about a system written in [CLQL](#clql-reference) and based on libraries of facts called [Lexicons](#lexicons). It is an underlying pattern or heuristic which provide deep analysis of software systems, and can be used to guide development and safeguard systems via [Flows and Bots](flows.md).
+A Tenet is a rule about a system written in [CLQL](#clql-reference) and based on libraries of facts called [Lexicons](#lexicons). It is an underlying pattern or heuristic which provide deep analysis of software systems, and can be used to guide development and safeguard systems via [Flows and Functions](flows.md).
 
 Some examples of Tenets:
 
@@ -20,13 +20,13 @@ All Tenets are either written directly in `.lingo` files within your project, or
 <br/>
 
 ##  Structure
-A Tenet is a CLQL Query, and consists of [Metadata](#metadata) (name and doc), [Bots](#bots), and the [Query](#query) itself.
+A Tenet is a CLQL Query, and consists of [Metadata](#metadata) (name and doc), [Functions](#functions), and the [Query](#query) itself.
 ```YAML
 ...
 tenets:
   - name: ...
     doc: ...
-    bots: ...
+    flows: ...
     query: ...
 ...
 ```
@@ -40,7 +40,7 @@ Metadata describes the Tenet. It is used for discovery, integration, and documen
 tenets:
   - name: four-or-less
     doc: Functions in this module should take a maximum of four arguments.
-    bots: ...
+    flows: ...
     query: ...
     ...
 ...
@@ -53,7 +53,7 @@ tenets:
 The query is made up of three parts:
 
 - Import statement to include the relevant [Lexicon(s)](#lexicons)
-- Decorators which extract features of interest to Bots
+- Decorators which extract features of interest to functions
 - A match statement
 
 For example:
@@ -63,7 +63,7 @@ For example:
 tenets:
   - name: four-or-less
     doc: Functions in this module should take a maximum of four arguments.
-    bots: ...
+    flows: ...
     query:
       import codelingo/ast/php              # import statement
       @ review.comment                      # feature extraction decorator
@@ -71,7 +71,7 @@ tenets:
 ...
 ```
 
-Here we've imported the php lexicon and are looking for function statements at any depth, which is to say we're looking for functions defined anywhere in the target repository. Once one is found, the review bot is going to attach it's comment to the file and line number of that function.
+Here we've imported the php lexicon and are looking for function statements at any depth, which is to say we're looking for functions defined anywhere in the target repository. Once one is found, the review flow is going to attach it's comment to the file and line number of that function.
 
 Here is a more complex example:
 ```YAML
@@ -79,7 +79,7 @@ Here is a more complex example:
 tenets:
   - name: debug-prints
     doc: ...
-    bots: ...
+    flows: ...
     query: |
       import codelingo/ast/python36
       @ review.comment
@@ -93,21 +93,21 @@ tenets:
 This particular Tenet looks for debug prints in python code.
 
 
-Note, the decorator `@ review.comment` is what integrates the Tenet into the Review Flow, detailing where the comment should be made when the pattern matches. Generally speaking, query decorators are metadata on queries that bots use to extract named information from the query result.
+Note, the decorator `@ review.comment` is what integrates the Tenet into the Review Flow, detailing where the comment should be made when the pattern matches. Generally speaking, query decorators are metadata on queries that functions use to extract named information from the query result.
 <!-- TODO add more decorators example -->
 
-### Bots
+### Functions
 
-Bots are agents that integrate with your infrastructure. They are orchestrated in [Flows](flows) and extract features from Tenet queries.
+Functions are agents that integrate with your infrastructure. They are orchestrated in [Flows](flows) and extract features from Tenet queries.
 
-In the example below, the review Bot builds a comment from a Tenet query which can be used by a Flow to comment on a pull request made to github, bitbucket, gitlab or the like. It does this by extracting the file name, start line and end line to attach the comment to via the `@ review.comment` query decorator. See [Query Decorators as Feature Extractors](#query_decorators) for more details.
+In the example below, the review Function builds a comment from a Tenet query which can be used by a Flow to comment on a pull request made to github, bitbucket, gitlab or the like. It does this by extracting the file name, start line and end line to attach the comment to via the `@ review.comment` query decorator. See [Query Decorators as Feature Extractors](#query_decorators) for more details.
 
 ```YAML
 ...
 tenets:
   - name: four-or-less
     doc: Functions in this module should take a maximum of four arguments.
-    bots:
+    flows:
       codelingo/review:
         comments: Please write functions that only take a maximum of four arguments.
     query:
@@ -129,7 +129,7 @@ Follow these steps for writing Tenets for your own requirements:
 
 4. Write the specific `query` you are interested in using the facts provided by the Lexicon.
 
-5. Integrate the relevant `bots`.
+5. Integrate the relevant `functions`.
 
 6. (_optional_) [Deploy your Tenet to the Hub](#deploying-tenets-to-the-hub).
 
@@ -265,14 +265,14 @@ query:
 
 Lexicons get data into the CodeLingo Platform and provide a list of facts to query that data. In the above example, the git Lexicon finds and clones the "myrepo" repository from the "myvcsgithost.com" VCS host. The "myrepo" repository must be publicly accessible for the git lexicon to access it.
 
-The CodeLingo Platform can be queried directly with the the `$ lingo search` command or via [Bots](/concepts/flows.md) which use queries stored in Tenets.
+The CodeLingo Platform can be queried directly with the the `$ lingo search` command or via [Functions](/concepts/flows.md) which use queries stored in Tenets.
 #### Matching function name
 
 ```yaml
 tenets:
 - name: first-tenet
   doc: example doc
-  bots:
+  flows:
     codelingo/review:
       comments: This is a function, name 'writeMsg', but you probably knew that.
   query:
@@ -441,7 +441,7 @@ The same rule can be expressed in CLQL as the following [tenet](tenets.md):
 tenets:
   - name: "EmptyBlock"
     doc: "Validates that the code does not contain any empty block statements."
-    bots:
+    flows:
       codelingo/review:
         comments: This is a function, name 'writeMsg', but you probably knew that.
     query:
@@ -884,7 +884,7 @@ When writing a Tenet in a .lingo file read by CLAIR, only the AST lexicon facts 
 tenets:
   - name: all-classes
     doc: Documentation for all-classes
-    bots:
+    flows:
       codelingo/review:
         comments: This is a class, but you probably already knew that.
     query:
