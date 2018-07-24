@@ -10,7 +10,7 @@ This guide provides instructions and documentation for:
 
 ## Installation
 
-The lingo CLI tool can be used to manage [Lexicons](concepts/tenets.md#lexicons), [Tenets](concepts/tenets.md) and [Bots](concepts/flows.md) for your repositories.
+The lingo CLI tool can be used to manage [Lexicons](concepts/tenets.md#lexicons), [Tenets](concepts/tenets.md) and [Flows](concepts/flows.md) for your repositories.
 
 <a href="https://github.com/codelingo/lingo/releases" target="_blank">Download</a> a pre-built binary or, if you have <a href="https://golang.org/doc/install" target="_blank">Golang setup</a>, install from source:
 ```bash
@@ -61,7 +61,7 @@ To initialize a default `.lingo` file, run `$ lingo init`. The default file cont
   tenets:
   - name: find-funcs
     doc: Example tenet that finds all functions.
-    bots:
+    flows:
       codelingo/review:
         comments: This is a function, but you probably already knew that.
     query: |
@@ -111,7 +111,7 @@ Custom Tenets can be written from scratch directly in `.lingo` files using CodeL
 # example of a Tenet written directly in a .lingo file
 tenets:
   - name: find-funcs
-    bots:
+    flows:
        codelingo/review
           comment: "this is a func"
     query: |
@@ -124,7 +124,7 @@ tenets:
 The key parts of each Tenet are:
 - **`name`** meta data for the identification of the Tenet
 - **`doc`** meta data for the usage of the Tenet
-- **`bots`** The metadata for bots the Tenet integrates with. In this case, for the review bot, we provide a comment for the review.
+- **`flows`** The metadata for flows the Tenet integrates with. In this case, for the review flow, we provide a comment for the review.
 - **`query`** - this is the pattern the Tenet is looking for and core to all Tenets.
 - **`@ review.comment`** - is a query decorator which extracts the information needed from the query result for the Review Flow. In this case, it'll return the filename and line number for every function declaration found in the repository.
 
@@ -168,7 +168,7 @@ Note: The first time `lingo run review` is run on a repository, `lingo` will aut
 
 ## Integrating the Review Flow
 
-Flows are used to integrate CodeLingo into your workflow. The Review Flow uses the comment extracted from the Tenets by the review Bot to comment on Pull Requests. This helps teams best practices are followed by all developers on a team.
+Flows are used to integrate CodeLingo into your workflow. The Review Flow uses the comment extracted from the Tenets by the review Flow to comment on Pull Requests. This helps teams best practices are followed by all developers on a team.
 
 Setting up the Review Flow on a repos is as easy as adding a new webhook on Github.
 
@@ -185,7 +185,7 @@ Once configured, CLAIR will comment on pull requests when the Tenets for this pr
 
 CLAIR will only review pull requests and will never make changes to your codebase.
 
-Flows can be used to build any custom workflow. Whether that's generating custom reports on your project dashboard, or integrations with your existing tools and services through Bots.
+Flows can be used to build any custom workflow. Whether that's generating custom reports on your project dashboard, or integrations with your existing tools and services through Functions.
 
 If you are interested in building custom flows and integrations, please contact us directly at: 
  [hello@codelingo.io](hello@codelingo.io).
