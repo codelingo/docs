@@ -54,7 +54,7 @@ To limit the above query to match classes with a particular name, add a "name" p
 ```
 @review.comment
 method({depth: any}):
-  name: "myFunc"
+  name == "myFunc"
 ```
 
 This query returns all methods with the name "myFunc". Note that the query decorator is still on the `method` fact - properties cannot be returned, only their parent facts. Also note that properties are not namespaced, as their namespace is implied from their parent fact.
@@ -68,7 +68,7 @@ Properties can be of type string, float, and int. The following finds all int li
 
 ```
 int_lit({depth: any}):
-  value: 8
+  value == 8
 ```
 
 This query finds float literals with the value 8.7:
@@ -107,7 +107,7 @@ Facts can take any number of facts and properties as children, forming a query w
 
 ```
 method({depth: any}):
-  name: "myMethod"
+  name == "myMethod"
   if_stmt({depth: any})
 ```
 
@@ -186,7 +186,7 @@ Exlude allows queries to match children that *do not* have a given property or c
 ```
 class({depth: any}):
   exclude:
-    name: "classA"
+    name == "classA"
 ```
 
 This query finds all classes with a method that is not called String:
@@ -232,7 +232,7 @@ method:
     return_stmt({depth: any}):
       literal:
         exclude:
-          name: "nil"
+          name == "nil"
 ```
 
 Facts nested under multiple excludes still do not return results and cannot be decorated.
@@ -244,12 +244,12 @@ Include allows queries to match patterns without a given parent. The following q
 
 ```
 func:
-  name: $funcName
+  name as funcName
   exclude:
     if_stmt:
       include:
         func_call:
-          name: $funcName
+          name as funcName
 ```
 
 It can be read as matching all functions that call themselves with no if statement between the definition and the call site. `$funcName` is a [variable](#variables) that ensures the definition and call site refer to the same function.
@@ -285,11 +285,11 @@ The following query compares two classes (which do have a parent-child relations
 class({depth: any}):
   name: “classA”
   method:
-    name: $methodName
+    name as methodName
 class({depth: any}):
   name: “classB”
   method:
-    name: $methodName
+    name as methodName
 ```
 
 The query above will only return methods of classA for which classB has a corresponding method.
@@ -343,7 +343,7 @@ git.repo:
     sha: “HEAD^”
     project:
       method:
-        arg-num: $args
+        arg-num as args
   git.commit:
     sha: “HEAD”
     project:

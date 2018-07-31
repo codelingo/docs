@@ -19,16 +19,16 @@ tenets:
       go.call_expr({depth: any}):
         go.selector_expr:
           go.ident:
-            name: "errors"
+            name == "errors"
           go.ident:
-            name: "New"
+            name == "New"
         go.args:
           go.call_expr:
             go.selector_expr:
               go.ident:
-                name: "fmt"
+                name == "fmt"
               go.ident:
-                name: "Sprintf"
+                name == "Sprintf"
 ```
 
 Examples of problems that can be solved with Tenets & Flows include:
@@ -65,10 +65,10 @@ tenets:
 ```
 tenets:
   - name: find-funcs
-    doc: "example Tenet that finds all func decls"
+    doc == "example Tenet that finds all func decls"
     flows:
       codelingo/review:
-        comment: "this is a function"
+        comment == "this is a function"
 
 query:
   import go
@@ -113,7 +113,7 @@ Metadata describes the Tenet. It is used for discovery and documentation. The tw
 tenets:
   - name: four-or-less
     doc: Functions in this module should take a maximum of four arguments.
-    flows: 
+    flows == 
     # ...
     query:
 # ...
@@ -127,7 +127,7 @@ Tenets on their own do nothing until a Flow uses it. The flow section configures
 # ...
 flows:
   codelingo/review:
-    comment: "this is a func"
+    comment == "this is a func"
 # ...
 ```
 
@@ -170,7 +170,7 @@ tenets:
       python36.expr({depth: any}):
         python36.call:
           python36.name:
-            id: "print"
+            id == "print"
 ...
 ```
 

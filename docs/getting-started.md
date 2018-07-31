@@ -113,7 +113,7 @@ tenets:
   - name: find-funcs
     flows:
        codelingo/review
-          comment: "this is a func"
+          comment == "this is a func"
     query: |
        import codelingo/go
        @review.comment

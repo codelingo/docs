@@ -10,11 +10,11 @@ query:
   import codelingo/vcs/git
   import codelingo/ast/go
   git.repo:
-    owner: "username"
-    host: "myvcsgithost.com"
-    name: "myrepo"
+    owner == "username"
+    host == "myvcsgithost.com"
+    name == "myrepo"
     git.commit:
-      sha: "HEAD"
+      sha == "HEAD"
       go.project:
         @review.comment
         go.func_type({depth: any}):
@@ -39,7 +39,7 @@ tenets:
     import codelingo/ast/go
     @review.comment
     go.func_decl({depth: any}):
-      name: "writeMsg"
+      name == "writeMsg"
 ```
 
 This will find funcs named "writeMsg". Save and close the file, then run `lingo review`. Try adding another func called "readMsg" and run a review. Only the "writeMsg" func should be highlighted. Now, update the Tenet to find all funcs that end in "Msg":
@@ -90,12 +90,12 @@ csharp.method_declaration:
       csharp.variable_declaration:
         @review.comment
         csharp.variable_declarator:
-          identifier_token: $varName
+          identifier_token as varName
     csharp.for_each_statement:
       csharp.add_assignment_expression({depth: any}):
         @review.comment
         csharp.identifier_name:
-          identifier_token: $varName
+          identifier_token as varName
 ```
 
 <br />
@@ -116,10 +116,10 @@ cc.func_decl:
   cc.block_stmt:
     cc.declaration_stmt:
       cc.variable:
-        name: $returnedReference
+        name as returnedReference
     cc.return_stmt:
       cc.variable:
-        name: $returnedReference
+        name as returnedReference
 ```
 
 
@@ -198,7 +198,7 @@ The same rule can be expressed in CLQL as the following [tenet](tenets.md):
 ```clql
 tenets:
   - name: "EmptyBlock"
-    doc: "Validates that the code does not contain any empty block statements."
+    doc == "Validates that the code does not contain any empty block statements."
     flows:
       codelingo/review:
         comments: This is a function, name 'writeMsg', but you probably knew that.
@@ -256,7 +256,7 @@ As in the [empty block statements example below](#empty-block-statements), to ex
 
 ```clql
 cs.element:
-  generated: "false"
+  generated == "false"
   cs.declaration_stmt:
     cs.access_modifier: "false"
 ```
@@ -277,16 +277,16 @@ We can do this with the following Tenet:
 ```clql
 csprof.session:
   csprof.exec:
-      command: "./scripts/build.sh"
-      args: "-o ./bin/program.exe"
+      command == "./scripts/build.sh"
+      args == "-o ./bin/program.exe"
   csprof.exec:
-    command: "./bin/program.exe"
-    args: "/host:127.0.0.1 /db:testing"
+    command == "./bin/program.exe"
+    args == "/host:127.0.0.1 /db:testing"
   cs.file:
-    filename: "./db/manager.cs"
+    filename == "./db/manager.cs"
     @review.comment
     cs.method:
-      name: "getDBCon"
+      name == "getDBCon"
       csprof.exit:
         memory_mb: >= 10
 ```
@@ -310,22 +310,22 @@ We need to know if our database manager is handling the asynchronous calls corre
 ```clql
 csprof.session:
   csprof.exec:
-    command: "./scripts/build.sh"
-    args: "-o ./bin/program.exe"
+    command == "./scripts/build.sh"
+    args == "-o ./bin/program.exe"
   csprof.exec:
-    command: "./bin/program.exe"
-    args: "/host:127.0.0.1 /db:testing"
+    command == "./bin/program.exe"
+    args == "/host:127.0.0.1 /db:testing"
   cs.file:
-    filename: "./db/manager.cs"
+    filename == "./db/manager.cs"
     cs.method:
-      name: "updateUser"
+      name == "updateUser"
       csprof.block_start:
-        time: $startUpdate
+        time as startUpdate
       csprof.block_exit:
-        time: $exitUpdate
+        time as exitUpdate
     @review.comment
     cs.method:
-      name: "getUser"
+      name == "getUser"
       csprof.block_start:
         time: > $startUpdate
       csprof.block_start:
@@ -343,16 +343,16 @@ In the example below, we have an application used for importing data into a data
 ```clql
 cs.session:
   csprof.exec:
-    command: "./scripts/build.sh"
-    args: "-o ./bin/program.exe"
+    command == "./scripts/build.sh"
+    args == "-o ./bin/program.exe"
   csprof.exec:
-    command: "./bin/program.exe"
-    args: "/host:127.0.0.1 /db:testing"
+    command == "./bin/program.exe"
+    args == "/host:127.0.0.1 /db:testing"
   cs.file:
-    filename: "./db/manager.cs"
+    filename == "./db/manager.cs"
     @review.comment
     cs.method:
-      name: "importData"
+      name == "importData"
       csprof.duration:
         time_min: >= 4
         average_cpu_percent: <= 1
