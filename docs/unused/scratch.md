@@ -35,7 +35,7 @@ tenets:
   - name: four-or-less
     doc: Functions in this module should take a maximum of four arguments.<mark class="code-impt" style="display:inline-block; width: 100%;backgroun">    query:
       import codelingo/ast/php              // import statement
-      @ review.comment                      // feature extraction decorator
+      @review.comment                      // feature extraction decorator
       php.stmt_function({depth: any})       // the match statement</mark>
 ...
 </code>

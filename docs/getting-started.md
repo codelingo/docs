@@ -4,13 +4,13 @@
 This guide provides instructions and documentation for:
 
 - Installation and usage of the CodeLingo command line interface (CLI)
-- Configuration of CodeLingo for your repositories via .lingo files
+- Configuration of CodeLingo for your repositories via .lingo.yaml files
 - Importing and writing of Tenets
 - Instructions for integrating CodeLingo into your workflow for automated code reviews
 
 ## Installation
 
-The lingo CLI tool can be used to manage [Lexicons](concepts/tenets.md#lexicons), [Tenets](concepts/tenets.md) and [Flows](concepts/flows.md) for your repositories.
+The lingo CLI tool can be used to generate [Tenets](concepts/tenets.md) and run [Flows](concepts/flows.md) for your repositories.
 
 <a href="https://github.com/codelingo/lingo/releases" target="_blank">Download</a> a pre-built binary or, if you have <a href="https://golang.org/doc/install" target="_blank">Golang setup</a>, install from source:
 ```bash
@@ -67,7 +67,7 @@ To initialize a default `.lingo` file, run `$ lingo init`. The default file cont
     query: |
       import codelingo/ast/common
 
-      @ review.comment
+      @review.comment
       common.func({depth: any})
 ```
 
@@ -98,7 +98,7 @@ tenets:
   - import: codelingo/go
 ```
 
-Published Tenets to import (driven by best practices and the community) can be found [on the Hub](https://dev.codelingo.io/hub/tenets).
+Published Tenets to import (driven by best practices and the community) can be found [on the Codelingo repo](https://github.com/codelingo/codelingo/tree/master/tenets).
 
 **[View more information on importing published Tenets](concepts/tenets.md#importing).**
 
@@ -113,10 +113,10 @@ tenets:
   - name: find-funcs
     flows:
        codelingo/review
-          comment: "this is a func"
+          comment == "this is a func"
     query: |
        import codelingo/go
-       @ review.comment
+       @review.comment
        go.func_decl
 
 ```
@@ -126,7 +126,7 @@ The key parts of each Tenet are:
 - **`doc`** meta data for the usage of the Tenet
 - **`flows`** The metadata for flows the Tenet integrates with. In this case, for the review flow, we provide a comment for the review.
 - **`query`** - this is the pattern the Tenet is looking for and core to all Tenets.
-- **`@ review.comment`** - is a query decorator which extracts the information needed from the query result for the Review Flow. In this case, it'll return the filename and line number for every function declaration found in the repository.
+- **`@review.comment`** - is a query decorator which extracts the information needed from the query result for the Review Flow. In this case, it'll return the filename and line number for every function declaration found in the repository.
 
 
 **[View more information on writing custom Tenets](concepts/tenets.md#writing-custom-tenets)**
@@ -137,13 +137,13 @@ The key parts of each Tenet are:
 Integrating Tenets into your existing developer workflow is done through Flows. The review flow is the default flow that comes preinstalled with the lingo CLI. All flows are run via `$ lingo run <flow_name>`.
 
 ```bash
-  $ lingo run review -i
+  $ lingo run review
 ```
 
 By default, this will step through each occurence of each Tenet. For example,
 
 ```bash
-$ lingo run review -i
+$ lingo run review
 test.php:2
 
     This is a function, but you probably already knew that.
@@ -179,9 +179,9 @@ Setting up the Review Flow on a repos is as easy as adding a new webhook on Gith
 5. Ensure the "Active" box is ticked.
 6. Click "Add webhook".
 
-Note that CLAIR only supports public repos at this time.
+Note that the review Flow only supports public repos at this time.
 
-Once configured, CLAIR will comment on pull requests when the Tenets for this project occur.
+Once configured, the review Flow will comment on pull requests when the Tenets for this project occur.
 
 CLAIR will only review pull requests and will never make changes to your codebase.
 
@@ -194,6 +194,6 @@ If you are interested in building custom flows and integrations, please contact 
 
 Now that you have basic integration with CodeLingo into your project, you can start to add additional Tenets and build custom workflow augmentation.
 <br/><br/>
-**[Explore published Tenets to add to your project](https://dev.codelingo.io/hub/tenets)**
+**[Explore published Tenets to add to your project](https://github.com/codelingo/codelingo/tree/master/tenets)**
 <br/><br/>
 **[View guide to importing and writing Tenets](/concepts/tenets.md)**

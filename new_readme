@@ -1,0 +1,309 @@
+
+---
+
+First, [install the CodeLingo GitHub App](https://github.com/apps/codelingo). This will enable CodeLingo Flows to be run on your repositories. The Review Flow is enabled by default and reviews pull requests to you repos, using Tenets stored in your repository inside a .lingo.yaml file. A Tenet is made up of a `name`, a `doc` specifiying what the Tenet does, `flows` that use this Tenet and a `query` used by the Flow:
+
+```yaml
+tenets:
+  - name: sprintf-error
+    doc: |
+      Find instances of 'errors.New(fmt.Sprintf(...))'.
+    flows:
+      codelingo/review:
+        comments: Should replace errors.New(fmt.Sprintf(...)) with errors.Errorf(...).
+    query: |
+      import codelingo/ast/go
+  
+      @review.comment
+      go.call_expr({depth: any}):
+        go.selector_expr:
+          go.ident:
+            name: "errors"
+          go.ident:
+            name: "New"
+        go.args:
+          go.call_expr:
+            go.selector_expr:
+              go.ident:
+                name: "fmt"
+              go.ident:
+                name: "Sprintf"
+```
+
+## Tenets
+
+Tenets live in .lingo.yaml files in your repository and are used by Flows to automate tasks. You can think of a Tenet as an underlying principle guiding a workflow. 
+
+In the sprintf-error Tenet above, the Review Flow uses the Tenet to make sure `errors.New` is being used correctly and attaches a comment to the line where the `go.call_expr` is found, using the `@review.comment` decorator.
+
+### Adding Tenets
+
+There are three ways to add Tenets to a .lingo.yaml file:
+
+1. The easist is to import a bundle of Tenets:
+
+```yaml
+tenets:
+  - import: codelingo/go
+```
+
+In the example above `codelingo` is the bundle owner and `go` is the bundle name. More Tenet bundles from the community can be found [here](https://github.com/codelingo/hub/tree/master/tenets).https://github.com/codelingo/hub/tree/master/tenets
+
+2. The second way is to import individual Tenets from a bundle:
+
+```yaml
+tenets:
+  - import: codelingo/go/goto
+  - import: codelingo/go/sprintf
+```
+
+3. The third way is to write a new Tenet directly in the .lingo.yaml file:
+
+```
+tenets:
+  - name: find-funcs
+    doc: "example Tenet that finds all func decls"
+    flows:
+      codelingo/review:
+        comment: "this is a function"
+
+query:
+  import go
+  
+  @review.comment
+  go.func_decl
+```
+
+---
+
+Publishing a Tenet Bundle
+
+To publish a Tenet Bundle, make a pull request to github.com/codelingo/hub and add a folder under:
+
+```
+tenets/
+  <your-codelingo-username>/
+    <bundle-name>/
+      <tenet-name>/
+        .lingo.yaml
+```
+
+---
+
+
+
+_Find and Share CodeLingo Resources_
+
+The CodeLingo Hub is an Open source collection of CodeLingo Resources.
+
+* Lexicons - Libraries for DSLs, such as a language AST or VCS. Provides facts for queries.
+* Tenets -  Patterns and anti-patterns in your software stack written in CLQL.
+* Flows - pipelines for process augmentation and automation.
+* Bots - agents that integrate with your services and data stores.
+
+If you are first getting started with CodeLingo please [check out the getting started guide](https://codelingo.io/docs/getting-started).
+
+To use CodeLingo locally, you will need to install the CLI tool which [can be found here](https://github.com/codelingo/lingo)
+
+For any questions please **[join the conversation in Slack](https://join.slack.com/t/codelingo/shared_invite/enQtMzY4MzA5ODYwOTYzLWVhMjI1ODU1YmM3ODAxYWUxNWU5ZTI0NWI0MGVkMmUwZDZhNWYxNGRiNWY4ZDY0NzRkMjU5YTRiYWY2N2FlMmU)**
+
+
+## Lexicons
+Lexicons provide the DSL for querying against a particular domain, specifically programming languages, version control, runtime, and databases.
+
+Lexicons are imported as part of a CLQL query. Please see the documentation for more information about using Lexicons.
+
+Lexicons are currently available for the follow programming languages:
+
+[Go](lexicons/ast/codelingo/go), [Python](lexicons/ast/codelingo/python), [PHP](lexicons/`ast/codelingo/php), [C++](lexicons/ast/codelingo/c++), [C#](lexicons/ast/codelingo/csharp)
+
+If you are interested in writing your own lexicon, please contact us at hello@codelingo.io
+
+## Tenets
+Tenets are stored patterns and queries that can be applied to your software stack. All Tenets are constructed in CLQL and rely on specific lexicons.
+
+Pre-written Tenets found in the Hub can be imported within your lingo file as follows: 
+```
+tenets:
+  - import codelingo/go/empty-slice
+```
+
+All pre-written Tenets are available within this repository, and simply be explored through the file structure. For example, [here is a Tenet for Go](tenets/codelingo/go/goto) that uses of goto
+
+For more information and about writing your own Tenets, please [see the documentation](https://codelingo.io/docs/concepts/tenets/)
+
+
+**[Explore all Tenets](/tenets)**
+
+## Flows
+Tenets are integrated into your workflow through Flows. Flows are automated and semi-automated processes that rely heavily on bots (integrations) to drive your software development lifecycle. They are completely customizable pipelines and can be configured directly in YAML or via the UI.
+
+Currently the default Flow is the review Flow. Custom Flows are currently in development.
+
+## Bots
+Bots are agents that integrate with all your data sources, t
+---
+
+First, [install the CodeLingo GitHub App](https://github.com/apps/codelingo-clair). This will enable CodeLingo Flows to be run on your repositories. The Review Flow is enabled by default and reviews pull requests to you repos, using Tenets stored in your repository inside a .lingo.yaml file. A Tenet is made up of a `name`, a `doc` specifiying what the Tenet does, `flows` that use this Tenet and a `query` used by the Flow:
+
+```yaml
+tenets:
+  - name: sprintf-error
+    doc: |
+      Find instances of 'errors.New(fmt.Sprintf(...))'.
+    flows:
+      codelingo/review:
+        comments: Should replace errors.New(fmt.Sprintf(...)) with errors.Errorf(...).
+    query: |
+      import codelingo/ast/go
+  
+      @review.comment
+      go.call_expr({depth: any}):
+        go.selector_expr:
+          go.ident:
+            name: "errors"
+          go.ident:
+            name: "New"
+        go.args:
+          go.call_expr:
+            go.selector_expr:
+              go.ident:
+                name: "fmt"
+              go.ident:
+                name: "Sprintf"
+```
+
+## Tenets
+
+Tenets live in .lingo.yaml files in your repository and are used by Flows to automate tasks. You can think of a Tenet as an underlying principle guiding a workflow. 
+
+In the sprintf-error Tenet above, the Review Flow uses the Tenet to make sure `errors.New` is being used correctly and attaches a comment to the line where the `go.call_expr` is found, using the `@review.comment` decorator.
+
+### Adding Tenets
+
+There are three ways to add Tenets to a .lingo.yaml file:
+
+1. The easist is to import a bundle of Tenets:
+
+```yaml
+tenets:
+  - import: codelingo/go
+```
+
+In the example above `codelingo` is the bundle owner and `go` is the bundle name. More Tenet bundles from the community can be found [here](https://github.com/codelingo/hub/tree/master/tenets).https://github.com/codelingo/hub/tree/master/tenets
+
+2. The second way is to import individual Tenets from a bundle:
+
+```yaml
+tenets:
+  - import: codelingo/go/goto
+  - import: codelingo/go/sprintf
+```
+
+3. The third way is to write a new Tenet directly in the .lingo.yaml file:
+
+```
+tenets:
+  - name: find-funcs
+    doc: "example Tenet that finds all func decls"
+    flows:
+      codelingo/review:
+        comment: "this is a function"
+
+query:
+  import go
+  
+  @review.comment
+  go.func_decl
+```
+
+---
+
+Publishing a Tenet Bundle
+
+To publish a Tenet Bundle, make a pull request to github.com/codelingo/hub and add a folder under:
+
+```
+tenets/
+  <your-codelingo-username>/
+    <bundle-name>/
+      <tenet-name>/
+        .lingo.yaml
+```
+
+---
+
+
+
+_Find and Share CodeLingo Resources_
+
+The CodeLingo Hub is an Open source collection of CodeLingo Resources.
+
+* Lexicons - Libraries for DSLs, such as a language AST or VCS. Provides facts for queries.
+* Tenets -  Patterns and anti-patterns in your software stack written in CLQL.
+* Flows - pipelines for process augmentation and automation.
+* Bots - agents that integrate with your services and data stores.
+
+If you are first getting started with CodeLingo please [check out the getting started guide](https://codelingo.io/docs/getting-started).
+
+To use CodeLingo locally, you will need to install the CLI tool which [can be found here](https://github.com/codelingo/lingo)
+
+For any questions please **[join the conversation in Slack](https://join.slack.com/t/codelingo/shared_invite/enQtMzY4MzA5ODYwOTYzLWVhMjI1ODU1YmM3ODAxYWUxNWU5ZTI0NWI0MGVkMmUwZDZhNWYxNGRiNWY4ZDY0NzRkMjU5YTRiYWY2N2FlMmU)**
+
+
+## Lexicons
+Lexicons provide the DSL for querying against a particular domain, specifically programming languages, version control, runtime, and databases.
+
+Lexicons are imported as part of a CLQL query. Please see the documentation for more information about using Lexicons.
+
+Lexicons are currently available for the follow programming languages:
+
+[Go](lexicons/ast/codelingo/go), [Python](lexicons/ast/codelingo/python), [PHP](lexicons/`ast/codelingo/php), [C++](lexicons/ast/codelingo/c++), [C#](lexicons/ast/codelingo/csharp)
+
+If you are interested in writing your own lexicon, please contact us at hello@codelingo.io
+
+## Tenets
+Tenets are stored patterns and queries that can be applied to your software stack. All Tenets are constructed in CLQL and rely on specific lexicons.
+
+Pre-written Tenets found in the Hub can be imported within your lingo file as follows: 
+```
+tenets:
+  - import codelingo/go/empty-slice
+```
+
+All pre-written Tenets are available within this repository, and simply be explored through the file structure. For example, [here is a Tenet for Go](tenets/codelingo/go/goto) that uses of goto
+
+For more information and about writing your own Tenets, please [see the documentation](https://codelingo.io/docs/concepts/tenets/)
+
+
+**[Explore all Tenets](/tenets)**
+
+## Flows
+Tenets are integrated into your workflow through Flows. Flows are automated and semi-automated processes that rely heavily on bots (integrations) to drive your software development lifecycle. They are completely customizable pipelines and can be configured directly in YAML or via the UI.
+
+Currently the default Flow is the review Flow. Custom Flows are currently in development.
+
+## Bots
+Bots are agents that integrate with all your data sources, tools, and services. They can be used to:
+
+* ingest your codebase into a flow
+* make a comment on Github
+* create Slack messages on results
+* integrate with other external services
+
+
+## Contributing
+
+If you have new Tenets or Flows that you would like to contribute to the Hub, please raise a Pull Request directly against the repo.
+
+## Other Resources
+
+* [Roadmap](/company/ROADMAP.md)
+* [Join Slack](https://join.slack.com/t/codelingo/shared_invite/enQtMzY4MzA5ODYwOTYzLWVhMjI1ODU1YmM3ODAxYWUxNWU5ZTI0NWI0MGVkMmUwZDZhNWYxNGRiNWY4ZDY0NzRkMjU5YTRiYWY2N2FlMmU)
+* [Documentation](https://codelingo.io/docs)
+
+
+
+---
+[hello@codelingo.io](mailto:hello@codelingo.io) | [codelingo.io](https://codelingo.io)
+
