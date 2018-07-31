@@ -252,9 +252,3 @@ au BufRead,BufNewFile *.lingo set syntax=lingo
 ```
 
 Other than the match statement, written in CLQL, the rest of a .lingo file is written in YAML. As such, you can set .lingo files to YAML syntax in your IDE to get partial highlighting.
-
-
-
-<br/>
-
-<br />
