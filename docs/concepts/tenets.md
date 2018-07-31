@@ -86,7 +86,7 @@ tenets:
       python36.expr({depth: any}):
         python36.call:
           python36.name:
-            id: "print"
+            id == "print"
 ...
 ```
 
@@ -251,16 +251,16 @@ query:
   import codelingo/vcs/git
   import codelingo/ast/go
   git.repo:
-    owner: "username"
-    host: "myvcsgithost.com"
-    name: "myrepo"
+    owner == "username"
+    host == "myvcsgithost.com"
+    name == "myrepo"
     git.commit:
-      sha: "HEAD"
+      sha == "HEAD"
       go.project:
         @ review.comment
         go.func_type({depth: any}):
           go.field_list:
-            child_count: >4
+            child_count >4
 ```
 
 Lexicons get data into the CodeLingo Platform and provide a list of facts to query that data. In the above example, the git Lexicon finds and clones the "myrepo" repository from the "myvcsgithost.com" VCS host. The "myrepo" repository must be publicly accessible for the git lexicon to access it.
@@ -279,7 +279,7 @@ tenets:
     import codelingo/ast/go
     @ review.comment
     go.func_decl({depth: any}):
-      name: "writeMsg"
+      name == "writeMsg"
 ```
 
 This will find funcs named "writeMsg". Save and close the file, then run `lingo review`. Try adding another func called "readMsg" and run a review. Only the "writeMsg" func should be highlighted. Now, update the Tenet to find all funcs that end in "Msg":
@@ -332,12 +332,12 @@ csharp.method_declaration:
       csharp.variable_declaration:
         @ review.comment
         csharp.variable_declarator:
-          identifier_token: $varName
+          identifier_token as varName
     csharp.for_each_statement:
       csharp.add_assignment_expression({depth: any}):
         @ review.comment
         csharp.identifier_name:
-          identifier_token: $varName
+          identifier_token as varName
 ```
 
 <br />
@@ -358,10 +358,10 @@ cc.func_decl:
   cc.block_stmt:
     cc.declaration_stmt:
       cc.variable:
-        name: $returnedReference
+        name as returnedReference
     cc.return_stmt:
       cc.variable:
-        name: $returnedReference
+        name as returnedReference
 ```
 
 
@@ -498,9 +498,9 @@ As in the [empty block statements example below](#empty-block-statements), to ex
 
 ```clql
 cs.element:
-  generated: "false"
+  generated == "false"
   cs.declaration_stmt:
-    cs.access_modifier: "false"
+    access_modifier == "false"
 ```
 
 The above query matches all C# elements that are not generated, whose declaration does not have an access modifier.
@@ -519,18 +519,18 @@ We can do this with the following Tenet:
 ```clql
 csprof.session:
   csprof.exec:
-      command: "./scripts/build.sh"
-      args: "-o ./bin/program.exe"
+      command == "./scripts/build.sh"
+      args == "-o ./bin/program.exe"
   csprof.exec:
-    command: "./bin/program.exe"
-    args: "/host:127.0.0.1 /db:testing"
+    command == "./bin/program.exe"
+    args == "/host:127.0.0.1 /db:testing"
   cs.file:
-    filename: "./db/manager.cs"
+    filename == "./db/manager.cs"
     @ review.comment
     cs.method:
-      name: "getDBCon"
+      name == "getDBCon"
       csprof.exit:
-        memory_mb: >= 10
+        memory_mb >= 10
 ```
  
 Sometime in the future we decide to update the underlying library to the latest version. After profiling our application again, CodeLingo catches that multiple instances of the `getDBCon` function have exceeded the `>= 10MB memory` Tenet.
@@ -552,26 +552,26 @@ We need to know if our database manager is handling the asynchronous calls corre
 ```clql
 csprof.session:
   csprof.exec:
-    command: "./scripts/build.sh"
-    args: "-o ./bin/program.exe"
+    command == "./scripts/build.sh"
+    args == "-o ./bin/program.exe"
   csprof.exec:
-    command: "./bin/program.exe"
-    args: "/host:127.0.0.1 /db:testing"
+    command == "./bin/program.exe"
+    args == "/host:127.0.0.1 /db:testing"
   cs.file:
-    filename: "./db/manager.cs"
+    filename == "./db/manager.cs"
     cs.method:
-      name: "updateUser"
+      name == "updateUser"
       csprof.block_start:
-        time: $startUpdate
+        time as startUpdate
       csprof.block_exit:
-        time: $exitUpdate
+        time as exitUpdate
     @ review.comment
     cs.method:
-      name: "getUser"
+      name == "getUser"
       csprof.block_start:
-        time: > $startUpdate
+        time > startUpdate
       csprof.block_start:
-        time: < $exitUpdate
+        time < exitUpdate
 ```
 
 This query users [variables](#variables) If the `getUser` function is called while an instance of the `updateUser` function is in progress, the `getUser` function must return after the `updateUser` function to prevent a dirty read from the database. An issue will be raised if this does not hold true.
@@ -585,20 +585,20 @@ In the example below, we have an application used for importing data into a data
 ```clql
 cs.session:
   csprof.exec:
-    command: "./scripts/build.sh"
-    args: "-o ./bin/program.exe"
+    command == "./scripts/build.sh"
+    args == "-o ./bin/program.exe"
   csprof.exec:
-    command: "./bin/program.exe"
-    args: "/host:127.0.0.1 /db:testing"
+    command == "./bin/program.exe"
+    args == "/host:127.0.0.1 /db:testing"
   cs.file:
-    filename: "./db/manager.cs"
+    filename == "./db/manager.cs"
     @ review.comment
     cs.method:
-      name: "importData"
+      name == "importData"
       csprof.duration:
-        time_min: >= 4
-        average_cpu_percent: <= 1
-        average_memory_mb: <= 10
+        time_min >= 4
+        average_cpu_percent <= 1
+        average_memory_mb <= 10
 ```
 
 If an instance of the `importData` runs for more than 4 minutes with unusually low resource usage, an issue will be raised as the function is suspect of deadlock.
@@ -634,7 +634,7 @@ To limit the above query to match classes with a particular name, add a "name" p
 ```
 @ review.comment
 method({depth: any}):
-  name: "myFunc"
+  name == "myFunc"
 ```
 
 This query returns all methods with the name "myFunc". Note that the query decorator is still on the `method` fact - properties cannot be returned, only their parent facts. Also note that properties are not namespaced, as their namespace is implied from their parent fact.
@@ -648,7 +648,7 @@ Properties can be of type string, float, and int. The following finds all int li
 
 ```
 int_lit({depth: any}):
-  value: 8
+  value == 8
 ```
 
 This query finds float literals with the value 8.7:
@@ -665,7 +665,7 @@ float_lit({depth: any}):
 The comparison operators >, <, >=, and <= are available for floats and ints. The following finds all int literals above negative 3:
 ```
 int_lit({depth: any}):
-  value: > -3
+  value > -3
 ```
 
 <br />
@@ -687,7 +687,7 @@ Facts can take any number of facts and properties as children, forming a query w
 
 ```
 method({depth: any}):
-  name: "myMethod"
+  name == "myMethod"
   if_stmt({depth: any})
 ```
 
@@ -766,7 +766,7 @@ Exlude allows queries to match children that *do not* have a given property or c
 ```
 class({depth: any}):
   exclude:
-    name: "classA"
+    name == "classA"
 ```
 
 This query finds all classes with a method that is not called String:
@@ -812,7 +812,7 @@ method:
     return_stmt({depth: any}):
       literal:
         exclude:
-          name: "nil"
+          name == "nil"
 ```
 
 Facts nested under multiple excludes still do not return results and cannot be decorated.
@@ -824,12 +824,12 @@ Include allows queries to match patterns without a given parent. The following q
 
 ```
 func:
-  name: $funcName
+  name as funcName
   exclude:
     if_stmt:
       include:
         func_call:
-          name: $funcName
+          name as funcName
 ```
 
 It can be read as matching all functions that call themselves with no if statement between the definition and the call site. `$funcName` is a [variable](#variables) that ensures the definition and call site refer to the same function.
@@ -865,11 +865,11 @@ The following query compares two classes (which do have a parent-child relations
 class({depth: any}):
   name: “classA”
   method:
-    name: $methodName
+    name as methodName
 class({depth: any}):
   name: “classB”
   method:
-    name: $methodName
+    name as methodName
 ```
 
 The query above will only return methods of classA for which classB has a corresponding method.
@@ -923,13 +923,13 @@ git.repo:
     sha: “HEAD^”
     project:
       method:
-        arg-num: $args
+        arg-num as args
   git.commit:
     sha: “HEAD”
     project:
       @ review.comment
       method:
-        arg-num: > $args
+        arg-num > args
 ```
 
 
