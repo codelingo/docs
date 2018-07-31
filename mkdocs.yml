@@ -11,11 +11,12 @@ google_analytics: ['UA-117506438-1', 'codelingo.io/docs'] #TODO: Turn this on...
 
 pages:
     - Home: index.md
-    - User Guide:
+    - User Guides:
       - Getting Started: getting-started.md
       - Tenets: concepts/tenets.md
-      - Flows and Functions: concepts/flows.md
-      - Help & Support: help.md
+      - Flows: concepts/flows.md
+      - Examples: concepts/examples.md
+      - CLQL Reference: concepts/CLQL.md
     # todo (junyu) mkdocs fails to build with external links
     # - Hub: https://dev.codelingo.io/hub
 

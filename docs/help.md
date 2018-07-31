@@ -1,6 +1,5 @@
 # Getting Help
-Please note, CodeLingo is still under development and there may be bugs that issues or arise.
 
-If you are having any issues with anything, such as installing or configuring CodeLingo to your needs, please do not hesitate to [contacting us via email](mailto:hello@codelingo.io).
+If you are having any issues, such as installing or configuring CodeLingo to your needs, please do not hesitate to [contacting us via email](mailto:hello@codelingo.io).
 
-You can also join us on slack and chat to us there: [codelingo.slack.com](https://codelingo.slack.com).
+You can also join us on slack or start a discussion on our Forum: [codelingo.slack.com](https://codelingo.slack.com).

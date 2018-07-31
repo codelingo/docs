@@ -1,59 +1,87 @@
-# CodeLingo
-[codelingo.io](http://codelingo.io)
+# Overview
 
-## Overview
-The CodeLingo platform guides software teams to build better code, faster. CodeLingo integrates with the unique workflows and existing tooling of software development teams.
+Codelingo is a Platform as a Service (PaaS) for software development teams to solve software development problems. It treats your software as data and automates your workflows, called Flows, with the rules and patterns you define, called Tenets.
 
-## Getting started
+Our flagship Flow is the Review Flow, which checks a repository's pull requests conform to its project specific patterns.
 
-To get started with CodeLingo, you will first need to [create an account](https://codelingo.io/join)
+# Quick Starts
 
-For installation, and getting setup with the CLI tool and pull request integration, please see the getting started guide.
+## Playground
 
-**[View getting started guide](getting-started.md)**
+Test out writing a Tenet and running a Flow online with zero installs: [playground](https://codelingo.io/playground) - it's easier than you think!
 
-The CodeLingo platform is based on the key concepts of Lexicons, Tenets, Functions and Flows. These can be used for deep analysis of code quality of the entire software stack, and augmentation of the software development lifecycle.
+<!-- TODO image of the playground UI -->
 
-## Lexicons
+<!-- TODO CLQL tutorial -->
 
-Lexicons provide the language to describe patterns across all different domains of the SDLC in the form of a library of facts. Think of them of as a DSL for specific domains for define patterns and heuristics. There are Lexicons for:
+## GitHub Review Flow
 
-- Software languages (Golang, C#, C++, PHP, Python etc)
-- Version Control Systems (Git, Perforce, Subversion)
-- Runtime
+After [installing Codelingo on GitHub](https://github.com/apps/codelingo), write the following .lingo.yaml to the root of your repository:
+
+```yaml
+# .lingo.yaml file
+
+tenets:
+  - import: codelingo/go
+```
+
+You're done! Every pull request to your repository will now be checked against the go Tenet bundle we imported above. 
+
+<!-- TODO add screenshot of review comment -->
+
+Other Tenet bundles (including for other languages) from the community can be found at [https://github.com/codelingo/codelingo/tree/master/tenets](https://github.com/codelingo/codelingo/tree/master/tenets).
+
+<!-- TODO add instructions on how to interact with Review Flow with GitHub comments -->
+
+## Local Review Flow
+
+To run the Review Flow against repositories on your local machine, install the [lingo CLI](https://github.com/codelingo/lingo/releases/latest) and set it up with the following commands:
+
+```bash
+# Run this command from anywhere. Follow the prompts to set up Codelingo on your machine.
+$ lingo config setup
+
+# Run this command inside a git repository to add a default .lingo.yaml file in the current directory.
+$ lingo init
+```
+
+Replace the content of the .lingo.yaml file we wrote above with:
+
+```yaml
+  tenets:
+    - import: codelingo/go
+```
+
+You can now run the Review Flow to check your source code against the go Tenet bundle we imported above.
+
+```bash
+# Run this command from the same directory as the .lingo.yaml file or any of its sub directories.
+$ lingo run review
+```
+
+# Slow Start
+
+A step by step guide to getting started with Tenets and Flows: 
+**[View the getting started guide](getting-started.md)**
+
+# Concepts
+
+The CodeLingo platform has two key concepts: Tenets and Flows.
 
 ## Tenets
 
-Tenets are the patterns and heuristics that you apply to your software stack in the form of stored queries. CLQL is the language used to write these queries. It is what allows you to treat you software stack as data, and requires the use of domain specific Lexicons.
+A Tenet is an encoded project specific best practice used to guide development. A Tenet can be used for: coding styles, performance tuning, security audits, debugging, avoiding gotchas, reducing complexity and churn, and more.
 
-Tenets can detect and manage patterns in: Best Practices, Coding Style, Performance, Security Vulnerabilities, Debugging, Gotchas, Complexity, Churn, and more.
+**[View the guide and docs for working with Tenets](concepts/tenets.md)**
 
-**[Explore published Tenets on the Hub](https://dev.codelingo.io/hub/tenets)**
-
-**[View guide and docs for working with Tenets](concepts/tenets.md)**
-
-
-## Functions
-Functions are agents that integrate with your infrastructure. They can either be used to extract particular Tenets from your software stack, or push results to different tools that you use. Functions are core to building Flows and are used to integrate your analysis from Tenets.
-
+**[Explore published Tenets](https://dev.codelingo.io/codelingo/tenets)**
 
 ## Flows
-Flows automate and augment common developer workflows. In the context of Tenets, they can be used to fail builds, comment on pull requests, send error notifications, or expose dashboarding.
 
-Flows can be configured directly in YAML or via the Flow Composer GUI. This allows you to build custom workflows with your tenets, and integrations with your existing tools through Functions.
+A Flow is an automated development workflow that leverages Tenets to do some task, for example automating code reviews. While a Tenet lives next to your code in a .lingo.yaml file, it is inert until a Flow uses it.
 
-Build custom debug dashboards, crash reports, code review UIs, and monitoring systems.
+**[View the guide and docs for working with Flows](concepts/flows.md)**
 
-**[View guide to Flows and Functions](concepts/flows.md)**
+# User Guides
 
-**[Explore Hub existing flows](https://dev.codelingo.io/hub/flows)**
-
-
-## Pricing
-Please contact pj@codelingo.io for all pricing inquiries.
-
-## Getting help
-For all support requests please contact hello@codelingo.io.
-
-
-
+See the links under the User Guide drop-down for further resources.
