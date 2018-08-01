@@ -4,7 +4,7 @@
 
 Below is an example of a query that returns all functions in a repository with more than 4 arguments:
 
-```YAML
+```yaml
 
 query:
   import codelingo/vcs/git
@@ -198,7 +198,7 @@ The same rule can be expressed in CLQL as the following [tenet](tenets.md):
 ```clql
 tenets:
   - name: "EmptyBlock"
-    doc == "Validates that the code does not contain any empty block statements."
+    doc: "Validates that the code does not contain any empty block statements."
     flows:
       codelingo/review:
         comments: This is a function, name 'writeMsg', but you probably knew that.

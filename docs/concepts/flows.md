@@ -10,7 +10,7 @@ tenets:
       doc: find functions named someName
       flows:
         codelingo/review:
-          comment == "this is a func"
+          comment: "this is a func"
       query: |
         import codelingo/ast/go
         
@@ -28,7 +28,7 @@ Flows that can be used with the above Tenet are configured under the `flows` sec
 # ...
 flows:
   codelingo/review:
-    comment == "this is a func"
+    comment: "this is a func"
 # ...
 ```
 
