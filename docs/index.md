@@ -62,6 +62,7 @@ $ lingo run review
 # Slow Start
 
 A step by step guide to getting started with Tenets and Flows: 
+
 **[View the getting started guide](getting-started.md)**
 
 # Concepts

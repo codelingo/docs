@@ -50,7 +50,7 @@ tenets:
   - import: codelingo/go
 ```
 
-In the example above `codelingo` is the bundle owner and `go` is the bundle name. More Tenet bundles from the community can be found [here](https://github.com/codelingo/hub/tree/master/tenets).https://github.com/codelingo/hub/tree/master/tenets
+In the example above `codelingo` is the bundle owner and `go` is the bundle name. More Tenet bundles from the community can be found [here](https://github.com/codelingo/hub/tree/master/tenets).
 
 2. The second way is to import individual Tenets from a bundle:
 
@@ -65,10 +65,10 @@ tenets:
 ```
 tenets:
   - name: find-funcs
-    doc == "example Tenet that finds all func decls"
+    doc: "example Tenet that finds all func decls"
     flows:
       codelingo/review:
-        comment == "this is a function"
+        comment: "this is a function"
 
 query:
   import go
@@ -94,26 +94,26 @@ tenets/
 # Structure of a Tenet
 
 A Tenet consists of [Metadata](#metadata), [Flows](#flows), and the [Query](#query) itself.
-```YAML
-...
+```yaml
+# ...
 tenets:
-  - name: ...
-    doc: ...
-    flows: ...
-    query: ...
-...
+  - name: # ...
+    doc: # ...
+    flows: # ...
+    query: # ...
+# ...
 ```
 
 ## Metadata
 
-Metadata describes the Tenet. It is used for discovery and documentation. The two main fields are `name`, uniquely naming the Tenet and `doc`, describing the Tenet's purpose, for example:
+Metadata describes the Tenet. It is used for discovery and documentation. The two main fields are `name`, uniquely naming the Tenet within the bundle and `doc`, describing the Tenet's purpose, for example:
 
-```YAML
+```yaml
 # ...
 tenets:
   - name: four-or-less
     doc: Functions in this module should take a maximum of four arguments.
-    flows == 
+    flows: 
     # ...
     query:
 # ...
@@ -127,7 +127,7 @@ Tenets on their own do nothing until a Flow uses it. The flow section configures
 # ...
 flows:
   codelingo/review:
-    comment == "this is a func"
+    comment: "this is a func"
 # ...
 ```
 
@@ -136,20 +136,20 @@ flows:
 The query is made up of three parts:
 
 - Import statement to include the relevant [Lexicon(s)](CLQL.md#lexicons)
-- Decorators which extract features of interest to Flow Functions
 - The statement of CLQL facts
+- Decorators which extract features of interest to Flow Functions
 
 For example:
 
-```YAML
+```yaml
 # ...
 tenets:
   - # ...
     query:
-      import codelingo/ast/php              # import statement
+      import codelingo/ast/php         # import statement
 
-      @review.comment                      # Flow Function decorator
-      php.stmt_function({depth: any})       # the CLQL fact statement
+      @review.comment                  # Flow Function decorator
+      php.stmt_function({depth: any})  # the CLQL fact statement
 # ...
 ```
 
@@ -157,12 +157,12 @@ Here we've imported the php lexicon and are looking for function statements at a
 
 Here is a more complex example:
 
-```YAML
-...
+```yaml
+# ...
 tenets:
   - name: debug-prints
-    doc: ...
-    flows: ...
+    doc: # ...
+    flows: # ...
     query: |
       import codelingo/ast/python36
 
@@ -171,7 +171,7 @@ tenets:
         python36.call:
           python36.name:
             id == "print"
-...
+# ...
 ```
 
 This particular Tenet looks for debug prints in python code.
@@ -186,7 +186,7 @@ Flows are made up of a pipeline of serverless functions, called Flow Functions.
 
 In the example below, the review Function builds a comment from a Tenet query which can be used by a Flow to comment on a pull request made to github, bitbucket, gitlab or the like. It does this by extracting the file name, start line and end line to attach the comment to via the `@review.comment` Flow Function query decorator. See [Query Decorators as Feature Extractors](#query_decorators) for more details.
 
-```YAML
+```yaml
 # ...
 tenets:
   - name: four-or-less
