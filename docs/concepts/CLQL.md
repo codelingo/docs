@@ -90,17 +90,6 @@ int_lit({depth: any}):
 
 <br />
 
-## Regex
-
-Any string property can be queried with regex. The following finds methods with names longer than 25 characters:
-
-```
-method({depth: any}):
-  name: /^.{25,}$/
-```
-
-<br />
-
 # Fact Nesting
 
 Facts can take any number of facts and properties as children, forming a query with a tree struct of arbitrary depth. A parent-child fact pair will match any parent element even if the child is not a direct descendant. The following query finds all the if statements inside a method called "myMethod", even those nested inside intermediate scopes (for loops etc):
@@ -296,7 +285,76 @@ The query above will only return methods of classA for which classB has a corres
 
 <br />
 
-## Interleaving
+# Functions
+
+Functions allow users to execute arbitrary logic on variables.
+
+## Resolvers
+
+The following query uses the inbuilt `concat` function to find methods called `New<classname>`:
+
+```
+class({depth: any}):
+  name as className
+  method:
+    name == concat("New", className)
+```
+
+The value of `concat("New", className)` resolves to a string, and `name == <resolvedString>` operates as normal.
+
+## Asserters
+
+The following query uses the inbuilt `regex` function to match methods with capitalised names:
+
+```
+class({depth: any}):
+  method:
+    name as methodName
+    regex(/^[A-Z]/, methodName)
+```
+
+Asserters return bools, and if they are false the whole result is filtered out.
+
+## Custom Functions
+
+JS functions can be defined in .lingo files, then called in the query section of [Tenets](/concepts/tenets.md). We could write and use a new concat function like so:
+
+```yaml
+functions:
+  - name: newConcat
+    type: resolver
+    body: |
+      function (a, b) {
+        c = a.concat(b)
+        return c
+      }
+tenets:
+  - flows:
+      codelingo/review:
+        comments: |
+          This method appears to be a constructor
+    name: constructor-finder
+    query: |
+      class({depth: any}):
+        name as className
+        @review.comment
+        method:
+          name == newConcat("New", className)
+
+```
+
+## Arguments
+
+In addition to the string and regex literals shown above, functions can accept float, bool, and int arguments.
+
+For the most part, variables defined anywhere in the query can be passed to functions anywhere else in the query. However, variables defined inside an `exclude` block cannot be passed to functions outside that exclude block and vice versa.
+
+Function calls can't be nested in CLQL (yet), and new functions must be written to express more complex logic.
+
+<br />
+
+
+# Interleaving
 
 When writing a Tenet in a .lingo file, only the AST lexicon facts are required:
 
