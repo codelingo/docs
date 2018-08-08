@@ -287,11 +287,11 @@ The query above will only return methods of classA for which classB has a corres
 
 # Functions
 
-Functions allow users to execute arbitrary logic on variables.
+Functions allow users to execute arbitrary logic on variables. There are two types of functions: resolvers and asserters.
 
 ## Resolvers
 
-The following query uses the inbuilt `concat` function to find methods called `New<classname>`:
+A resolver function is used on the right hand side of a property assertion. In the following example, we assert that the name property of the method fact is equal to the value returned from the concat function:
 
 ```
 class({depth: any}):
@@ -300,9 +300,9 @@ class({depth: any}):
     name == concat("New", className)
 ```
 
-The value of `concat("New", className)` resolves to a string, and `name == <resolvedString>` operates as normal.
-
 ## Asserters
+
+Asserter functions return a Boolean value and can only be called on their own line in a CLQL query.
 
 The following query uses the inbuilt `regex` function to match methods with capitalised names:
 
@@ -310,14 +310,14 @@ The following query uses the inbuilt `regex` function to match methods with capi
 class({depth: any}):
   method:
     name as methodName
-    regex(/^[A-Z]/, methodName)
+    regex(/^[A-Z]/, methodName) // pass in the methodName variable to the regex function and assert that the name is capitalised.
 ```
-
-Asserters return bools, and if they are false the whole result is filtered out.
 
 ## Custom Functions
 
-JS functions can be defined in .lingo files, then called in the query section of [Tenets](/concepts/tenets.md). We could write and use a new concat function like so:
+JS functions are defined in .lingo.yaml files under the functions section. These functions can then be called in the query section of any [Tenets](/concepts/tenets.md) within the same .lingo.yaml file.
+
+The following example defines and uses a custom concat function:
 
 ```yaml
 functions:
@@ -340,7 +340,28 @@ tenets:
         @review.comment
         method:
           name == newConcat("New", className)
+```
 
+The following example defines and uses a custom string length asserter:
+
+```yaml
+functions:
+  - name: stringLengthGreaterThan
+    type: resolver
+    body: |
+      function (str, minLen) {
+        return str.length > minLen
+      }
+tenets:
+  - flows:
+      codelingo/review:
+        comments: |
+          This method has a long name
+    name: long-method-name
+    query: |
+      method:
+        name as methodName
+        stringLengthGreaterThan(methodName, 15)
 ```
 
 ## Arguments
@@ -348,8 +369,6 @@ tenets:
 In addition to the string and regex literals shown above, functions can accept float, bool, and int arguments.
 
 For the most part, variables defined anywhere in the query can be passed to functions anywhere else in the query. However, variables defined inside an `exclude` block cannot be passed to functions outside that exclude block and vice versa.
-
-Function calls can't be nested in CLQL (yet), and new functions must be written to express more complex logic.
 
 <br />
 
