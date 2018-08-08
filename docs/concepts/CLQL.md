@@ -90,17 +90,6 @@ int_lit({depth: any}):
 
 <br />
 
-## Regex
-
-Any string property can be queried with regex. The following finds methods with names longer than 25 characters:
-
-```
-method({depth: any}):
-  name: /^.{25,}$/
-```
-
-<br />
-
 # Fact Nesting
 
 Facts can take any number of facts and properties as children, forming a query with a tree struct of arbitrary depth. A parent-child fact pair will match any parent element even if the child is not a direct descendant. The following query finds all the if statements inside a method called "myMethod", even those nested inside intermediate scopes (for loops etc):
@@ -296,7 +285,95 @@ The query above will only return methods of classA for which classB has a corres
 
 <br />
 
-## Interleaving
+# Functions
+
+Functions allow users to execute arbitrary logic on variables. There are two types of functions: resolvers and asserters.
+
+## Resolvers
+
+A resolver function is used on the right hand side of a property assertion. In the following example, we assert that the name property of the method fact is equal to the value returned from the concat function:
+
+```
+class({depth: any}):
+  name as className
+  method:
+    name == concat("New", className)
+```
+
+## Asserters
+
+Asserter functions return a Boolean value and can only be called on their own line in a CLQL query.
+
+The following query uses the inbuilt `regex` function to match methods with capitalised names:
+
+```
+class({depth: any}):
+  method:
+    name as methodName
+    regex(/^[A-Z]/, methodName) // pass in the methodName variable to the regex function and assert that the name is capitalised.
+```
+
+## Custom Functions
+
+JS functions are defined in .lingo.yaml files under the functions section. These functions can then be called in the query section of any [Tenets](/concepts/tenets.md) within the same .lingo.yaml file.
+
+The following example defines and uses a custom concat function:
+
+```yaml
+functions:
+  - name: newConcat
+    type: resolver
+    body: |
+      function (a, b) {
+        c = a.concat(b)
+        return c
+      }
+tenets:
+  - flows:
+      codelingo/review:
+        comments: |
+          This method appears to be a constructor
+    name: constructor-finder
+    query: |
+      class({depth: any}):
+        name as className
+        @review.comment
+        method:
+          name == newConcat("New", className)
+```
+
+The following example defines and uses a custom string length asserter:
+
+```yaml
+functions:
+  - name: stringLengthGreaterThan
+    type: resolver
+    body: |
+      function (str, minLen) {
+        return str.length > minLen
+      }
+tenets:
+  - flows:
+      codelingo/review:
+        comments: |
+          This method has a long name
+    name: long-method-name
+    query: |
+      method:
+        name as methodName
+        stringLengthGreaterThan(methodName, 15)
+```
+
+## Arguments
+
+In addition to the string and regex literals shown above, functions can accept float, bool, and int arguments.
+
+For the most part, variables defined anywhere in the query can be passed to functions anywhere else in the query. However, variables defined inside an `exclude` block cannot be passed to functions outside that exclude block and vice versa.
+
+<br />
+
+
+# Interleaving
 
 When writing a Tenet in a .lingo file, only the AST lexicon facts are required:
 
