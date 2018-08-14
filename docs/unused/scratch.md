@@ -9,7 +9,7 @@ tenets:
     query: |
     import: codelingo/csharp
       @ clair.comment
-      csharp.method_declaration({depth: any})
+      csharp.method_declaration(depth = any)
   - name: same-other-tenet
     doc: Some documentation
     comment: This is the comment left by the flow
@@ -36,7 +36,7 @@ tenets:
     doc: Functions in this module should take a maximum of four arguments.<mark class="code-impt" style="display:inline-block; width: 100%;backgroun">    query:
       import codelingo/ast/php              // import statement
       @review.comment                      // feature extraction decorator
-      php.stmt_function({depth: any})       // the match statement</mark>
+      php.stmt_function(depth = any)       // the match statement</mark>
 ...
 </code>
 </pre>

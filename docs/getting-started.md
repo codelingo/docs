@@ -68,7 +68,7 @@ To initialize a default `.lingo` file, run `$ lingo init`. The default file cont
       import codelingo/ast/common
 
       @review.comment
-      common.func({depth: any})
+      common.func(depth = any)
 ```
 
 This single Tenet will find functions across any language.

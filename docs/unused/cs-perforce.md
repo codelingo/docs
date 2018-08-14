@@ -61,7 +61,7 @@ tenets:
   comment: This is a function, but you probably already knew that.
   match: |
     @ clair.comment
-    csharp.method_declaration({depth: any})
+    csharp.method_declaration(depth = any)
 ```
 
 Commit:
