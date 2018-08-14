@@ -17,7 +17,7 @@ query:
       sha == "HEAD"
       go.project:
         @review.comment
-        go.func_type({depth: any}):
+        go.func_type(depth = any):
           go.field_list:
             child_count: >4
 ```
@@ -38,7 +38,7 @@ tenets:
   query:
     import codelingo/ast/go
     @review.comment
-    go.func_decl({depth: any}):
+    go.func_decl(depth = any):
       name == "writeMsg"
 ```
 
@@ -92,7 +92,7 @@ csharp.method_declaration:
         csharp.variable_declarator:
           identifier_token as varName
     csharp.for_each_statement:
-      csharp.add_assignment_expression({depth: any}):
+      csharp.add_assignment_expression(depth = any):
         @review.comment
         csharp.identifier_name:
           identifier_token as varName
@@ -205,7 +205,7 @@ tenets:
     query:
       import codelingo/ast/cpp
       @review.comment
-      cs.block_stmt({depth: any}):
+      cs.block_stmt(depth = any):
         exclude:
           cs.element
 ```

@@ -16,7 +16,7 @@ tenets:
       import codelingo/ast/go
   
       @review.comment
-      go.call_expr({depth: any}):
+      go.call_expr(depth = any):
         go.selector_expr:
           go.ident:
             name == "errors"
@@ -149,7 +149,7 @@ tenets:
       import codelingo/ast/php         # import statement
 
       @review.comment                  # Flow Function decorator
-      php.stmt_function({depth: any})  # the CLQL fact statement
+      php.stmt_function(depth = any)  # the CLQL fact statement
 # ...
 ```
 
@@ -167,7 +167,7 @@ tenets:
       import codelingo/ast/python36
 
       @review.comment
-      python36.expr({depth: any}):
+      python36.expr(depth = any):
         python36.call:
           python36.name:
             id == "print"
@@ -197,7 +197,7 @@ tenets:
     query:
       import codelingo/ast/php
       @review.comment
-      php.stmt_function({depth: any})
+      php.stmt_function(depth = any)
 # ...
 ```
 

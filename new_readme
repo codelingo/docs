@@ -15,7 +15,7 @@ tenets:
       import codelingo/ast/go
   
       @review.comment
-      go.call_expr({depth: any}):
+      go.call_expr(depth = any):
         go.selector_expr:
           go.ident:
             name: "errors"
@@ -158,7 +158,7 @@ tenets:
       import codelingo/ast/go
   
       @review.comment
-      go.call_expr({depth: any}):
+      go.call_expr(depth = any):
         go.selector_expr:
           go.ident:
             name: "errors"
