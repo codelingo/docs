@@ -1,7 +1,7 @@
 
 ---
 
-First, [install the CodeLingo GitHub App](https://github.com/apps/codelingo). This will enable CodeLingo Flows to be run on your repositories. The Review Flow is enabled by default and reviews pull requests to you repos, using Tenets stored in your repository inside a .lingo.yaml file. A Tenet is made up of a `name`, a `doc` specifiying what the Tenet does, `flows` that use this Tenet and a `query` used by the Flow:
+First, [install the CodeLingo GitHub App](https://github.com/apps/codelingo). This will enable CodeLingo Flows to be run on your repositories. The Review Flow is enabled by default and reviews pull requests to you repos, using Tenets stored in your repository inside a codelingo.yaml file. A Tenet is made up of a `name`, a `doc` specifiying what the Tenet does, `flows` that use this Tenet and a `query` used by the Flow:
 
 ```yaml
 tenets:
@@ -32,13 +32,13 @@ tenets:
 
 ## Tenets
 
-Tenets live in .lingo.yaml files in your repository and are used by Flows to automate tasks. You can think of a Tenet as an underlying principle guiding a workflow. 
+Tenets live in codelingo.yaml files in your repository and are used by Flows to automate tasks. You can think of a Tenet as an underlying principle guiding a workflow.
 
 In the sprintf-error Tenet above, the Review Flow uses the Tenet to make sure `errors.New` is being used correctly and attaches a comment to the line where the `go.call_expr` is found, using the `@review.comment` decorator.
 
 ### Adding Tenets
 
-There are three ways to add Tenets to a .lingo.yaml file:
+There are three ways to add Tenets to a codelingo.yaml file:
 
 1. The easist is to import a bundle of Tenets:
 
@@ -57,7 +57,7 @@ tenets:
   - import: codelingo/go/sprintf
 ```
 
-3. The third way is to write a new Tenet directly in the .lingo.yaml file:
+3. The third way is to write a new Tenet directly in the codelingo.yaml file:
 
 ```
 tenets:
@@ -85,7 +85,7 @@ tenets/
   <your-codelingo-username>/
     <bundle-name>/
       <tenet-name>/
-        .lingo.yaml
+        codelingo.yaml
 ```
 
 ---
@@ -144,7 +144,7 @@ Currently the default Flow is the review Flow. Custom Flows are currently in dev
 Bots are agents that integrate with all your data sources, t
 ---
 
-First, [install the CodeLingo GitHub App](https://github.com/apps/codelingo-clair). This will enable CodeLingo Flows to be run on your repositories. The Review Flow is enabled by default and reviews pull requests to you repos, using Tenets stored in your repository inside a .lingo.yaml file. A Tenet is made up of a `name`, a `doc` specifiying what the Tenet does, `flows` that use this Tenet and a `query` used by the Flow:
+First, [install the CodeLingo GitHub App](https://github.com/apps/codelingo-clair). This will enable CodeLingo Flows to be run on your repositories. The Review Flow is enabled by default and reviews pull requests to you repos, using Tenets stored in your repository inside a codelingo.yaml file. A Tenet is made up of a `name`, a `doc` specifiying what the Tenet does, `flows` that use this Tenet and a `query` used by the Flow:
 
 ```yaml
 tenets:
@@ -175,13 +175,13 @@ tenets:
 
 ## Tenets
 
-Tenets live in .lingo.yaml files in your repository and are used by Flows to automate tasks. You can think of a Tenet as an underlying principle guiding a workflow. 
+Tenets live in codelingo.yaml files in your repository and are used by Flows to automate tasks. You can think of a Tenet as an underlying principle guiding a workflow.
 
 In the sprintf-error Tenet above, the Review Flow uses the Tenet to make sure `errors.New` is being used correctly and attaches a comment to the line where the `go.call_expr` is found, using the `@review.comment` decorator.
 
 ### Adding Tenets
 
-There are three ways to add Tenets to a .lingo.yaml file:
+There are three ways to add Tenets to a codelingo.yaml file:
 
 1. The easist is to import a bundle of Tenets:
 
@@ -200,7 +200,7 @@ tenets:
   - import: codelingo/go/sprintf
 ```
 
-3. The third way is to write a new Tenet directly in the .lingo.yaml file:
+3. The third way is to write a new Tenet directly in the codelingo.yaml file:
 
 ```
 tenets:
@@ -228,7 +228,7 @@ tenets/
   <your-codelingo-username>/
     <bundle-name>/
       <tenet-name>/
-        .lingo.yaml
+        codelingo.yaml
 ```
 
 ---

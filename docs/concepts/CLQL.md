@@ -43,7 +43,7 @@ common.class(depth = any)
 It consists of a single fact `common.class`. The name `class` indicates that the fact refers to a class, and the namespace `common` indicates that it may be a class from any language with classes. If the namespace were `csharp` this fact would only match classes from the C# lexicon. The depth range `depth = any` makes this fact match any class within the context of the query (a single C# program), no matter how deeply nested.
 A comment is made on every class found as there is a decorator `@review.comment` directly above the single fact `common.class`.
 
-Note: for brevity we will omit the `common` namespace. This can be done in .lingo files by importing the common lexicon into the global namespace: `import codelingo/ast/common as _`.
+Note: for brevity we will omit the `common` namespace. This can be done in codelingo.yaml files by importing the common lexicon into the global namespace: `import codelingo/ast/common as _`.
 
 <br />
 
@@ -315,7 +315,7 @@ class(depth = any):
 
 ## Custom Functions
 
-JS functions are defined in .lingo.yaml files under the functions section. These functions can then be called in the query section of any [Tenets](/concepts/tenets.md) within the same .lingo.yaml file.
+JS functions are defined in codelingo.yaml files under the functions section. These functions can then be called in the query section of any [Tenets](/concepts/tenets.md) within the same codelingo.yaml file.
 
 The following example defines and uses a custom concat function:
 
@@ -375,7 +375,7 @@ For the most part, variables defined anywhere in the query can be passed to func
 
 # Interleaving
 
-When writing a Tenet in a .lingo file, only the AST lexicon facts are required:
+When writing a Tenet in a codelingo.yaml file, only the AST lexicon facts are required:
 
 ```clql
 tenets:

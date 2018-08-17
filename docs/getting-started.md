@@ -4,7 +4,7 @@
 This guide provides instructions and documentation for:
 
 - Installation and usage of the CodeLingo command line interface (CLI)
-- Configuration of CodeLingo for your repositories via .lingo.yaml files
+- Configuration of CodeLingo for your repositories via codelingo.yaml files
 - Importing and writing of Tenets
 - Instructions for integrating CodeLingo into your workflow for automated code reviews
 
@@ -53,9 +53,9 @@ You should see a success message. The client is now authenticated to talk to the
 
 ## Adding Tenets
 
-Writing and running Tenets is driven via configuration stored in your repository's `.lingo` files. Each `.lingo` file specifies a collection of Tenets to apply to all code under the directory it's written in. A project requires at least one `.lingo` file, however multiple files can be used. All `.lingo` files in a repository will be run with the client, with configuration in children directories only being scoped to that directory's files. `.lingo` files are based on the YAML format.
+Writing and running Tenets is driven via configuration stored in your repository's `codelingo.yaml` files. Each `codelingo.yaml` file specifies a collection of Tenets to apply to all code under the directory it's written in. A project requires at least one `codelingo.yaml` file, however multiple files can be used. All `codelingo.yaml` files in a repository will be run with the client, with configuration in children directories only being scoped to that directory's files. `codelingo.yaml` files are based on the YAML format.
 
-To initialize a default `.lingo` file, run `$ lingo init`. The default file contains an example Tenet as follows:
+To initialize a default `codelingo.yaml` file, run `$ lingo init`. The default file contains an example Tenet as follows:
 
 ``` yaml
   tenets:
@@ -73,16 +73,16 @@ To initialize a default `.lingo` file, run `$ lingo init`. The default file cont
 
 This single Tenet will find functions across any language.
 
-Tenets can be added to a project's `.lingo` file via two methods:
+Tenets can be added to a project's `codelingo.yaml` file via two methods:
 
 - Importing published Tenets
 - Writing custom Tenets
 
-Note: a `.lingo` file can contain a combination of both custom Tenets and imported Tenets.
+Note: a `codelingo.yaml` file can contain a combination of both custom Tenets and imported Tenets.
 
 ### Importing Tenets
 
-To import a published Tenet, add the url to your `.lingo` file:
+To import a published Tenet, add the url to your `codelingo.yaml` file:
 
 ```
 # example of importing an individual Tenet from the CodeLingo's go bundle
@@ -105,10 +105,10 @@ Published Tenets to import (driven by best practices and the community) can be f
 ### Writing Custom Tenets
 
 
-Custom Tenets can be written from scratch directly in `.lingo` files using CodeLingo Query Language (CLQL). CLQL relies on importing Lexicons, which provide a set of domain specific facts to work with. Here is an example of a custom Tenet that find all functions in a repository:
+Custom Tenets can be written from scratch directly in `codelingo.yaml` files using CodeLingo Query Language (CLQL). CLQL relies on importing Lexicons, which provide a set of domain specific facts to work with. Here is an example of a custom Tenet that find all functions in a repository:
 
 ```
-# example of a Tenet written directly in a .lingo file
+# example of a Tenet written directly in a codelingo.yaml file
 tenets:
   - name: find-funcs
     flows:

@@ -1,6 +1,6 @@
 # Overview
 
-Tenets live in .lingo.yaml files in your repository and are used by Flows to automate tasks. You can think of a Tenet as an underlying principle guiding a workflow. 
+Tenets live in codelingo.yaml files in your repository and are used by Flows to automate tasks. You can think of a Tenet as an underlying principle guiding a workflow.
 
 In the sprintf-error Tenet below, the Review Flow uses the Tenet to make sure `errors.New` is being used correctly and attaches a comment to the line where the `go.call_expr` is found, using the `@review.comment` decorator:
 
@@ -41,7 +41,7 @@ Examples of problems that can be solved with Tenets & Flows include:
 
 # Adding Tenets
 
-There are three ways to add Tenets to a .lingo.yaml file:
+There are three ways to add Tenets to a codelingo.yaml file:
 
 1. The easist is to import a bundle of Tenets:
 
@@ -60,7 +60,7 @@ tenets:
   - import: codelingo/go/sprintf
 ```
 
-3. The third way is to write a new Tenet directly in the .lingo.yaml file:
+3. The third way is to write a new Tenet directly in the codelingo.yaml file:
 
 ```
 tenets:
@@ -86,7 +86,7 @@ tenets/
   <your-codelingo-username>/
     <bundle-name>/
       <tenet-name>/
-        .lingo.yaml
+        codelingo.yaml
 ```
 
 <br/>
@@ -245,10 +245,10 @@ Vim has also full support for the Lingo syntax, including CLQL. To set it up:
 - Download [lingo.vim](../resources/lingo.vim)
 - Copy to `~/.vim/syntax/lingo.vim`
 - Enable in vim with `:set syntax=lingo`
-- Auto enable on `.lingo` file open by adding the following line to `~/.vimrc`
+- Auto enable on `codelingo.yaml` file open by adding the following line to `~/.vimrc`
 
 ```
-au BufRead,BufNewFile *.lingo set syntax=lingo
+au BufRead,BufNewFile codelingo.yaml set syntax=lingo
 ```
 
-Other than the match statement, written in CLQL, the rest of a .lingo file is written in YAML. As such, you can set .lingo files to YAML syntax in your IDE to get partial highlighting.
+Other than the match statement, written in CLQL, the rest of a codelingo.yaml file is written in YAML. As such, you can set codelingo.yaml files to YAML syntax in your IDE to get partial highlighting.
