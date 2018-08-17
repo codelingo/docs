@@ -43,13 +43,13 @@ public class Hello
 }
 ```
 
-Create a new .lingo file:
+Create a new codelingo.yaml file:
 
 ```bash
 lingo new
 ```
 
-Edit the .lingo file as follows:
+Edit the codelingo.yaml file as follows:
 
 ```bash
 lexicons:
