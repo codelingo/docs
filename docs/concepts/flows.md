@@ -1,6 +1,6 @@
 # Overview
 
-A Flow is an automated development workflow that leverages Tenets to do some task, for example automating code reviews. While a Tenet lives next to your code in a codelingo.yaml.yaml file, it is inert until a Flow uses it.
+A Flow is an automated development workflow that leverages Tenets to do some task, for example automating code reviews. While a Tenet lives next to your code in a codelingo.yaml file, it is inert until a Flow uses it.
 
 Under the hood, a Flow is a pipeline of serverless functions, called Flow Functions. Flow Functions allow Flows to integrate with your existing tools and infrastructure. Flow Functions are also what glue Tenets and Flows together, with the use of query decorators. Let's walk through the following Tenet to see how this works:
 
