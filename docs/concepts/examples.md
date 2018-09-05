@@ -34,7 +34,7 @@ tenets:
   doc: example doc
   flows:
     codelingo/review:
-      comments: This is a function, name 'writeMsg', but you probably knew that.
+      comment: This is a function, name 'writeMsg', but you probably knew that.
   query:
     import codelingo/ast/go
     @review.comment
@@ -201,7 +201,7 @@ tenets:
     doc: "Validates that the code does not contain any empty block statements."
     flows:
       codelingo/review:
-        comments: This is a function, name 'writeMsg', but you probably knew that.
+        comment: This is a function, name 'writeMsg', but you probably knew that.
     query:
       import codelingo/ast/cpp
       @review.comment

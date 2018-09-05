@@ -331,7 +331,7 @@ functions:
 tenets:
   - flows:
       codelingo/review:
-        comments: |
+        comment: |
           This method appears to be a constructor
     name: constructor-finder
     query: |
@@ -355,7 +355,7 @@ functions:
 tenets:
   - flows:
       codelingo/review:
-        comments: |
+        comment: |
           This method has a long name
     name: long-method-name
     query: |
@@ -383,7 +383,7 @@ tenets:
     doc: Documentation for all-classes
     flows:
       codelingo/review:
-        comments: This is a class, but you probably already knew that.
+        comment: This is a class, but you probably already knew that.
     query:
       import codelingo/ast/csharp as cs
       @review.comment

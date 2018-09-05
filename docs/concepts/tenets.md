@@ -11,7 +11,7 @@ tenets:
       Find instances of 'errors.New(fmt.Sprintf(...))'.
     flows:
       codelingo/review:
-        comments: Should replace errors.New(fmt.Sprintf(...)) with errors.Errorf(...).
+        comment: Should replace errors.New(fmt.Sprintf(...)) with errors.Errorf(...).
     query: |
       import codelingo/ast/go
   
@@ -193,7 +193,7 @@ tenets:
     doc: Functions in this module should take a maximum of four arguments.
     flows:
       codelingo/review:
-        comments: Please write functions that only take a maximum of four arguments.
+        comment: Please write functions that only take a maximum of four arguments.
     query:
       import codelingo/ast/php
       @review.comment
