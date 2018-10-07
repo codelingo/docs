@@ -53,7 +53,7 @@ To limit the above query to match classes with a particular name, add a "name" p
 
 ```
 @review.comment
-method(depth = any):
+common.method(depth = any):
   name == "myFunc"
 ```
 
@@ -67,14 +67,14 @@ This query returns all methods with the name "myFunc". Note that the query decor
 Properties can be of type string, float, and int. The following finds all int literals with the value 8:
 
 ```
-int_lit(depth = any):
+common.int_lit(depth = any):
   value == 8
 ```
 
 This query finds float literals with the value 8.7:
 
 ```
-float_lit(depth = any):
+common.float_lit(depth = any):
   value: 8.7
 ```
 
@@ -84,7 +84,7 @@ float_lit(depth = any):
 
 The comparison operators >, <, >=, and <= are available for floats and ints. The following finds all int literals above negative 3:
 ```
-int_lit(depth = any):
+common.int_lit(depth = any):
   value: > -3
 ```
 
@@ -95,25 +95,25 @@ int_lit(depth = any):
 Facts can take any number of facts and properties as children, forming a query with a tree struct of arbitrary depth. A parent-child fact pair will match any parent element even if the child is not a direct descendant. The following query finds all the if statements inside a method called "myMethod", even those nested inside intermediate scopes (for loops etc):
 
 ```
-method(depth = any):
+common.method(depth = any):
   name == "myMethod"
-  if_stmt(depth = any)
+  common.if_stmt(depth = any)
 ```
 
 Any fact in a query can be decorated. If `class` is decorated, this query returns all classes named "myClass", but only if it has at least one method:
 
 ```
-class(depth = any):
+common.class(depth = any):
   name: “myClass”
-  method(depth = any)
+  common.method(depth = any)
 ```
 
 Any fact in a query can have properties. The following query finds all methods named "myMethod" on the all classes named "myClass":
 
 ```
-class(depth = any):
+common.class(depth = any):
   name: “myClass”
-  method(depth = any):
+  common.method(depth = any):
     name: “myMethod”
 ```
 
@@ -122,15 +122,15 @@ class(depth = any):
 Facts use depth ranges to specify the depth at which they can be found below their parent. Depth ranges have two zero based numbers, representing the minimum and maximum depth to find the result at, inclusive and exclusive respectively. The following query finds any if statements that are direct children of their parent method, in other words, if statements at depth zero from methods:
 
 ```
-method(depth = any):
-  if_stmt(depth = 0:1)
+common.method(depth = any):
+  common.if_stmt(depth = 0:1)
 ```
 
 This query finds if statements at (zero based) depths 3, 4, and 5:
 
 ```
-method(depth = any):
-  if_stmt(depth = 3:6)
+common.method(depth = any):
+  common.if_stmt(depth = 3:6)
 ```
 
 A depth range where the maximum is not greater than the minimum, i.e. `(depth = 5:5})` or `({depth: 6:0)`, will give an error.
@@ -138,15 +138,15 @@ A depth range where the maximum is not greater than the minimum, i.e. `(depth = 
 Depth ranges specifying a single depth can be described with a single number. This query finds direct children at depth zero:
 
 ```
-method(depth = any):
-  if_stmt(depth = 0)
+common.method(depth = any):
+  common.if_stmt(depth = 0)
 ```
 
 Indices in a depth range can range from 0 to positive infinity. Positive infinity is represented by leaving the second index empty. This query finds all methods, and all their descendant if_statements from depth 5 onwards:
 
 ```
-method(depth = any):
-  if_stmt(depth = 5:)
+common.method(depth = any):
+  common.if_stmt(depth = 5:)
 ```
 
 Note: The depth range on top level facts, like `method` in the previous examples, determines the depth from the base context to that fact. In this case the base context contains a single program. However, it can be configured to refer to any context, typically a single repository or the root of the graph on which all queryable data hangs.
@@ -158,10 +158,10 @@ Note: The depth range on top level facts, like `method` in the previous examples
 The following query will find a method with a foreach loop, a for loop, and a while loop in that order:
 
 ```
-method(depth = any):
-  for_stmt
-  foreach_stmt
-  while_stmt
+common.method(depth = any):
+  common.for_stmt
+  common.foreach_stmt
+  common.while_stmt
 ```
 
 <!--TODO(blakemscurr): Explain the <lexicon>.element fact-->
@@ -173,7 +173,7 @@ method(depth = any):
 Exlude allows queries to match children that *do not* have a given property or child fact. Excluded facts and properties are children of an `exclude` operator. The following query finds all classes except those named "classA":
 
 ```
-class(depth = any):
+common.class(depth = any):
   exclude:
     name == "classA"
 ```
@@ -181,8 +181,8 @@ class(depth = any):
 This query finds all classes with a method that is not called String:
 
 ```
-class(depth = any):
-  method:
+common.class(depth = any):
+  common.method:
     exclude:
       name: “String”
 ```
@@ -190,9 +190,9 @@ class(depth = any):
 The placement of the exclude operator has a significant effect on the query's meaning - this similar query finds all classes without String methods:
 
 ```
-class(depth = any):
+common.class(depth = any):
   exlude:
-    method:
+    common.method:
       name: “String”
 ```
 
@@ -201,11 +201,11 @@ The exclude operator in the above query can be read as excluding all methods wit
 Excluding a fact does not affect its siblings. The following query finds all String methods that use an if statement, but don’t use a foreach statement:
 
 ```
-method(depth = any):
+common.method(depth = any):
   name: “String”
-  if_stmt
+  common.if_stmt
   exclude:
-    foreach_stmt
+    common.foreach_stmt
 ```
 
 An excluded fact will not return a result and therefore cannot be decorated.
@@ -216,10 +216,10 @@ An excluded fact will not return a result and therefore cannot be decorated.
 Exclusions can be arbitrarily nested. The following query finds methods which only return nil or return nothing, that is, it finds all methods except those with non-nil values in their return statements:
 
 ```
-method:
+common.method:
   exclude:
-    return_stmt(depth = any):
-      literal:
+    common.return_stmt(depth = any):
+      common.literal:
         exclude:
           name == "nil"
 ```
@@ -232,12 +232,12 @@ Facts nested under multiple excludes still do not return results and cannot be d
 Include allows queries to match patterns without a given parent. The following query is a simple attempt at finding infinitely recursing functions. It works by finding functions that call themselves without an if statement to halt recursion:
 
 ```
-func:
+common.func:
   name as funcName
   exclude:
-    if_stmt:
+    common.if_stmt:
       include:
-        func_call:
+        common.func_call:
           name as funcName
 ```
 
@@ -253,12 +253,12 @@ Results under include statements appear as children of the parent of the corresp
 A fact with multiple children will match against elements of the code that have child1 *and* child2 *and* child3 etc. The `any_of` operator overrides the implicit "and". The following query finds all String methods that use basic loops:
 
 ```
-method(depth = any):
+common.method(depth = any):
   name: “String”
   any_of:
-    foreach_stmt
-    while_stmt
-    for_stmt
+    common.foreach_stmt
+    common.while_stmt
+    common.for_stmt
 ```
 <!-- TODO(blakemscurr) n_of-->
 
@@ -271,13 +271,13 @@ Facts that do not have a parent-child relationship can be compared by assigning 
 The following query compares two classes (which do have a parent-child relationship) and returns the methods which both classes implement:
 
 ```
-class(depth = any):
+common.class(depth = any):
   name: “classA”
-  method:
+  common.method:
     name as methodName
-class(depth = any):
+common.class(depth = any):
   name: “classB”
-  method:
+  common.method:
     name as methodName
 ```
 
@@ -294,9 +294,9 @@ Functions allow users to execute arbitrary logic on variables. There are two typ
 A resolver function is used on the right hand side of a property assertion. In the following example, we assert that the name property of the method fact is equal to the value returned from the concat function:
 
 ```
-class(depth = any):
+common.class(depth = any):
   name as className
-  method:
+  common.method:
     name == concat("New", className)
 ```
 
@@ -307,8 +307,8 @@ Asserter functions return a Boolean value and can only be called on their own li
 The following query uses the inbuilt `regex` function to match methods with capitalised names:
 
 ```
-class(depth = any):
-  method:
+common.class(depth = any):
+  common.method:
     name as methodName
     regex(/^[A-Z]/, methodName) // pass in the methodName variable to the regex function and assert that the name is capitalised.
 ```
@@ -335,10 +335,10 @@ tenets:
           This method appears to be a constructor
     name: constructor-finder
     query: |
-      class(depth = any):
+      common.class(depth = any):
         name as className
         @review.comment
-        method:
+        common.method:
           name == newConcat("New", className)
 ```
 
@@ -359,7 +359,7 @@ tenets:
           This method has a long name
     name: long-method-name
     query: |
-      method:
+      common.method:
         name as methodName
         stringLengthGreaterThan(methodName, 15)
 ```
