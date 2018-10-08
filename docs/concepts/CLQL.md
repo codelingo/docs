@@ -284,37 +284,23 @@ Path statements encapsulate CLQL trees. These subtrees can be repeated with a si
 
 ## Linear
 
-The following query finds functions with triply nested if statements:
+Say we wanted to find triply nested if statements, our query would look like the following:
 
 ```clql
-common.func:
-  path(repeat = 3):
-    common.if_stmt:
-      pathcontinue
-```
-
-It can be rewritten by expanding the CLQL between `path` and `pathcontinue` 3 times:
-
-```clql
-common.func:
+common.if_stmt:
   common.if_stmt:
-    common.if_stmt:
-      common.if_stmt
+    common.if_stmt
 ```
 
-The following finds all functions call by a function called `someFunc`:
+With paths, we can express the same thing like so:
 
 ```clql
-common.func:
-  name == "someFunc"
-  path(repeat = any):
-    common.func_call(depth = any):
-      edge("calls"):
-        common.func:
-          pathcontinue
+path(repeat = 3):
+  common.if_stmt:
+    pathcontinue
 ```
 
-It can be rewritten (into demonstrative pseudocode) by expanding the CLQL betweeen `path` and `pathcontinue` once, twice etc to infinity, and grouping the expansions under an `any_of`:
+Some queries cannot be written with `path` statements. Say we wanted to find all functions called by `someFunc()` and an arbitrarily long chain of calls. Our query would have to explicitly match either directly called functions, or functions with 1, 2, 3 etc intermediaries to infinity.
 
 ```clql
 common.func:
@@ -339,9 +325,38 @@ common.func:
                 ...
 ```
 
+With paths the same query is trivial:
+
+```clql
+common.func:
+  name == "someFunc"
+  path(repeat = any):
+    common.func_call(depth = any):
+      edge("calls"):
+        common.func:
+          pathcontinue
+```
+
 ## Complex subtrees
 
-All CLQL elements that are children of `path` but not `pathcontinue` are repeated. The following query matches functions with triply nested if statements that all check the same value:
+Say we wanted to match triply nested if statements that all check the same value, our query would look like the following:
+
+```clql
+common.if_stmt:
+  common.condition:
+    common.var:
+      name as varName
+  common.if_stmt:
+    common.condition:
+      common.var:
+        name == varName
+    common.if_stmt:
+      common.condition:
+        common.var:
+          name == varName
+```
+
+With paths our query has much less repitition:
 
 ```clql
 common.func:
@@ -353,29 +368,26 @@ common.func:
       pathcontinue
 ```
 
-It can be rewritten by replacing the pathcontinue statement with the contents of the path statement 3 times and replacing any repeated definition of `varName` with an assertion:
-
-```clql
-common.func:
-  common.if_stmt:
-    common.condition:
-      common.var:
-        name as varName
-    common.if_stmt:
-      common.condition:
-        common.var:
-          name == varName
-      common.if_stmt:
-        common.condition:
-          common.var:
-            name == varName
-```
+Note that CLQL elements that are children of `path`, not just the `if_stmt`. Also note that repeated definitions of `varName` are replaced with assertions.
 
 ## Branching
 
 A `path` statement can have multiple `pathcontinue` statements. This allows multiple parents to have the same children. These children are defined under a `pathend` statment, rather than as children of the `pathcontinue` statements. It is often used with an `any_of` to match classes of simlar facts such as methods, closures, and functions, for example.
 
-The following query finds functions or methods with doubly nested for loops:
+Say we wanted to find functions or methods with doubly nested for loops. Without `pathend` we would need to repeat the doubly nested for loop facts under `func` and `method`:
+
+```
+common.file:
+  any_of:
+    common.func:
+      common.for_stmt:
+        common.for_stmt
+    common.method
+      common.for_stmt:
+        common.for_stmt
+```
+
+With `pathend` there is no repitition:
 
 ```
 common.file:
@@ -390,34 +402,7 @@ common.file:
         common.for_stmt
 ```
 
-It can be rewritten by replacing each `pathcontinue` statement with the children of the pathend statement:
-
-```
-common.file:
-  any_of:
-    common.func:
-      common.for_stmt:
-        common.for_stmt
-    common.method
-      common.for_stmt:
-        common.for_stmt
-```
-
-The following query matches all functions with function calls inside doubly nested for/while statements:
-
-```clql
-common.func:
-  path(repeat = 2):
-    any_of:
-      common.for_stmt:
-        pathcontinue
-      common.while_stmt:
-        pathcontinue
-    pathend:
-      common.func_call
-```
-
-It can be rewritten by replacing the `pathcontinue` statements with the children of the `path` statement, and replacing the resulting `pathcontinue` statements with the children of the `pathend` statement.
+Say we wanted to find functions with function calls inside doubly nested for/while statements, our query would have to handle all combinations of for/for for/while, while/for, and while/while:
 
 ```clql
 common.func:
@@ -434,6 +419,20 @@ common.func:
           common.func_call
         common.while_stmt:
           common.func_call
+```
+
+With paths, we can express the same thing like so:
+
+```clql
+common.func:
+  path(repeat = 2):
+    any_of:
+      common.for_stmt:
+        pathcontinue
+      common.while_stmt:
+        pathcontinue
+    pathend:
+      common.func_call
 ```
 
 ## Nested paths
