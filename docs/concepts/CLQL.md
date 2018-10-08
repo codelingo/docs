@@ -300,6 +300,10 @@ path(repeat = 3):
     pathcontinue
 ```
 
+Once a query reaches a `pathcontinue` statement it continues from the `path` statement until the path has been repeated the specified number of times.
+
+## Repeat range
+
 Some queries cannot be written with `path` statements. Say we wanted to find all functions called by `someFunc()` and an arbitrarily long chain of calls. Our query would have to explicitly match either directly called functions, or functions with 1, 2, 3 etc intermediaries to infinity.
 
 ```clql
@@ -330,12 +334,14 @@ With paths the same query is trivial:
 ```clql
 common.func:
   name == "someFunc"
-  path(repeat = any):
+  path(repeat = 1:):
     common.func_call(depth = any):
       edge("calls"):
         common.func:
           pathcontinue
 ```
+
+`repeat = 1:` is a range specifying that the path should be repeated one or more times.
 
 ## Complex subtrees
 
