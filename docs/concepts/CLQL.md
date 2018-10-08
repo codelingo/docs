@@ -278,9 +278,9 @@ common.func_call:
 
 <br />
 
-# Block
+# Path
 
-Block statements encapsulate CLQL trees. These subtrees can be repeated with a single argument allowing succint repition of complex patterns. Branches of the subtree can be recombined at the end of the block allowing queries along multiple paths.
+Path statements encapsulate CLQL trees. These subtrees can be repeated with a single argument allowing succint repition of complex patterns. Branched paths can rejoin allowing a fact to match nodes with different kinds of parents.
 
 ## Linear
 
@@ -288,12 +288,12 @@ The following query finds functions with triply nested if statements:
 
 ```clql
 common.func:
-  block(repeat = 3):
+  path(repeat = 3):
     common.if_stmt:
-      blockcontinue
+      pathcontinue
 ```
 
-It can be rewritten by expanding the CLQL between `block` and `blockcontinue` 3 times:
+It can be rewritten by expanding the CLQL between `path` and `pathcontinue` 3 times:
 
 ```clql
 common.func:
@@ -307,14 +307,14 @@ The following finds all functions call by a function called `someFunc`:
 ```clql
 common.func:
   name == "someFunc"
-  block(repeat = any):
+  path(repeat = any):
     common.func_call(depth = any):
       edge("calls"):
         common.func:
-          blockcontinue
+          pathcontinue
 ```
 
-It can be rewritten (into demonstrative pseudocode) by expanding the CLQL betweeen `block` and `blockcontinue` once, twice etc to infinity, and grouping the expansions under an `any_of`:
+It can be rewritten (into demonstrative pseudocode) by expanding the CLQL betweeen `path` and `pathcontinue` once, twice etc to infinity, and grouping the expansions under an `any_of`:
 
 ```clql
 common.func:
@@ -341,19 +341,19 @@ common.func:
 
 ## Complex subtrees
 
-All CLQL elements that are children of `block` but not `blockcontinue` are repeated. The following query matches functions with triply nested if statements that all check the same value:
+All CLQL elements that are children of `path` but not `pathcontinue` are repeated. The following query matches functions with triply nested if statements that all check the same value:
 
 ```clql
 common.func:
-  block(repeat = 3):
+  path(repeat = 3):
     common.if_stmt:
       common.condition:
         common.var:
           name as varName
-      blockcontinue
+      pathcontinue
 ```
 
-It can be rewritten by replacing the blockcontinue statement with the contents of the block statement 3 times and replacing any repeated definition of `varName` with an assertion:
+It can be rewritten by replacing the pathcontinue statement with the contents of the path statement 3 times and replacing any repeated definition of `varName` with an assertion:
 
 ```clql
 common.func:
@@ -373,24 +373,24 @@ common.func:
 
 ## Branching
 
-A `block` statement can have multiple `blockcontinue` statements. This allows multiple parents to have the same children. These children are defined under a `blockend` statment, rather than as children of the `blockcontinue` statements. It is often used with an `any_of` to match classes of simlar facts such as methods, closures, and functions, for example.
+A `path` statement can have multiple `pathcontinue` statements. This allows multiple parents to have the same children. These children are defined under a `pathend` statment, rather than as children of the `pathcontinue` statements. It is often used with an `any_of` to match classes of simlar facts such as methods, closures, and functions, for example.
 
 The following query finds functions or methods with doubly nested for loops:
 
 ```
 common.file:
-  block:
+  path:
     any_of:
       common.func:
-        blockcontinue
+        pathcontinue
       common.method
-        blockcontinue
-    blockend:
+        pathcontinue
+    pathend:
       common.for_stmt:
         common.for_stmt
 ```
 
-It can be rewritten by replacing each `blockcontinue` statement with the children of the blockend statement:
+It can be rewritten by replacing each `pathcontinue` statement with the children of the pathend statement:
 
 ```
 common.file:
@@ -407,17 +407,17 @@ The following query matches all functions with function calls inside doubly nest
 
 ```clql
 common.func:
-  block(repeat = 2):
+  path(repeat = 2):
     any_of:
       common.for_stmt:
-        blockcontinue
+        pathcontinue
       common.while_stmt:
-        blockcontinue
-    blockend:
+        pathcontinue
+    pathend:
       common.func_call
 ```
 
-It can be rewritten by replacing the `blockcontinue` statements with the children of the `block` statement, and replacing the resulting `blockcontinue` statements with the children of the `blockend` statement.
+It can be rewritten by replacing the `pathcontinue` statements with the children of the `path` statement, and replacing the resulting `pathcontinue` statements with the children of the `pathend` statement.
 
 ```clql
 common.func:
@@ -436,26 +436,26 @@ common.func:
           common.func_call
 ```
 
-## Nested blocks
+## Nested paths
 
-Nested blocks are not yet valid CLQL. The following query is intended to follow the callgraph from `someFunc` and via function calls with multiply nested for loops. It will currently give a parse error.
+Nested paths are not yet valid CLQL. The following query is intended to follow the callgraph from `someFunc` and via function calls with multiply nested for loops. It will currently give a parse error.
 
 ```clql
 common.func:
   name == "someFunc"
-  block(repeat = any):
-    block(repeat = 2:):
+  path(repeat = any):
+    path(repeat = 2:):
      common.for_stmt:
-       blockcontinue:
+       pathcontinue:
         common.func_call(depth = any):
           edge("calls"):
             common.func:
-              blockcontinue
+              pathcontinue
 ```
 
 ## Decorators
 
-Some decorators such as `@review.comment` can only be used once per query. Using them in a repeated block will cause an error.
+Some decorators such as `@review.comment` can only be used once per query. Using them in a repeated path will cause an error.
 
 <br />
 
