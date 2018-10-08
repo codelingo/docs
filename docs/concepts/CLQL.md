@@ -241,7 +241,7 @@ func:
           name as funcName
 ```
 
-It can be read as matching all functions that call themselves with no if statement between the definition and the call site. `$funcName` is a [variable](#variables) that ensures the definition and call site refer to the same function.
+It can be read as matching all functions that call themselves with no if statement between the definition and the call site. `funcName` is a [variable](#variables) that ensures the definition and call site refer to the same function.
 
 Include statements must have an exclude ancestor. Exclude/include pairs can be arbitrarily nested.
 
@@ -266,7 +266,7 @@ method(depth = any):
 
 # Variables
 
-Facts that do not have a parent-child relationship can be compared by assigning their properties to variables. Any argument starting with “$” defines a variable. A query with a variable will only match a pattern in the code if all properties representing that variable are equal.
+Facts that do not have a parent-child relationship can be compared by assigning their properties to variables. A query with a variable will only match a pattern in the code if all properties representing that variable are equal.
 
 The following query compares two classes (which do have a parent-child relationship) and returns the methods which both classes implement:
 
@@ -426,7 +426,7 @@ git.repo:
     project:
       @review.comment
       method:
-        arg-num: > $args
+        arg-num: > args
 ```
 
 
