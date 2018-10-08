@@ -262,6 +262,22 @@ common.method(depth = any):
 ```
 <!-- TODO(blakemscurr) n_of-->
 
+<br />
+
+# Edge
+
+Facts in AST lexicons refer to nodes in an AST, and the parent/child relationship between facts refers to the parent/child relationship of nodes in the AST. Nodes can have other parent/child relationships that are orthogonal to AST, such as calls. These relationships can be queried with the `edge` keyword.
+
+The following query finds function calls at the top level of a file and follows the `calls` edge to their definition:
+
+```
+common.func_call:
+  edge("calls"):
+    common.func
+```
+
+<br />
+
 # Block
 
 Block statements encapsulate CLQL trees. These subtrees can be repeated with a single argument allowing succint repition of complex patterns. Branches of the subtree can be recombined at the end of the block allowing queries along multiple paths.
