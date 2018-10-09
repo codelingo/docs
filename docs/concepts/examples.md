@@ -24,7 +24,7 @@ query:
 
 Lexicons get data into the CodeLingo Platform and provide a list of facts to query that data. In the above example, the git Lexicon finds and clones the "myrepo" repository from the "myvcsgithost.com" VCS host. The "myrepo" repository must be publicly accessible for the git lexicon to access it.
 
-The CodeLingo Platform can be queried directly with the `$ lingo search` command or via [Functions](flows.md) which use queries stored in Tenets.
+The CodeLingo Platform can be queried directly with the `$ lingo run search` command or via [Functions](flows.md) which use queries stored in Tenets.
 
 ## Matching a function name
 
