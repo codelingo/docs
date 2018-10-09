@@ -122,6 +122,7 @@ tenets:
 ```
 
 The key parts of each Tenet are:
+
 - **`name`** meta data for the identification of the Tenet
 - **`doc`** meta data for the usage of the Tenet
 - **`flows`** The metadata for flows the Tenet integrates with. In this case, for the review flow, we provide a comment for the review.

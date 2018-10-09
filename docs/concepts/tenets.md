@@ -50,7 +50,7 @@ tenets:
   - import: codelingo/go
 ```
 
-In the example above `codelingo` is the bundle owner and `go` is the bundle name. More Tenet bundles from the community can be found [here](https://github.com/codelingo/hub/tree/master/tenets).
+In the example above `codelingo` is the bundle owner and `go` is the bundle name. More Tenet bundles from the community can be found [here](https://github.com/codelingo/codelingo/tree/master/tenets).
 
 2. The second way is to import individual Tenets from a bundle:
 
@@ -79,7 +79,7 @@ query:
 
 # Publishing a Tenet Bundle
 
-To publish a Tenet Bundle, make a pull request to github.com/codelingo/hub and add a folder under:
+To publish a Tenet Bundle, make a pull request to github.com/codelingo/codelingo and add a folder under:
 
 ```
 tenets/
@@ -106,7 +106,7 @@ tenets:
 
 ## Metadata
 
-Metadata describes the Tenet. It is used for discovery and documentation. The two main fields are `name`, uniquely naming the Tenet within the bundle and `doc`, describing the Tenet's purpose, for example:
+Metadata describes the Tenet. It is used for discovery and documentation. The two main fields are `name` - uniquely naming the Tenet within the bundle and `doc` - describing the Tenet's purpose, for example:
 
 ```yaml
 # ...
@@ -184,7 +184,7 @@ Note, the decorator `@review.comment` is what integrates the Tenet into the Revi
 
 Flows are made up of a pipeline of serverless functions, called Flow Functions.
 
-In the example below, the review Function builds a comment from a Tenet query which can be used by a Flow to comment on a pull request made to github, bitbucket, gitlab or the like. It does this by extracting the file name, start line and end line to attach the comment to via the `@review.comment` Flow Function query decorator. See [Query Decorators as Feature Extractors](#query_decorators) for more details.
+In the example below, the review Function builds a comment from a Tenet query which can be used by a Flow to comment on a pull request made to github, bitbucket, gitlab or the like. It does this by extracting the file name, start line and end line to attach the comment to via the `@review.comment` Flow Function query decorator. See [Query Decorators as Feature Extractors](#query) for more details.
 
 ```yaml
 # ...
@@ -207,7 +207,7 @@ Follow these steps for writing Tenets for your own requirements:
 
 1. Define metadata for the Tenet (`name`, `doc`)
 
-2. Identify what Lexicon(s) will be required (view availlable Lexicons via [the Codelingo repo](https://github.com/codelingo/codelingo/tree/master/lexicons))
+2. Identify what Lexicon(s) will be required (view available Lexicons via [the Codelingo repo](https://github.com/codelingo/codelingo/tree/master/lexicons))
 
 3. Import the Lexicon(s) into your Tenet. (e.g.`import codelingo/ast/csharp`)
 
@@ -215,7 +215,9 @@ Follow these steps for writing Tenets for your own requirements:
 
 5. Integrate the relevant `functions`.
 
+<!-- TODO add deploy single tenet to hub. -->
 6. (_optional_) [Deploy your Tenet to the Hub](#deploying-tenets-to-the-hub).
+
 
 
 <br/>
@@ -226,7 +228,7 @@ CodeLingo integrates with your IDE to provide support for writing and running CL
 
 ## Sublime
 
-<a href="https://github.com/codelingo/ideplugins/tree/master/sublime" target="_blank">View Subline pulugin README</a>
+<a href="https://github.com/codelingo/ideplugins/tree/master/sublime" target="_blank">View Subline plugin README</a>
 
 CodeLingo's Integrated Development Environment (IDE) plugins can help build patterns in code by automatically generating queries to detect selected elements of programs. A generated query will describe the selected element and its position in the structure of the program:
 

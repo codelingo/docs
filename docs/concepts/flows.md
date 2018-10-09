@@ -61,7 +61,6 @@ query: |
 
 By decorating the `go.func_decl` fact with `@review.comment` the review Flow's comment Function extracts the file and line from the query result, to be used by the review Flow to comment on that line.
 
-
 <div class="alert alert-info">
   <p style="font-size:16px;">
   Documentation on how to compose custom Flows is coming soon. In the mean time, please see the <a href="/docs/concepts/tenets/">Tenets</a> documention to understand how Flows work with Tenets. 
