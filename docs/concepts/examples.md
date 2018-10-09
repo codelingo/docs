@@ -24,7 +24,7 @@ query:
 
 Lexicons get data into the CodeLingo Platform and provide a list of facts to query that data. In the above example, the git Lexicon finds and clones the "myrepo" repository from the "myvcsgithost.com" VCS host. The "myrepo" repository must be publicly accessible for the git lexicon to access it.
 
-The CodeLingo Platform can be queried directly with the the `$ lingo search` command or via [Functions](/concepts/flows.md) which use queries stored in Tenets.
+The CodeLingo Platform can be queried directly with the `$ lingo search` command or via [Functions](flows.md) which use queries stored in Tenets.
 
 ## Matching a function name
 
@@ -77,7 +77,7 @@ The CLQL to match this pattern should find all variables that are declared befor
 
 ![C# example Generation](../img/cs_decl.png)
 
-Note: the `csharp.variable_declarator` has the `identifier_token` field that can be used to identify the `total` variable, but it spans the whole third line, so the whole line must be selected to generate that fact. Since other elements are within that line, many extra facts are generated. This is largely a property of the C# parser used by the underlying [lexicon](#lexicons).
+Note: the `csharp.variable_declarator` has the `identifier_token` field that can be used to identify the `total` variable, but it spans the whole third line, so the whole line must be selected to generate that fact. Since other elements are within that line, many extra facts are generated. This is largely a property of the C# parser used by the underlying [lexicon](CLQL.md#lexicons).
 
 ![C# example Generation](../img/cs_inc.png)
 
