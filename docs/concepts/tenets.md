@@ -7,9 +7,9 @@ In the sprintf-error Tenet below, the Review Flow uses the Tenet to make sure `e
 ```yaml
 tenets:
   - name: sprintf-error
-    doc: |
-      Find instances of 'errors.New(fmt.Sprintf(...))'.
     flows:
+      codelingo/docs:
+        body: Find instances of 'errors.New(fmt.Sprintf(...))'.
       codelingo/review:
         comment: Should replace errors.New(fmt.Sprintf(...)) with errors.Errorf(...).
     query: |
@@ -65,8 +65,9 @@ tenets:
 ```
 tenets:
   - name: find-funcs
-    doc: "example Tenet that finds all func decls"
     flows:
+      codelingo/docs:
+        title: "example Tenet that finds all func decls"
       codelingo/review:
         comment: "this is a function"
 
@@ -98,7 +99,6 @@ A Tenet consists of [Metadata](#metadata), [Flows](#flows), and the [Query](#que
 # ...
 tenets:
   - name: # ...
-    doc: # ...
     flows: # ...
     query: # ...
 # ...
@@ -106,13 +106,12 @@ tenets:
 
 ## Metadata
 
-Metadata describes the Tenet. It is used for discovery and documentation. The two main fields are `name` - uniquely naming the Tenet within the bundle and `doc` - describing the Tenet's purpose, for example:
+Metadata describes the Tenet. It is used for discovery and documentation. The `name` uniquely names the Tenet within the bundle, for example:
 
 ```yaml
 # ...
 tenets:
   - name: four-or-less
-    doc: Functions in this module should take a maximum of four arguments.
     flows: 
     # ...
     query:
@@ -161,7 +160,6 @@ Here is a more complex example:
 # ...
 tenets:
   - name: debug-prints
-    doc: # ...
     flows: # ...
     query: |
       import codelingo/ast/python36
@@ -190,7 +188,6 @@ In the example below, the review Function builds a comment from a Tenet query wh
 # ...
 tenets:
   - name: four-or-less
-    doc: Functions in this module should take a maximum of four arguments.
     flows:
       codelingo/review:
         comment: Please write functions that only take a maximum of four arguments.

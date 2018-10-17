@@ -31,8 +31,9 @@ The CodeLingo Platform can be queried directly with the `$ lingo run search` com
 ```yaml
 tenets:
 - name: first-tenet
-  doc: example doc
   flows:
+    codelingo/docs:
+      body: example doc
     codelingo/review:
       comment: This is a function, name 'writeMsg', but you probably knew that.
   query:
@@ -198,8 +199,9 @@ The same rule can be expressed in CLQL as the following [tenet](tenets.md):
 ```clql
 tenets:
   - name: "EmptyBlock"
-    doc: "Validates that the code does not contain any empty block statements."
     flows:
+      codelingo/docs:
+        title: "Validates that the code does not contain any empty block statements."
       codelingo/review:
         comment: This is a function, name 'writeMsg', but you probably knew that.
     query:

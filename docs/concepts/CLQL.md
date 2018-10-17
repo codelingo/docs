@@ -380,8 +380,9 @@ When writing a Tenet in a codelingo.yaml file, only the AST lexicon facts are re
 ```clql
 tenets:
   - name: all-classes
-    doc: Documentation for all-classes
     flows:
+      codelingo/docs:
+        body: Documentation for all-classes
       codelingo/review:
         comment: This is a class, but you probably already knew that.
     query:
