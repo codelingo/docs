@@ -7,8 +7,9 @@ Under the hood, a Flow is a pipeline of serverless functions, called Flow Functi
 ```yaml
 tenets:
     - name: example-tenet
-      doc: find functions named someName
       flows:
+        codelingo/docs:
+          title: find functions named someName
         codelingo/review:
           comment: "this is a func"
       query: |

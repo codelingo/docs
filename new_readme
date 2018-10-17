@@ -6,9 +6,9 @@ First, [install the CodeLingo GitHub App](https://github.com/apps/codelingo). Th
 ```yaml
 tenets:
   - name: sprintf-error
-    doc: |
-      Find instances of 'errors.New(fmt.Sprintf(...))'.
     flows:
+      codelingo/docs:
+        body: Find instances of 'errors.New(fmt.Sprintf(...))'.
       codelingo/review:
         comment: Should replace errors.New(fmt.Sprintf(...)) with errors.Errorf(...).
     query: |
@@ -62,8 +62,9 @@ tenets:
 ```
 tenets:
   - name: find-funcs
-    doc: "example Tenet that finds all func decls"
     flows:
+      codelingo/docs:
+        title: "example Tenet that finds all func decls"
       codelingo/review:
         comment: "this is a function"
 
@@ -149,9 +150,9 @@ First, [install the CodeLingo GitHub App](https://github.com/apps/codelingo-clai
 ```yaml
 tenets:
   - name: sprintf-error
-    doc: |
-      Find instances of 'errors.New(fmt.Sprintf(...))'.
     flows:
+      codelingo/docs:
+        body: Find instances of 'errors.New(fmt.Sprintf(...))'.
       codelingo/review:
         comment: Should replace errors.New(fmt.Sprintf(...)) with errors.Errorf(...).
     query: |
@@ -205,8 +206,9 @@ tenets:
 ```
 tenets:
   - name: find-funcs
-    doc: "example Tenet that finds all func decls"
     flows:
+      codelingo/docs:
+        title: "example Tenet that finds all func decls"
       codelingo/review:
         comment: "this is a function"
 
