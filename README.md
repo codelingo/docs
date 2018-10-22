@@ -10,7 +10,7 @@ See here to run the site: http://www.mkdocs.org
 
 ```bash 
 
-$mkdocs build
+$ mkdocs build
 ```
 
 This will create the html site under ./site
