@@ -62,7 +62,7 @@ This query returns all methods with the name "myFunc". Note that the query decor
 
 <br />
 
-## Floats and Ints
+## Strings, Floats and Ints
 <!--TODO(blakemscurr) explain boolean properties once syntax has been added to the ebnf-->
 Properties can be of type string, float, and int. The following finds all int literals with the value 8:
 
@@ -77,6 +77,18 @@ This query finds float literals with the value 8.7:
 float_lit(depth = any):
   value: 8.7
 ```
+
+<br />
+
+## Equality
+
+The equality operators == and != are avaliable for strings, floats and ints. The following finds all methods that are not called "main":
+
+```
+method(depth = any):
+  name != "main"
+```
+
 
 <br />
 
@@ -170,7 +182,7 @@ method(depth = any):
 
 # Exclude
 
-Exlude allows queries to match children that *do not* have a given property or child fact. Excluded facts and properties are children of an `exclude` operator. The following query finds all classes except those named "classA":
+Exclude allows queries to match children that *do not* have a given property or child fact. Excluded facts and properties are children of an `exclude` operator. The following query finds all classes except those named "classA":
 
 ```
 class(depth = any):
@@ -191,7 +203,7 @@ The placement of the exclude operator has a significant effect on the query's me
 
 ```
 class(depth = any):
-  exlude:
+  exclude:
     method:
       name: “String”
 ```
