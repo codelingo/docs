@@ -320,7 +320,7 @@ JS functions are defined in codelingo.yaml files under the functions section. Th
 The following example defines and uses a custom concat function:
 
 ```yaml
-functions:
+funcs:
   - name: newConcat
     type: resolver
     body: |
@@ -345,7 +345,7 @@ tenets:
 The following example defines and uses a custom string length asserter:
 
 ```yaml
-functions:
+funcs:
   - name: stringLengthGreaterThan
     type: resolver
     body: |
