@@ -6,7 +6,7 @@ then
     tag=$(git rev-parse --verify --short HEAD)
 fi
 
-set -xe
+set -e
 
 registry=531831122766.dkr.ecr.us-west-2.amazonaws.com
 image=docs
@@ -16,3 +16,6 @@ mkdocs build
 docker build -t $registry/$image:$tag -t $registry/$image:latest .
 docker push $registry/$image:$tag
 docker push $registry/$image:latest
+
+JSON='{"image": "'"$registry/$image"'", "tag": "'"$tag"'"}'
+printf '%s' "$JSON"
