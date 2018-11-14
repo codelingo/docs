@@ -1,6 +1,6 @@
 # Overview
 
-Tenets live in codelingo.yaml files in your repository and are used by Flows to automate tasks. You can think of a Tenet as an underlying principle guiding a workflow and ensuring that your codebase only contains quality, error-free code.
+Tenets live in codelingo.yaml files in your repository and are used by Flows to automate tasks. You can think of a Tenet as an underlying principle guiding a workflow.
 
 In the Tenet [sprintf](https://www.codelingo.io/tenets/codelingo/go/sprintf) below, the Review Flow uses the Tenet to make sure `errors.New` is being used correctly and attaches a comment to the line where the `go.call_expr` is found, using the `@review comment` decorator:
 

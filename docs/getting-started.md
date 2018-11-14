@@ -169,7 +169,7 @@ Setting up the Review Flow on a repository is as easy as adding a new webhook on
 
 1. Set the Payload URL to https://flow.codelingo.io/codelingo/review/github
 2. Ensure the content type is set to "application/json".
-3. Select the "Letme select individual events" option.
+3. Select the "Let me select individual events" option.
 4. Tick the "Pull request" box, leaving all others unchecked.
 5. Ensure the "Active" box is ticked.
 6. Click "Add webhook".
