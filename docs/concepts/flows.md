@@ -9,16 +9,16 @@ tenets:
     - name: example-tenet
       flows:
         codelingo/docs:
-          title: find functions named someName
+          title: Find functions named helloWorld.
         codelingo/review:
-          comment: "this is a func"
+          comment: "This is a function named helloWorld."
       query: |
         import codelingo/ast/go
         
-        @review.comment 
+        @review comment 
         go.func_decl:
           go.ident:
-            value == "someName"
+            value == "helloWorld"
 ```
 
 ## Import & Config
@@ -29,38 +29,38 @@ Flows that can be used with the above Tenet are configured under the `flows` sec
 # ...
 flows:
   codelingo/review:
-    comment: "this is a func"
+    comment: "This is a function named helloWorld."
 # ...
 ```
 
-Here we are importing the `review` flow from the `codelingo` owner and configuring it to comment "this is a func" on any query matches. 
+Here we are importing the `review` flow from the `codelingo` owner and configuring it to comment "This is a function named helloWorld." on any query matches. 
 
 ## Flow Function Decorators
 
-The Tenet query searches for all Go functions named "someName":
+The Tenet query searches for all Go functions named "helloWorld":
 
 ```yaml
 # ...
 query: |
   import codelingo/ast/go
 
-  @review.comment
+  @review comment
   go.func_decl:
     go.ident:
-    value == "someName"
+    value == "helloWorld"
 # ...
 ```
 
- Tenet queries are decorated with Flow Function decorators which extract the results of the query to be used by the Flow. In this case, `@review.comment` is the decorator for the comment Flow Function of the review Flow:
+ Tenet queries are decorated with Flow Function decorators which extract the results of the query to be used by the Flow. In this case, `@review comment` is the decorator for the comment Flow Function of the Review Flow:
 
-```
+```yaml
 # ...
-  @review.comment
+  @review comment
   go.func_decl:
 # ...
 ```
 
-By decorating the `go.func_decl` fact with `@review.comment` the review Flow's comment Function extracts the file and line from the query result, to be used by the review Flow to comment on that line.
+By decorating the `go.func_decl` fact with `@review comment` the Review Flow's comment function extracts the file and line from the query result, to be used by the review Flow to comment on that line.
 
 <div class="alert alert-info">
   <p style="font-size:16px;">

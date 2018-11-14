@@ -36,24 +36,18 @@ In order to run Tenets against your repository, your lingo client will need to a
 1. Create a CodeLingo account <a href="https://codelingo.io/join" target="_blank">here</a>
 2. Generate the token from the  <a href="https://www.codelingo.io/settings/profile" target="_blank">web app here</a>, and copy it to your clipboard
 3. Run `$ lingo config setup` and follow the prompts.
-
-```bash
-$ lingo config setup
-```
-
 4. Enter your username (you can see it in the top right corner of codelingo.io, this should be the CodeLingo account username you created in step 1)
-
 5. Enter your token, pasting from your clipboard
 
 You should see a success message. The client is now authenticated to talk to the CodeLingo platform.
 
 ---
 
-*Under The Hood*: The setup command creates a ~/.codelingo folder in which it stores credentials and configuration details to push code up and get issues back from the CodeLingo platform. You'll note it also adds a ~/.codelingo/config/git-credentials file. This is used by the lingo tool, via git, to sync code to the CodeLingo git server.
+*Under The Hood*: The setup command creates a ~/.codelingo folder in which it stores credentials and configuration details to push code up and get issues back from the CodeLingo platform. Note: It also adds a ~/.codelingo/config/git-credentials file. This is used by the lingo tool, via git, to sync code to the CodeLingo git server.
 
 ## Adding Tenets
 
-Writing and running Tenets is driven via configuration stored in your repository's `codelingo.yaml` files. Each `codelingo.yaml` file specifies a collection of Tenets to apply to all code under the directory it's written in. A project requires at least one `codelingo.yaml` file, however multiple files can be used. All `codelingo.yaml` files in a repository will be run with the client, with configuration in children directories only being scoped to that directory's files. `codelingo.yaml` files are based on the YAML format.
+Writing and running Tenets is driven via configuration stored in your repository's `codelingo.yaml` files. Each `codelingo.yaml` file specifies a collection of Tenets to apply to all code under the directory it's written in. A project requires at least one `codelingo.yaml` file, however multiple files can be used. All `codelingo.yaml` files in a repository will be run by the client, with configuration in children directories only being scoped to that directory's files. `codelingo.yaml` files are based on the YAML format.
 
 To initialize a default `codelingo.yaml` file, run `$ lingo init`. The default file contains an example Tenet as follows:
 
@@ -85,20 +79,20 @@ Note: a `codelingo.yaml` file can contain a combination of both custom Tenets an
 To import a published Tenet, add the url to your `codelingo.yaml` file:
 
 ```
-# example of importing an individual Tenet from the CodeLingo's go bundle
+# example of importing an individual Tenet from the CodeLingo's Go Bundle
 tenets:
   - import: codelingo/go/marshelling
 ```
 
-Tenets can be imported individually (as above), or as a bundle:
+Tenets can be imported individually (as above), or as a Bundle:
 
 ```
-#  example of importing the whole go bundle
+#  example of importing the whole Go Bundle
 tenets:
   - import: codelingo/go
 ```
 
-Published Tenets to import (driven by best practices and the community) can be found [on the Codelingo repo](https://github.com/codelingo/codelingo/tree/master/tenets).
+Published Tenets to import (driven by best practices and the community) can be found [on CodeLingo](https://www.codelingo.io/tenets).
 
 **[View more information on importing published Tenets](concepts/tenets.md#importing).**
 
@@ -116,18 +110,18 @@ tenets:
           comment: "this is a func"
     query: |
        import codelingo/go
-       @review.comment
-       go.func_decl
+
+       @review comment
+       go.func_decl(depth = any)
 
 ```
 
 The key parts of each Tenet are:
 
-- **`name`** meta data for the identification of the Tenet
-- **`doc`** meta data for the usage of the Tenet
+- **`name`** Meta data for the identification of the Tenet
 - **`flows`** The metadata for flows the Tenet integrates with. In this case, for the review flow, we provide a comment for the review.
 - **`query`** - this is the pattern the Tenet is looking for and core to all Tenets.
-- **`@review.comment`** - is a query decorator which extracts the information needed from the query result for the Review Flow. In this case, it'll return the filename and line number for every function declaration found in the repository.
+- **`@review comment`** - is a query decorator which extracts the information needed from the query result for the Review Flow. In this case, it'll return the filename and line number for every function declaration found in the repository.
 
 
 **[View more information on writing custom Tenets](concepts/tenets.md#writing-custom-tenets)**
@@ -141,7 +135,7 @@ Integrating Tenets into your existing developer workflow is done through Flows. 
   $ lingo run review
 ```
 
-By default, this will step through each occurence of each Tenet. For example,
+By default, this will step through each occurrence of each Tenet. For example,
 
 ```bash
 $ lingo run review
@@ -165,13 +159,13 @@ In this example, the Tenet is using the inbuilt php fact "stmt_function" which m
 
 To open a file at the line of the issue, type `o` and hit return. It will give you an option (which it will remember) to set your editor, defaulting to vi.
 
-Note: The first time `lingo run review` is run on a repository, `lingo` will automatically add the Codelingo git server as a remote, so that changes can be synced and analysed on the Codelingo platform.
+Note: The first time `lingo run review` is run on a repository, `lingo` will automatically add the CodeLingo git server as a remote, so that changes can be synced and analysed on the CodeLingo platform.
 
 ## Integrating the Review Flow
 
-Flows are used to integrate CodeLingo into your workflow. The Review Flow uses the comment extracted from the Tenets by the review Flow to comment on Pull Requests. This helps teams best practices are followed by all developers on a team.
+Flows are used to integrate CodeLingo into your workflow. The Review Flow uses the comment from the Tenets to comment on Pull Requests. This ensures a teams best practices are followed by all developers on a team.
 
-Setting up the Review Flow on a repos is as easy as adding a new webhook on Github.
+Setting up the Review Flow on a repository is as easy as adding a new webhook on Github.
 
 1. Set the Payload URL to https://flow.codelingo.io/codelingo/review/github
 2. Ensure the content type is set to "application/json".
@@ -180,21 +174,21 @@ Setting up the Review Flow on a repos is as easy as adding a new webhook on Gith
 5. Ensure the "Active" box is ticked.
 6. Click "Add webhook".
 
-Note that the review Flow only supports public repos at this time.
+Note: The Review Flow only supports public repos at this time.
 
-Once configured, the review Flow will comment on pull requests when the Tenets for this project occur.
+Once configured, the Review Flow will comment on pull requests that violate a Tenet.
 
-CLAIR will only review pull requests and will never make changes to your codebase.
+The Review Flow will only review Pull Requests and will never make changes to your codebase.
 
 Flows can be used to build any custom workflow. Whether that's generating custom reports on your project dashboard, or integrations with your existing tools and services through Functions.
 
-If you are interested in building custom flows and integrations, please contact us directly at: 
+If you are interested in building custom Flows and integrations, please contact us directly at: 
  [hello@codelingo.io](hello@codelingo.io).
 
 ## Next Steps
 
 Now that you have basic integration with CodeLingo into your project, you can start to add additional Tenets and build custom workflow augmentation.
 <br/><br/>
-**[Explore published Tenets to add to your project](https://github.com/codelingo/codelingo/tree/master/tenets)**
+**[Explore published Tenets to add to your project](https://www.codelingo.io/tenets)**
 <br/><br/>
 **[View guide to importing and writing Tenets](/concepts/tenets.md)**

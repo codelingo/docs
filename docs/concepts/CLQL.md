@@ -1,6 +1,6 @@
 # Lexicons
 
-CLQL queries are statements of facts about a domain of knowledge. Those facts come from Lexicons.
+CodeLingo Query Language (CLQL) queries are statements of Facts about a domain of knowledge. Those Facts come from Lexicons.
 
 There are currently three domains of knowledge Lexicon types support:
 
@@ -10,7 +10,7 @@ Abstract Syntax Tree (AST) Lexicons are used to query static properties of sourc
 
 ## Version Control (VCS)
 
-With Version Control System (VCS) Lexicons, facts about the VCS itself can be queried: commit comments, commit SHAs, authorship and other metadata.
+With Version Control System (VCS) Lexicons, Facts about the VCS itself can be queried: commit comments, commit SHAs, authorship and other metadata.
 
 ## Runtime
 
@@ -30,50 +30,50 @@ If you are interested in writing your own custom Lexicons please see the **[Lexi
 # Querying with Facts
 
 <!--Should we include systems that CLQL does not *yet* support? -->
-CLQL can query many types of software related systems. But assume for simplicity that all queries on this page are scoped to a single object oriented program.
+CLQL can query many types of software related systems but assume for simplicity that all queries on this page are scoped to a single object oriented program.
 
 <!--TODONOW link to fact definition section on lexicon page-->
-Queries are made up of Facts. A CLQL query with just a single fact will match all elements of that type in the program. The following query matches and returns all classes in the queried program:
+Queries are made up of Facts. A CLQL query with just a single Fact will match all elements of that type in the program. The following query matches and returns all classes in the queried program:
 
-```
+```yaml
 # ...
 common.class(depth = any)
 ```
 
-It consists of a single fact `common.class`. The name `class` indicates that the fact refers to a class, and the namespace `common` indicates that it may be a class from any language with classes. If the namespace were `csharp` this fact would only match classes from the C# lexicon. The depth range `depth = any` makes this fact match any class within the context of the query (a single C# program), no matter how deeply nested.
-A comment is made on every class found as there is a decorator `@review.comment` directly above the single fact `common.class`.
+It consists of a single Fact `common.class`. The name `class` indicates that the Fact refers to a class, and the namespace `common` indicates that it may be a class from any language with classes. If the namespace were `csharp` this Fact would only match classes from the C# Lexicon. The depth range `depth = any` makes this Fact match any class within the context of the query (a single C# program), no matter how deeply nested.
+A comment is made on every class found as there is a decorator `@review comment` directly above the single Fact `common.class`.
 
-Note: for brevity we will omit the `common` namespace. This can be done in codelingo.yaml files by importing the common lexicon into the global namespace: `import codelingo/ast/common as _`.
+Note: For brevity we will omit the `common` namespace. This can be done in codelingo.yaml files by importing the common lexicon into the global namespace: `import codelingo/ast/common as _`.
 
 <br />
 
 ## Fact Properties
 
-To limit the above query to match classes with a particular name, add a "name" property as an argument to the `method` fact:
+To limit the above query to match classes with a particular name, add a "name" property as an argument to the `method` Fact:
 
-```
-@review.comment
+```yaml
+@review comment
 method(depth = any):
   name == "myFunc"
 ```
 
-This query returns all methods with the name "myFunc". Note that the query decorator is still on the `method` fact - properties cannot be returned, only their parent facts. Also note that properties are not namespaced, as their namespace is implied from their parent fact.
+This query returns all methods with the name "myFunc". Note that the query decorator is still on the `method` Fact - properties cannot be returned, only their parent Facts. Also note that properties are not namespaced, as their namespace is implied from their parent Fact.
 
 
 <br />
 
-## Strings, Floats and Ints
+## Strings, Floats and Integers
 <!--TODO(blakemscurr) explain boolean properties once syntax has been added to the ebnf-->
-Properties can be of type string, float, and int. The following finds all int literals with the value 8:
+Properties can be of type String, Float, and Integer. The following finds all Integer literals with the value 8:
 
-```
+```yaml
 int_lit(depth = any):
   value == 8
 ```
 
 This query finds float literals with the value 8.7:
 
-```
+```yaml
 float_lit(depth = any):
   value: 8.7
 ```
@@ -82,9 +82,9 @@ float_lit(depth = any):
 
 ## Equality
 
-The equality operators == and != are avaliable for strings, floats and ints. The following finds all methods that are not called "main":
+The equality operators == and != are avaliable for Strings, Floats and Integers. The following finds all methods that are not called "main":
 
-```
+```yaml
 method(depth = any):
   name != "main"
 ```
@@ -94,74 +94,75 @@ method(depth = any):
 
 ## Comparison
 
-The comparison operators >, <, >=, and <= are available for floats and ints. The following finds all int literals above negative 3:
-```
+The comparison operators >, <, >=, and <= are available for Floats and Integers. The following finds all Int literals above negative 3:
+
+```yaml
 int_lit(depth = any):
-  value: > -3
+  value > -3
 ```
 
 <br />
 
 # Fact Nesting
 
-Facts can take any number of facts and properties as children, forming a query with a tree struct of arbitrary depth. A parent-child fact pair will match any parent element even if the child is not a direct descendant. The following query finds all the if statements inside a method called "myMethod", even those nested inside intermediate scopes (for loops etc):
+Facts can take any number of facts and properties as children, forming a query with a tree struct of arbitrary depth. A parent-child Fact pair will match any parent element even if the child is not a direct descendant. The following query finds all the if statements inside a method called "myMethod", even those nested inside intermediate scopes (for loops etc):
 
-```
+```yaml
 method(depth = any):
   name == "myMethod"
   if_stmt(depth = any)
 ```
 
-Any fact in a query can be decorated. If `class` is decorated, this query returns all classes named "myClass", but only if it has at least one method:
+Any Fact in a query can be decorated. If `class` is decorated, this query returns all classes named "myClass", but only if it has at least one method:
 
-```
+```yaml
 class(depth = any):
-  name: “myClass”
+  name == “myClass”
   method(depth = any)
 ```
 
-Any fact in a query can have properties. The following query finds all methods named "myMethod" on the all classes named "myClass":
+Any Fact in a query can have properties. The following query finds all methods named "myMethod" that are inside classes named "myClass":
 
-```
+```yaml
 class(depth = any):
-  name: “myClass”
+  name == “myClass”
   method(depth = any):
-    name: “myMethod”
+    name == “myMethod”
 ```
 
 ## Depth
 
 Facts use depth ranges to specify the depth at which they can be found below their parent. Depth ranges have two zero based numbers, representing the minimum and maximum depth to find the result at, inclusive and exclusive respectively. The following query finds any if statements that are direct children of their parent method, in other words, if statements at depth zero from methods:
 
-```
+```yaml
 method(depth = any):
   if_stmt(depth = 0:1)
 ```
 
 This query finds if statements at (zero based) depths 3, 4, and 5:
 
-```
+```yaml
 method(depth = any):
   if_stmt(depth = 3:6)
 ```
 
-A depth range where the maximum is not greater than the minimum, i.e. `(depth = 5:5})` or `({depth: 6:0)`, will give an error.
+Note: A depth range where the maximum is not greater than the minimum, i.e. `(depth = 5:5})` or `({depth: 6:0)`, will give an error.
 
 Depth ranges specifying a single depth can be described with a single number. This query finds direct children at depth zero:
 
-```
+```yaml
 method(depth = any):
   if_stmt(depth = 0)
 ```
 
 Indices in a depth range can range from 0 to positive infinity. Positive infinity is represented by leaving the second index empty. This query finds all methods, and all their descendant if_statements from depth 5 onwards:
 
-```
+```yaml
 method(depth = any):
   if_stmt(depth = 5:)
 ```
 
-Note: The depth range on top level facts, like `method` in the previous examples, determines the depth from the base context to that fact. In this case the base context contains a single program. However, it can be configured to refer to any context, typically a single repository or the root of the graph on which all queryable data hangs.
+Note: The depth range on top level Facts, like `method` in the previous examples, determines the depth from the base context to that Fact. In this case the base context contains a single program. However, it can be configured to refer to any context, typically a single repository or the root of the graph on which all queryable data hangs.
 
 <br />
 
@@ -169,7 +170,7 @@ Note: The depth range on top level facts, like `method` in the previous examples
 
 The following query will find a method with a foreach loop, a for loop, and a while loop in that order:
 
-```
+```yaml
 method(depth = any):
   for_stmt
   foreach_stmt
@@ -182,52 +183,52 @@ method(depth = any):
 
 # Exclude
 
-Exclude allows queries to match children that *do not* have a given property or child fact. Excluded facts and properties are children of an `exclude` operator. The following query finds all classes except those named "classA":
+Exclude allows queries to match children that *do not* have a given property or child Fact. Excluded Facts and properties are children of an `exclude` operator. The following query finds all classes except those named "classA":
 
-```
+```yaml
 class(depth = any):
   exclude:
     name == "classA"
 ```
 
-This query finds all classes with a method that is not called String:
+This query finds all classes with a method that is not called `helloWorld`:
 
-```
+```yaml
 class(depth = any):
   method:
     exclude:
-      name: “String”
+      name == "helloWorld"
 ```
 
-The placement of the exclude operator has a significant effect on the query's meaning - this similar query finds all classes without String methods:
+The placement of the exclude operator has a significant effect on the query's meaning - this similar query finds all classes without `helloWorld` methods:
 
-```
+```yaml
 class(depth = any):
   exclude:
     method:
-      name: “String”
+      name == "helloWorld"
 ```
 
-The exclude operator in the above query can be read as excluding all methods with the name string - the `method` fact and `name` property combine to form a more complex pattern to be excluded. In the same way, arbitrarily many facts, properties, and operators can be added as children of the exclude operator to further specify the pattern to be excluded.
+The exclude operator in the above query can be read as excluding all methods with the name `helloWorld` - the `method` Fact and `name` property combine to form a more complex pattern to be excluded. In the same way, an arbitrary amount of Facts, properties, and operators can be added as children of the exclude operator to further specify the pattern to be excluded.
 
-Excluding a fact does not affect its siblings. The following query finds all String methods that use an if statement, but don’t use a foreach statement:
+Excluding a Fact does not affect its siblings. The following query finds all methods named `helloWorld` that use an if statement, but don’t use a foreach statement:
 
-```
+```yaml
 method(depth = any):
-  name: “String”
+  name == "helloWorld"
   if_stmt
   exclude:
     foreach_stmt
 ```
 
-An excluded fact will not return a result and therefore cannot be decorated.
+An excluded Fact will not return a result and therefore cannot be decorated.
 
 <br />
 ## Nested Exclude
 
-Exclusions can be arbitrarily nested. The following query finds methods which only return nil or return nothing, that is, it finds all methods except those with non-nil values in their return statements:
+Exclusions can be arbitrarily nested. The following query finds methods which only return nil or return nothing, that is, it finds all methods except those with non-nil values in their return statement:
 
-```
+```yaml
 method:
   exclude:
     return_stmt(depth = any):
@@ -236,21 +237,21 @@ method:
           name == "nil"
 ```
 
-Facts nested under multiple excludes still do not return results and cannot be decorated.
+Note: Facts nested under multiple excludes still do not return results and cannot be decorated.
 
 <br />
 # Include
 
 Include allows queries to match patterns without a given parent. The following query is a simple attempt at finding infinitely recursing functions. It works by finding functions that call themselves without an if statement to halt recursion:
 
-```
+```yaml
 func:
   name as funcName
   exclude:
     if_stmt:
       include:
         func_call:
-          name as funcName
+          name == funcName
 ```
 
 It can be read as matching all functions that call themselves with no if statement between the definition and the call site. `funcName` is a [variable](#variables) that ensures the definition and call site refer to the same function.
@@ -262,11 +263,11 @@ Results under include statements appear as children of the parent of the corresp
 <br />
 # any_of
 
-A fact with multiple children will match against elements of the code that have child1 *and* child2 *and* child3 etc. The `any_of` operator overrides the implicit "and". The following query finds all String methods that use basic loops:
+A Fact with multiple children will match against elements of the code that have child1 *and* child2 *and* child3 etc. The `any_of` operator overrides the implicit "and". The following query finds all methods named `helloWorld` that use basic loops:
 
-```
+```yaml
 method(depth = any):
-  name: “String”
+  name == "helloWorld"
   any_of:
     foreach_stmt
     while_stmt
@@ -282,18 +283,18 @@ Facts that do not have a parent-child relationship can be compared by assigning 
 
 The following query compares two classes (which do have a parent-child relationship) and returns the methods which both classes implement:
 
-```
+```yaml
 class(depth = any):
-  name: “classA”
+  name == "classA"
   method:
     name as methodName
 class(depth = any):
-  name: “classB”
+  name == "classB"
   method:
     name as methodName
 ```
 
-The query above will only return methods of classA for which classB has a corresponding method.
+The query above will only return methods of `classA` for which `classB` has a corresponding method.
 
 <br />
 
@@ -305,7 +306,7 @@ Functions allow users to execute arbitrary logic on variables. There are two typ
 
 A resolver function is used on the right hand side of a property assertion. In the following example, we assert that the name property of the method fact is equal to the value returned from the concat function:
 
-```
+```yaml
 class(depth = any):
   name as className
   method:
@@ -318,7 +319,7 @@ Asserter functions return a Boolean value and can only be called on their own li
 
 The following query uses the inbuilt `regex` function to match methods with capitalised names:
 
-```
+```yaml
 class(depth = any):
   method:
     name as methodName
@@ -349,7 +350,7 @@ tenets:
     query: |
       class(depth = any):
         name as className
-        @review.comment
+        @review comment
         method:
           name == newConcat("New", className)
 ```
@@ -359,7 +360,7 @@ The following example defines and uses a custom string length asserter:
 ```yaml
 funcs:
   - name: stringLengthGreaterThan
-    type: resolver
+    type: asserter
     body: |
       function (str, minLen) {
         return str.length > minLen
@@ -387,9 +388,9 @@ For the most part, variables defined anywhere in the query can be passed to func
 
 # Interleaving
 
-When writing a Tenet in a codelingo.yaml file, only the AST lexicon facts are required:
+When writing a Tenet in a codelingo.yaml file, only the AST lexicon Facts are required:
 
-```clql
+```yaml
 tenets:
   - name: all-classes
     flows:
@@ -399,47 +400,47 @@ tenets:
         comment: This is a class, but you probably already knew that.
     query:
       import codelingo/ast/csharp as cs
-      @review.comment
+      @review comment
       cs.class(depth = any)
 ```
 
-The review Flow adds the repository information to the query before searching the CodeLingo Platform:
+The Review Flow adds the repository information to the query before searching the CodeLingo Platform:
 
-```clql
+```yaml
 query:
   import codelingo/vcs/git
   import codelingo/ast/csharp as cs
   git.repo:
-    name: “yourRepo”
-    owner: “you”
-    host: “local”
+    name == "yourRepo"
+    owner == "you"
+    host == "local"
     git.commit:
-      sha: “HEAD”
+      sha == "HEAD"
       cs.project:
-        @review.comment
+        @review comment
         cs.class(depth = any)
 ```
 
-Every query to the CodeLingo platform itself starts with VCS facts to instruct the CodeLingo Platform on where to retrieve the source code from.
+Every query to the CodeLingo platform itself starts with VCS Facts to instruct the CodeLingo Platform on where to retrieve the source code from.
 
-Git (and indeed any Version Control System) facts can be used to query for changes in the code over time. For example, the following query checks if a given method has increased its number of arguments:
+Git (and indeed any Version Control System) Facts can be used to query for changes in the code over time. For example, the following query checks if a given method has increased its number of arguments:
 
-```
+```yaml
 git.repo:
-  name: “yourRepo”
-  owner: “you”
-  host: “local”
+  name == "yourRepo"
+  owner == "you"
+  host == "local"
   git.commit:
-    sha: “HEAD^”
+    sha == "HEAD^"
     project:
       method:
         arg-num as args
   git.commit:
-    sha: “HEAD”
+    sha == "HEAD"
     project:
-      @review.comment
+      @review comment
       method:
-        arg-num: > args
+        arg-num > args
 ```
 
 
