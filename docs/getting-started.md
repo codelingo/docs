@@ -163,7 +163,7 @@ Note: The first time `lingo run review` is run on a repository, `lingo` will aut
 
 ## Integrating the Review Flow
 
-Flows are used to integrate CodeLingo into your workflow. The Review Flow uses the comment from the Tenets to comment on Pull Requests. This helps ensure teams best practices are followed by all developers on a team.
+Flows are used to integrate CodeLingo into your workflow. The Review Flow uses the comment from the Tenets to comment on Pull Requests. This ensures a teams best practices are followed by all developers on a team.
 
 Setting up the Review Flow on a repository is as easy as adding a new webhook on Github.
 
