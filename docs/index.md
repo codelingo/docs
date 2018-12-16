@@ -2,13 +2,13 @@
 
 Codelingo is a Platform as a Service (PaaS) for software development teams to solve software development problems. It treats your software as data and automates your workflows, called Flows, with the rules and patterns you define, called Tenets.
 
-Our flagship Flow is the Review Flow, which checks a repository's pull requests conform to its project specific patterns.
+Our flagship Flow is the [Review Flow](https://www.codelingo.io/flows/codelingo/review), which checks a repository's pull requests conform to its project specific patterns. We have also built the [Rewrite Flow](https://www.codelingo.io/flows/codelingo/rewrite) and the [Docs Flow](https://www.codelingo.io/flows/codelingo/docs). 
 
 # Quick Starts
 
 ## Playground
 
-Test out writing a Tenet and running a Flow online with zero installs: [playground](https://codelingo.io/playground) - it's easier than you think!
+Test out writing a Tenet and running a Flow online with zero installs using the CodeLingo [playground](https://codelingo.io/playground) - it's easier than you think!
 
 <!-- TODO image of the playground UI -->
 
@@ -16,7 +16,7 @@ Test out writing a Tenet and running a Flow online with zero installs: [playgrou
 
 ## GitHub Review Flow
 
-After [installing Codelingo on GitHub](https://github.com/apps/codelingo), write the following codelingo.yaml to the root of your repository:
+After [installing CodeLingo on GitHub](https://github.com/apps/codelingo), write the following codelingo.yaml to the root of your repository:
 
 ```yaml
 # codelingo.yaml file
@@ -25,11 +25,11 @@ tenets:
   - import: codelingo/go
 ```
 
-You're done! Every pull request to your repository will now be checked against the go Tenet bundle we imported above. 
+You're done! Every pull request to your repository will now be checked against the Go Tenet Bundle we imported above. 
 
 <!-- TODO add screenshot of review comment -->
 
-Other Tenet bundles (including for other languages) from the community can be found at [https://github.com/codelingo/codelingo/tree/master/tenets](https://github.com/codelingo/codelingo/tree/master/tenets).
+Other Tenet Bundles (including for other languages) from the community can be found at [codelingo.io/tenets](https://www.codelingo.io/tenets).
 
 <!-- TODO add instructions on how to interact with Review Flow with GitHub comments -->
 
@@ -52,14 +52,14 @@ Replace the content of the codelingo.yaml file we wrote above with:
     - import: codelingo/go
 ```
 
-You can now run the Review Flow to check your source code against the go Tenet bundle we imported above.
+You can now run the Review Flow to check your source code against the Go Tenet Bundle we imported above.
 
 ```bash
 # Run this command from the same directory as the codelingo.yaml file or any of its sub directories.
 $ lingo run review
 ```
 
-# Slow Start
+# Getting Started Guide
 
 A step by step guide to getting started with Tenets and Flows: 
 
@@ -75,14 +75,10 @@ A Tenet is an encoded project specific best practice used to guide development. 
 
 **[View the guide and docs for working with Tenets](concepts/tenets.md)**
 
-**[Explore published Tenets](https://dev.codelingo.io/codelingo/tenets)**
+**[Explore published Tenets](https://www.codelingo.io/tenets)**
 
 ## Flows
 
 A Flow is an automated development workflow that leverages Tenets to do some task, for example automating code reviews. While a Tenet lives next to your code in a codelingo.yaml file, it is inert until a Flow uses it.
 
 **[View the guide and docs for working with Flows](concepts/flows.md)**
-
-# User Guides
-
-See the links under the User Guide drop-down for further resources.

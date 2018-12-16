@@ -4,10 +4,31 @@ This repo generates a static HTML site from markdown. Docs for the different ver
 
 See here to run the site: http://www.mkdocs.org
 
-To build the site: `mkdocs build`
+### Build Instructions
+
+1. Build the static site:
+
+```bash 
+
+$ mkdocs build
+```
 
 This will create the html site under ./site
 
-To publish the docs: `mkdocs gh-deploy`
+2. Build a Docker image. Note the push will error due to permissions, but the image will still be built.
+
+```bash
+
+$ ./push.sh
+```
+
+3. Run the image locally:
+
+```bash
+
+$ docker run -p 8080:80 -it 531831122766.dkr.ecr.us-west-2.amazonaws.com/docs:latest
+```
+
+4. Visit http://localhost:8080.
 
 Documentation on the individual repositories should be kept in sync with this repo. We should look to automate this in the future.
