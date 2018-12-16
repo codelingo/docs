@@ -410,13 +410,87 @@ path(repeat = 3):
     common.func_call
 ```
 
-## Caveats
+## Branching
 
-Branching, where `path` statement has multiple `pathcontinue` statements is currently not supported.
+A `path` statement can have multiple `pathcontinue` statements. This allows multiple parents to have the same children. These children are defined under a `pathend` statment, rather than as children of the `pathcontinue` statements. It is often used with an `any_of` to match classes of simlar facts such as methods, closures, and functions, for example.
 
-Nested paths are not supported.
+Say we wanted to find functions or methods with doubly nested for loops. Without `pathend` we would need to repeat the doubly nested for loop facts under `func` and `method`:
 
-Using `any_of` inside a path statement is not supported.
+```
+common.file:
+  any_of:
+    common.func:
+      common.for_stmt:
+        common.for_stmt
+    common.method
+      common.for_stmt:
+        common.for_stmt
+```
+
+With `pathend` there is no repitition:
+
+```
+common.file:
+  path:
+    any_of:
+      common.func:
+        pathcontinue
+      common.method
+        pathcontinue
+    pathend:
+      common.for_stmt:
+        common.for_stmt
+```
+
+Say we wanted to find functions with function calls inside doubly nested for/while statements, our query would have to handle all combinations of for/for for/while, while/for, and while/while:
+
+```clql
+common.func:
+  any_of:
+    common.for_stmt:
+      any_of:
+        common.for_stmt:
+          common.func_call
+        common.while_stmt:
+          common.func_call
+    common.while_stmt:
+      any_of:
+        common.for_stmt:
+          common.func_call
+        common.while_stmt:
+          common.func_call
+```
+
+With paths, we can express the same thing like so:
+
+```clql
+common.func:
+  path(repeat = 2):
+    any_of:
+      common.for_stmt:
+        pathcontinue
+      common.while_stmt:
+        pathcontinue
+    pathend:
+      common.func_call
+```
+
+## Nested paths
+
+Nested paths are not yet valid CLQL. The following query is intended to follow the callgraph from `someFunc` and via function calls with multiply nested for loops. It will currently give a parse error.
+
+```clql
+common.func:
+  name == "someFunc"
+  path(repeat = any):
+    path(repeat = 2:):
+     common.for_stmt:
+       pathcontinue:
+        common.func_call(depth = any):
+          edge("calls"):
+            common.func:
+              pathcontinue
+```
 
 ## Decorators
 
