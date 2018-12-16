@@ -376,6 +376,35 @@ common.func:
 
 Note that CLQL elements that are children of `path`, not just the `if_stmt`. Also note that repeated definitions of `varName` are replaced with assertions.
 
+## Pathend
+
+Suppose we wanted to match triply nested if statements with a function call inside the innermost if statement. Without paths our query looks like:
+
+```clql
+common.if_stmt:
+  common.if_stmt:
+    common.if_stmt:
+      common.func_call
+```
+
+with paths our query looks like:
+
+```clql
+path(repeat = 3):
+  common.if_stmt:
+    pathcontinue
+  pathend:
+    common.func_call
+```
+
+## Caveats
+
+Branching, where `path` statement has multiple `pathcontinue` statements is currently not supported.
+
+Nested paths are not supported.
+
+Using `any_of` inside a path statement is not supported.
+
 ## Decorators
 
 Some decorators such as `@review comment` can only be used once per query. Using them in a repeated path will cause an error.
