@@ -330,7 +330,7 @@ class(depth = any):
 
 ### UserInput
 
-User input is a builtin function that allows users to define values in CLQL. For example, the follwing query matches any string literal containing "Hello, World" and replaces it with a string defined by the user which defaults to "Goodbye, World":
+User input is a builtin function that allows users to define values in CLQL. For example, the following query matches any string literal containing "Hello, World" and replaces it with a string defined by the user which defaults to "Goodbye, World":
 ```yaml
 vars:
   variableName: StringLiteral
