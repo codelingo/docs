@@ -326,6 +326,32 @@ class(depth = any):
     regex(/^[A-Z]/, methodName) // pass in the methodName variable to the regex function and assert that the name is capitalised.
 ```
 
+## Builtin Functions
+
+### UserInput
+
+User input is a builtin function that allows users to define values in CLQL. For example, the following query matches any string literal containing "Hello, World" and replaces it with a string defined by the user which defaults to "Goodbye, World":
+```yaml
+vars:
+  variableName: StringLiteral
+  default: Goodbye, World
+...
+query:
+  @rewrite --replace "{{userInput(variableName, default)}}"
+  go.basic_lit:
+    value as literalValue
+    regex(/Hello, World/, literalValue)
+```
+
+If run in the CLI with `lingo run rewrite` the user is prompted with a prompt like:
+```
+StringLiteral["Goodbye, World"]:
+```
+
+If run with `lingo run rewrite --dump-comments=<file/path>` a JSON file is created that can be used to build interactive comments on Github.
+
+Functions currently only accept variables as arguments, so `userInput("StringLiteral", "Goodbye, World")` is invalid.
+
 ## Custom Functions
 
 JS functions are defined in codelingo.yaml files under the functions section. These functions can then be called in the query section of any [Tenets](/concepts/tenets.md) within the same codelingo.yaml file.
