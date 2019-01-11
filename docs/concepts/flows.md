@@ -47,7 +47,7 @@ query: |
   @review comment
   go.func_decl:
     go.ident:
-    value == "helloWorld"
+      value == "someName"
 # ...
 ```
 
