@@ -197,4 +197,4 @@ Now that you have basic integration with CodeLingo into your project, you can st
 <br/><br/>
 **[Explore published Tenets to add to your project](https://www.codelingo.io/tenets)**
 <br/><br/>
-**[View guide to importing and writing Tenets](/concepts/tenets.md)**
+**[View guide to importing and writing Tenets](https://www.codelingo.io/docs/concepts/tenets/)**
