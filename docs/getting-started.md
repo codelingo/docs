@@ -129,7 +129,13 @@ The key parts of each Tenet are:
 
 ## Running the Review Flow
 
-Integrating Tenets into your existing developer workflow is done through Flows. The review flow is the default flow that comes preinstalled with the lingo CLI. All flows are run via `$ lingo run <flow_name>`.
+Integrating Tenets into your existing developer workflow is done through Flows. The following steps will install and run the review flow.
+
+```bash
+  $ lingo install review
+```
+
+All flows are run via `$ lingo run <flow_name>`.
 
 ```bash
   $ lingo run review
