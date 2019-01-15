@@ -33,7 +33,7 @@ Place the lingo binary on your $PATH.
 
 In order to run Tenets against your repository, your lingo client will need to authenticate with the CodeLingo servers. To do so, you are required to have an account. Please follow these steps to set up your client:
 
-1. Create a CodeLingo account <a href="https://codelingo.io/join" target="_blank">here</a>
+1. Create a CodeLingo account: navigate to codelingo.io and click on the "Sign in with GitHub" button.
 2. Generate the token from the  <a href="https://www.codelingo.io/settings/profile" target="_blank">web app here</a>, and copy it to your clipboard
 3. Run `$ lingo config setup` and follow the prompts.
 4. Enter your username (you can see it in the top right corner of codelingo.io, this should be the CodeLingo account username you created in step 1)
@@ -129,7 +129,19 @@ The key parts of each Tenet are:
 
 ## Running the Review Flow
 
-Integrating Tenets into your existing developer workflow is done through Flows. The review flow is the default flow that comes preinstalled with the lingo CLI. All flows are run via `$ lingo run <flow_name>`.
+Integrating Tenets into your existing developer workflow is done through Flows. The simplest Flow to get started with is the Review Flow. To install, run:
+
+```bash
+  $ lingo install review
+```
+
+To learn how can use the Review Flow, run:
+
+```bash
+  $ lingo run review --help
+```
+
+All flows are run via `$ lingo run <flow_name>`.
 
 ```bash
   $ lingo run review
@@ -182,7 +194,7 @@ The Review Flow will only review Pull Requests and will never make changes to yo
 
 Flows can be used to build any custom workflow. Whether that's generating custom reports on your project dashboard, or integrations with your existing tools and services through Functions.
 
-If you are interested in building custom Flows and integrations, please contact us directly at: 
+If you are interested in building custom Flows and integrations, please contact us directly at:
  [hello@codelingo.io](hello@codelingo.io).
 
 ## Next Steps
@@ -191,4 +203,4 @@ Now that you have basic integration with CodeLingo into your project, you can st
 <br/><br/>
 **[Explore published Tenets to add to your project](https://www.codelingo.io/tenets)**
 <br/><br/>
-**[View guide to importing and writing Tenets](/concepts/tenets.md)**
+**[View guide to importing and writing Tenets](https://www.codelingo.io/docs/concepts/tenets/)**
