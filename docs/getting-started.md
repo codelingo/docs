@@ -33,7 +33,7 @@ Place the lingo binary on your $PATH.
 
 In order to run Tenets against your repository, your lingo client will need to authenticate with the CodeLingo servers. To do so, you are required to have an account. Please follow these steps to set up your client:
 
-1. Create a CodeLingo account by signing in with GitHub <a href="https://codelingo.au.auth0.com/login?state=g6Fo2SBNWGhoMUtWMTFFWDJ1SEVSWVdNendRUmE3VUs3bFVlc6N0aWTZIDhab3k0WkZlNUQ2T2c4ZUN3YjFlekQ3cE56STNPZGNEo2NpZNkgZUNDeUdQWjlZYjIwdEVPaVlraTZ0b0MyME5BVnBSd0c&client=eCCyGPZ9Yb20tEOiYki6toC20NAVpRwG&protocol=oauth2&response_type=token%20id_token&redirect_uri=https%3A%2F%2Fwww.codelingo.io%2Fcallback&scope=openid%20username%20email%20write%3Acli-token&audience=https%3A%2F%2Fflow.codelingo.io%2Fcodelingo%2Flogin%2Fgogs&nonce=kCoDkl38eVHLDT0rBGb3naFCIeJiPTZC&auth0Client=eyJuYW1lIjoiYXV0aDAuanMiLCJ2ZXJzaW9uIjoiOS44LjIifQ%3D%3D" target="_blank">here</a>
+1. Create a CodeLingo account: navigate to codelingo.io and click on the "Sign in with GitHub" button.
 2. Generate the token from the  <a href="https://www.codelingo.io/settings/profile" target="_blank">web app here</a>, and copy it to your clipboard
 3. Run `$ lingo config setup` and follow the prompts.
 4. Enter your username (you can see it in the top right corner of codelingo.io, this should be the CodeLingo account username you created in step 1)
@@ -129,10 +129,16 @@ The key parts of each Tenet are:
 
 ## Running the Review Flow
 
-Integrating Tenets into your existing developer workflow is done through Flows. The following steps will install and run the review flow.
+Integrating Tenets into your existing developer workflow is done through Flows. The simplest Flow to get started with is the Review Flow. To install, run:
 
 ```bash
   $ lingo install review
+```
+
+To learn how can use the Review Flow, run:
+
+```bash
+  $ lingo run review --help
 ```
 
 All flows are run via `$ lingo run <flow_name>`.
