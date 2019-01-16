@@ -193,6 +193,8 @@ Setting up the Review Flow on a repository is as easy as adding a new webhook on
 5. Ensure the "Active" box is ticked.
 6. Click "Add webhook".
 
+For more infomation on creating webhooks, see https://developer.github.com/webhooks/creating/
+
 Note: The Review Flow only supports public repos at this time.
 
 Once configured, the Review Flow will comment on pull requests that violate a Tenet.
