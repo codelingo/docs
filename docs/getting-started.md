@@ -27,7 +27,14 @@ Put the binary in a folder listed in your %PATH%. If you don't have an appropria
 
 #### Linux / Unix
 
-Place the lingo binary on your $PATH.
+Place the lingo binary on your $PATH, either:
+
+Open ~/.bashrc and add the line 'export PATH=$PATH:/path/to/folder/containing/lingo-binary' for wherever you would like the binary to be.
+Or put the binary on your current $PATH. Note: You can find your current $PATH by running:
+
+```bash
+$ ehco $PATH
+```
 
 ## Authentication
 
@@ -177,7 +184,7 @@ Note: The first time `lingo run review` is run on a repository, `lingo` will aut
 
 Flows are used to integrate CodeLingo into your workflow. The Review Flow uses the comment from the Tenets to comment on Pull Requests. This ensures a teams best practices are followed by all developers on a team.
 
-Setting up the Review Flow on a repository is as easy as adding a new webhook on Github.
+Setting up the Review Flow on a repository is as easy as adding a new webhook on Github. Simply navigate to the settings menu of the reposiory you wish to add the review flow to and click on Webhooks.
 
 1. Set the Payload URL to https://flow.codelingo.io/codelingo/review/github
 2. Ensure the content type is set to "application/json".
