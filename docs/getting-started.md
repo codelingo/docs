@@ -33,7 +33,7 @@ Open ~/.bashrc and add the line 'export PATH=$PATH:/path/to/folder/containing/li
 Or put the binary on your current $PATH. Note: You can find your current $PATH by running:
 
 ```bash
-$ ehco $PATH
+$ echo $PATH
 ```
 
 ## Authentication
