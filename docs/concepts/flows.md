@@ -45,9 +45,9 @@ query: |
   import codelingo/ast/go
 
   @review comment
-  go.func_decl:
+  go.func_decl (depth = any):
     go.ident:
-      value == "someName"
+      name == "helloWorld"
 # ...
 ```
 
