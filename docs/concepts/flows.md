@@ -16,7 +16,7 @@ tenets:
         import codelingo/ast/go
         
         @review comment 
-        go.func_decl (depth = any):
+        go.func_decl(depth = any):
           go.ident:
             name == "helloWorld"
 ```
@@ -45,7 +45,7 @@ query: |
   import codelingo/ast/go
 
   @review comment
-  go.func_decl (depth = any):
+  go.func_decl(depth = any):
     go.ident:
       name == "helloWorld"
 # ...
