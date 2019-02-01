@@ -13,9 +13,8 @@ image=docs
 
 mkdocs build
 
-docker build -t $registry/$image:$tag -t $registry/$image:latest .
+docker build -t $registry/$image:$tag .
 docker push $registry/$image:$tag
-docker push $registry/$image:latest
 
 JSON='{"image": "'"$registry/$image"'", "tag": "'"$tag"'"}'
 printf '%s' "$JSON"
