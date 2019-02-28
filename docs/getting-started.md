@@ -27,13 +27,20 @@ Put the binary in a folder listed in your %PATH%. If you don't have an appropria
 
 #### Linux / Unix
 
-Place the lingo binary on your $PATH.
+Place the lingo binary on your $PATH, either:
+
+Open ~/.bashrc and add the line 'export PATH=$PATH:/path/to/folder/containing/lingo-binary' for wherever you would like the binary to be.
+Or put the binary on your current $PATH. Note: You can find your current $PATH by running:
+
+```bash
+$ echo $PATH
+```
 
 ## Authentication
 
 In order to run Tenets against your repository, your lingo client will need to authenticate with the CodeLingo servers. To do so, you are required to have an account. Please follow these steps to set up your client:
 
-1. Create a CodeLingo account <a href="https://codelingo.io/join" target="_blank">here</a>
+1. Create a CodeLingo account: navigate to codelingo.io and click on the "Sign in with GitHub" button.
 2. Generate the token from the  <a href="https://www.codelingo.io/settings/profile" target="_blank">web app here</a>, and copy it to your clipboard
 3. Run `$ lingo config setup` and follow the prompts.
 4. Enter your username (you can see it in the top right corner of codelingo.io, this should be the CodeLingo account username you created in step 1)
@@ -129,7 +136,19 @@ The key parts of each Tenet are:
 
 ## Running the Review Flow
 
-Integrating Tenets into your existing developer workflow is done through Flows. The review flow is the default flow that comes preinstalled with the lingo CLI. All flows are run via `$ lingo run <flow_name>`.
+Integrating Tenets into your existing developer workflow is done through Flows. The simplest Flow to get started with is the Review Flow. To install, run:
+
+```bash
+  $ lingo install review
+```
+
+To learn how can use the Review Flow, run:
+
+```bash
+  $ lingo run review --help
+```
+
+All flows are run via `$ lingo run <flow_name>`.
 
 ```bash
   $ lingo run review
@@ -165,7 +184,7 @@ Note: The first time `lingo run review` is run on a repository, `lingo` will aut
 
 Flows are used to integrate CodeLingo into your workflow. The Review Flow uses the comment from the Tenets to comment on Pull Requests. This ensures a teams best practices are followed by all developers on a team.
 
-Setting up the Review Flow on a repository is as easy as adding a new webhook on Github.
+Setting up the Review Flow on a repository is as easy as adding a new webhook on Github. Simply navigate to the settings menu of the reposiory you wish to add the review flow to and click on Webhooks.
 
 1. Set the Payload URL to https://flow.codelingo.io/codelingo/review/github
 2. Ensure the content type is set to "application/json".
@@ -173,6 +192,8 @@ Setting up the Review Flow on a repository is as easy as adding a new webhook on
 4. Tick the "Pull request" box, leaving all others unchecked.
 5. Ensure the "Active" box is ticked.
 6. Click "Add webhook".
+
+For more infomation on creating webhooks, see https://developer.github.com/webhooks/creating/
 
 Note: The Review Flow only supports public repos at this time.
 
@@ -182,7 +203,7 @@ The Review Flow will only review Pull Requests and will never make changes to yo
 
 Flows can be used to build any custom workflow. Whether that's generating custom reports on your project dashboard, or integrations with your existing tools and services through Functions.
 
-If you are interested in building custom Flows and integrations, please contact us directly at: 
+If you are interested in building custom Flows and integrations, please contact us directly at:
  [hello@codelingo.io](hello@codelingo.io).
 
 ## Next Steps
@@ -191,4 +212,4 @@ Now that you have basic integration with CodeLingo into your project, you can st
 <br/><br/>
 **[Explore published Tenets to add to your project](https://www.codelingo.io/tenets)**
 <br/><br/>
-**[View guide to importing and writing Tenets](/concepts/tenets.md)**
+**[View guide to importing and writing Tenets](https://www.codelingo.io/docs/concepts/tenets/)**
