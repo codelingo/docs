@@ -272,7 +272,7 @@ CodeLingo integrates with your IDE to provide support for writing and running CL
 
 ## Sublime
 
-<a href="https://github.com/codelingo/ideplugins/tree/master/sublime" target="_blank">View Subline plugin README</a>
+<a href="https://github.com/codelingo/ideplugins/tree/master/sublime" target="_blank">View Sublime plugin README</a>
 
 CodeLingo's Integrated Development Environment (IDE) plugins can help build patterns in code by automatically generating queries to detect selected elements of programs. A generated query will describe the selected element and its position in the structure of the program:
 
