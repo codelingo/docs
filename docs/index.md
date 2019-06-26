@@ -25,7 +25,7 @@ tenets:
   - import: codelingo/go
 ```
 
-You're done! Every pull request to your repository will now be checked against the Go Tenet Bundle we imported above. 
+You're done! Every pull request to your repository will now be checked against the Go Tenet Bundle we imported above [like so](https://github.com/codelingo/ReviewDemonstration/pull/1).
 
 <!-- TODO add screenshot of review comment -->
 
