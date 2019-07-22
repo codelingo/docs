@@ -24,14 +24,14 @@ query:
 
 Lexicons get data into the CodeLingo Platform and provide a list of Facts to query that data. In the above example, the Git Lexicon finds and clones the "myrepo" repository from the "myvcsgithost.com" VCS host. The "myrepo" repository must be publicly accessible for the Git Lexicon to access it.
 
-The CodeLingo Platform can be queried directly with the `$ lingo run search` command or via [Functions](flows.md) which use queries stored in Tenets.
+The CodeLingo Platform can be queried directly with the `$ lingo run search` command or via [Functions](actions.md) which use queries stored in Tenets.
 
 ## Matching a function name
 
 ```yaml
 tenets:
 - name: first-tenet
-  flows:
+  actions:
     codelingo/docs:
       body: example doc
     codelingo/review:
@@ -200,7 +200,7 @@ The same rule can be expressed in CLQL as the following [Tenet](tenets.md):
 ```yaml
 tenets:
   - name: "EmptyBlock"
-    flows:
+    actions:
       codelingo/docs:
         title: "Validates that the code does not contain any empty block statements."
       codelingo/review:

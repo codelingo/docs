@@ -368,7 +368,7 @@ funcs:
         return c
       }
 tenets:
-  - flows:
+  - actions:
       codelingo/review:
         comment: |
           This method appears to be a constructor
@@ -392,7 +392,7 @@ funcs:
         return str.length > minLen
       }
 tenets:
-  - flows:
+  - actions:
       codelingo/review:
         comment: |
           This method has a long name
@@ -419,7 +419,7 @@ When writing a Tenet in a codelingo.yaml file, only the AST lexicon Facts are re
 ```yaml
 tenets:
   - name: all-classes
-    flows:
+    actions:
       codelingo/docs:
         body: Documentation for all-classes
       codelingo/review:
@@ -430,7 +430,7 @@ tenets:
       cs.class(depth = any)
 ```
 
-The Review Flow adds the repository information to the query before searching the CodeLingo Platform:
+The Review Action adds the repository information to the query before searching the CodeLingo Platform:
 
 ```yaml
 query:

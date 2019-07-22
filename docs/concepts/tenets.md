@@ -1,13 +1,13 @@
 # Overview
 
-Tenets live in codelingo.yaml files in your repository and are used by Flows to automate tasks. You can think of a Tenet as an underlying principle guiding a workflow.
+Tenets live in codelingo.yaml files in your repository and are used by Actions to automate tasks. You can think of a Tenet as an underlying principle guiding a workflow.
 
-In the Tenet [sprintf](https://www.codelingo.io/tenets/codelingo/go/sprintf) below, the Review Flow uses the Tenet to make sure `errors.New` is being used correctly and attaches a comment to the line where the `go.call_expr` is found, using the `@review comment` decorator:
+In the Tenet [sprintf](https://www.codelingo.io/tenets/codelingo/go/sprintf) below, the Review Action uses the Tenet to make sure `errors.New` is being used correctly and attaches a comment to the line where the `go.call_expr` is found, using the `@review comment` decorator:
 
 ```yaml
 tenets:
   - name: sprintf
-    flows:
+    actions:
       codelingo/docs:
         body: Find instances of 'errors.New(fmt.Sprintf(...))'.
       codelingo/review:
@@ -31,7 +31,7 @@ tenets:
                 name == "Sprintf"
 ```
 
-Examples of problems that can be solved with Tenets & Flows include:
+Examples of problems that can be solved with Tenets & Actions include:
 
 - Project specific practices: scaling the tacit knowledge of senior engineers to the whole team.
 - Infrastructure specific guidelines / safeguards: learning from failures.
@@ -65,7 +65,7 @@ tenets:
 ```yaml
 tenets:
   - name: find-funcs
-    flows:
+    actions:
       codelingo/docs:
         title: "Example Tenet that finds all func decls"
       codelingo/review:
@@ -82,13 +82,13 @@ tenets:
 
 # Structure of a Tenet
 
-A Tenet consists of [Metadata](#metadata), [Flows](#flows), and the [Query](#query) itself.
+A Tenet consists of [Metadata](#metadata), [Actions](#actions), and the [Query](#query) itself.
 
 ```yaml
 # ...
 tenets:
   - name: # ...
-    flows: # ...
+    actions: # ...
     query: # ...
 # ...
 ```
@@ -101,23 +101,27 @@ Metadata describes the Tenet. It is used for discovery and documentation. The `n
 # ...
 tenets:
   - name: four-or-less
-    flows: 
+    actions: 
     # ...
     query:
 # ...
 ```
 
-## Flows
+## Actions
 
-Tenets on their own do nothing until a Flow uses it. The Flow section configures the Flows that can use this Tenet, for example:
+Tenets on their own do nothing until a Action uses it. The Action section configures the Actions that can use this Tenet, for example:
 
 ```yaml
 # ...
-flows:
+actions:
   codelingo/review:
     comment: "This is a function."
 # ...
 ```
+
+#### Note:
+
+We have deprecated flows in favor of actions. For now we still support flows so if you are working with a 'codelingo.yaml' file and see the word 'flows' where 'actions' should be, it can be safely ignored.
 
 ## Query
 
@@ -125,7 +129,7 @@ The query is made up of three parts:
 
 - Import statement to include the relevant [Lexicon(s)](CLQL.md#lexicons)
 - The statement of CLQL Facts
-- Decorators which extract features of interest to Flow Functions
+- Decorators which extract features of interest to Action Functions
 
 For example:
 
@@ -136,12 +140,12 @@ tenets:
     query:
       import codelingo/ast/php         # import statement
 
-      @review comment                  # Flow Function decorator
+      @review comment                  # Action Function decorator
       php.stmt_function(depth = any)  # the CLQL fact statement
 # ...
 ```
 
-Here we've imported the PHP Lexicon and are looking for function statements at any depth, which is to say we're looking for functions defined anywhere in the target repository. Once one is found, the Review Flow is going to attach it's comment to the file and line number of that function.
+Here we've imported the PHP Lexicon and are looking for function statements at any depth, which is to say we're looking for functions defined anywhere in the target repository. Once one is found, the Review Action is going to attach it's comment to the file and line number of that function.
 
 Here is a more complex example:
 
@@ -149,7 +153,7 @@ Here is a more complex example:
 # ...
 tenets:
   - name: debug-prints
-    flows: # ...
+    actions: # ...
     query: |
       import codelingo/ast/python36
 
@@ -163,20 +167,20 @@ tenets:
 
 This particular Tenet looks for debug prints in Python code.
 
-Note: The decorator `@review comment` is what integrates the Tenet into the Review Flow, detailing where the comment should be made when the pattern matches. Generally speaking, query decorators are metadata on queries that functions use to extract named information from the query result.
+Note: The decorator `@review comment` is what integrates the Tenet into the Review Action, detailing where the comment should be made when the pattern matches. Generally speaking, query decorators are metadata on queries that functions use to extract named information from the query result.
 <!-- TODO add more decorators example -->
 
-## Flow Functions
+## Action Functions
 
-Flows are made up of a pipeline of serverless functions, called Flow Functions.
+Actions are made up of a pipeline of serverless functions, called Action Functions.
 
-In the example below, the review function builds a comment from a Tenet query which can be used by a Flow to comment on a Pull Request made to Github, Bitbucket, Gitlab or the like. It does this by extracting the file name, start line and end line to attach the comment to via the `@review comment` Flow Function query decorator. See [Query Decorators as Feature Extractors](#query) for more details.
+In the example below, the review function builds a comment from a Tenet query which can be used by a Action to comment on a Pull Request made to Github, Bitbucket, Gitlab or the like. It does this by extracting the file name, start line and end line to attach the comment to via the `@review comment` Action Function query decorator. See [Query Decorators as Feature Extractors](#query) for more details.
 
 ```yaml
 # ...
 tenets:
   - name: four-or-less
-    flows:
+    actions:
       codelingo/review:
         comment: Please write functions that only take a maximum of four arguments.
     query:
@@ -217,7 +221,7 @@ tenets:
 
 - Write the specific `query` you are interested in; using the Facts provided by the Lexicon. You can use one of the [IDE plugins](#ide-integration) or the [playground](https://www.codelingo.io/playground) to help you!
 
-- Add the relevant Flow configs and decorators.
+- Add the relevant Action configs and decorators.
 
 - Add [Asserter](CLQL.md#Asserters) and [Resolver](CLQL.md#Resolvers) functions if needed to the codelingo.yaml.
 

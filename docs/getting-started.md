@@ -1,5 +1,9 @@
 # Getting Started
 <br/>
+#### Note:
+
+We have deprecated flows in favor of actions. For now we still support flows so if you are working with a 'codelingo.yaml' file and see the word 'flows' where 'actions' should be, it can be safely ignored.
+
 ## Introduction
 This guide provides instructions and documentation for:
 
@@ -10,7 +14,7 @@ This guide provides instructions and documentation for:
 
 ## Installation
 
-The lingo CLI tool can be used to generate [Tenets](concepts/tenets.md) and run [Flows](concepts/flows.md) for your repositories.
+The lingo CLI tool can be used to generate [Tenets](concepts/tenets.md) and run [Actions](concepts/actions.md) for your repositories.
 
 <a href="https://github.com/codelingo/lingo/releases" target="_blank">Download</a> a pre-built binary or, if you have <a href="https://golang.org/doc/install" target="_blank">Golang setup</a>, install from source:
 ```bash
@@ -62,7 +66,7 @@ To initialize a default `codelingo.yaml` file, run `$ lingo init`. The default f
   tenets:
   - name: find-funcs
     doc: Example tenet that finds all functions.
-    flows:
+    actions:
       codelingo/review:
         comment: This is a function, but you probably already knew that.
     query: |
@@ -112,7 +116,7 @@ Custom Tenets can be written from scratch directly in `codelingo.yaml` files usi
 # example of a Tenet written directly in a codelingo.yaml file
 tenets:
   - name: find-funcs
-    flows:
+    actions:
        codelingo/review
           comment: "this is a func"
     query: |
@@ -126,29 +130,29 @@ tenets:
 The key parts of each Tenet are:
 
 - **`name`** Meta data for the identification of the Tenet
-- **`flows`** The metadata for flows the Tenet integrates with. In this case, for the review flow, we provide a comment for the review.
+- **`actions`** The metadata for actions the Tenet integrates with. In this case, for the review action, we provide a comment for the review.
 - **`query`** - this is the pattern the Tenet is looking for and core to all Tenets.
-- **`@review comment`** - is a query decorator which extracts the information needed from the query result for the Review Flow. In this case, it'll return the filename and line number for every function declaration found in the repository.
+- **`@review comment`** - is a query decorator which extracts the information needed from the query result for the Review Action. In this case, it'll return the filename and line number for every function declaration found in the repository.
 
 
 **[View more information on writing custom Tenets](concepts/tenets.md#writing-custom-tenets)**
 
 
-## Running the Review Flow
+## Running the Review Action
 
-Integrating Tenets into your existing developer workflow is done through Flows. The simplest Flow to get started with is the Review Flow. To install, run:
+Integrating Tenets into your existing developer workflow is done through Actions. The simplest Action to get started with is the Review Action. To install, run:
 
 ```bash
   $ lingo install review
 ```
 
-To learn how can use the Review Flow, run:
+To learn how can use the Review Action, run:
 
 ```bash
   $ lingo run review --help
 ```
 
-All flows are run via `$ lingo run <flow_name>`.
+All actions are run via `$ lingo run <flow_name>`.
 
 ```bash
   $ lingo run review
@@ -180,11 +184,11 @@ To open a file at the line of the issue, type `o` and hit return. It will give y
 
 Note: The first time `lingo run review` is run on a repository, `lingo` will automatically add the CodeLingo git server as a remote, so that changes can be synced and analysed on the CodeLingo platform.
 
-## Integrating the Review Flow
+## Integrating the Review Action
 
-Flows are used to integrate CodeLingo into your workflow. The Review Flow uses the comment from the Tenets to comment on Pull Requests. This ensures a teams best practices are followed by all developers on a team.
+Actions are used to integrate CodeLingo into your workflow. The Review Action uses the comment from the Tenets to comment on Pull Requests. This ensures a teams best practices are followed by all developers on a team.
 
-Setting up the Review Flow on a repository is as easy as adding a new webhook on Github. Simply navigate to the settings menu of the reposiory you wish to add the review flow to and click on Webhooks.
+Setting up the Review Action on a repository is as easy as adding a new webhook on Github. Simply navigate to the settings menu of the reposiory you wish to add the review action to and click on Webhooks.
 
 1. Set the Payload URL to https://flow.codelingo.io/codelingo/review/github
 2. Ensure the content type is set to "application/json".
@@ -195,15 +199,15 @@ Setting up the Review Flow on a repository is as easy as adding a new webhook on
 
 For more infomation on creating webhooks, see https://developer.github.com/webhooks/creating/
 
-Note: The Review Flow only supports public repos at this time.
+Note: The Review Action only supports public repos at this time.
 
-Once configured, the Review Flow will comment on pull requests that violate a Tenet.
+Once configured, the Review Action will comment on pull requests that violate a Tenet.
 
-The Review Flow will only review Pull Requests and will never make changes to your codebase.
+The Review Action will only review Pull Requests and will never make changes to your codebase.
 
-Flows can be used to build any custom workflow. Whether that's generating custom reports on your project dashboard, or integrations with your existing tools and services through Functions.
+Actions can be used to build any custom workflow. Whether that's generating custom reports on your project dashboard, or integrations with your existing tools and services through Functions.
 
-If you are interested in building custom Flows and integrations, please contact us directly at:
+If you are interested in building custom Actions and integrations, please contact us directly at:
  [hello@codelingo.io](hello@codelingo.io).
 
 ## Next Steps
