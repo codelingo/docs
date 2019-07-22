@@ -11,7 +11,7 @@ tenets:
       csharp.method_declaration(depth = any)
   - name: same-other-tenet
     comment: This is the comment left by the flow
-    flows:
+    actions:
       # functions here ...
     query:
       # query here ...
@@ -21,7 +21,7 @@ tenets:
 ```yaml
 tenets:
   - import: modica/default/null-check
-    flows:
+    actions:
       - codelingo/review
           comment: "this overrides null-check default comment"
 ```
@@ -31,7 +31,7 @@ tenets:
 ...
 tenets:
   - name: four-or-less
-    flows:
+    actions:
       codelingo/docs:
         body: Functions in this module should take a maximum of four arguments.<mark class="code-impt" style="display:inline-block; width: 100%;backgroun">    query:
       import codelingo/ast/php              // import statement

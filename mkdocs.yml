@@ -13,7 +13,7 @@ pages:
     - Home: index.md
     - Getting Started: getting-started.md
     - Tenets: concepts/tenets.md
-    - Flows: concepts/flows.md
+    - Flows: concepts/actions.md
     - CLQL Reference: concepts/CLQL.md
     - Examples: concepts/examples.md
     # todo (junyu) mkdocs fails to build with external links

@@ -1,12 +1,12 @@
 
 ---
 
-First, [install the CodeLingo GitHub App](https://github.com/apps/codelingo). This will enable CodeLingo Flows to be run on your repositories. The Review Flow is enabled by default and reviews pull requests to you repos, using Tenets stored in your repository inside a codelingo.yaml file. A Tenet is made up of a `name`, a `doc` specifiying what the Tenet does, `flows` that use this Tenet and a `query` used by the Flow:
+First, [install the CodeLingo GitHub App](https://github.com/apps/codelingo). This will enable CodeLingo Flows to be run on your repositories. The Review Action is enabled by default and reviews pull requests to you repos, using Tenets stored in your repository inside a codelingo.yaml file. A Tenet is made up of a `name`, a `doc` specifiying what the Tenet does, `actions` that use this Tenet and a `query` used by the Action:
 
 ```yaml
 tenets:
   - name: sprintf-error
-    flows:
+    actions:
       codelingo/docs:
         body: Find instances of 'errors.New(fmt.Sprintf(...))'.
       codelingo/review:
@@ -34,7 +34,7 @@ tenets:
 
 Tenets live in codelingo.yaml files in your repository and are used by Flows to automate tasks. You can think of a Tenet as an underlying principle guiding a workflow.
 
-In the sprintf-error Tenet above, the Review Flow uses the Tenet to make sure `errors.New` is being used correctly and attaches a comment to the line where the `go.call_expr` is found, using the `@review.comment` decorator.
+In the sprintf-error Tenet above, the Review Action uses the Tenet to make sure `errors.New` is being used correctly and attaches a comment to the line where the `go.call_expr` is found, using the `@review.comment` decorator.
 
 ### Adding Tenets
 
@@ -62,7 +62,7 @@ tenets:
 ```
 tenets:
   - name: find-funcs
-    flows:
+    actions:
       codelingo/docs:
         title: "example Tenet that finds all func decls"
       codelingo/review:
@@ -139,18 +139,18 @@ For more information and about writing your own Tenets, please [see the document
 ## Flows
 Tenets are integrated into your workflow through Flows. Flows are automated and semi-automated processes that rely heavily on bots (integrations) to drive your software development lifecycle. They are completely customizable pipelines and can be configured directly in YAML or via the UI.
 
-Currently the default Flow is the review Flow. Custom Flows are currently in development.
+Currently the default Action is the review Action. Custom Flows are currently in development.
 
 ## Bots
 Bots are agents that integrate with all your data sources, t
 ---
 
-First, [install the CodeLingo GitHub App](https://github.com/apps/codelingo-clair). This will enable CodeLingo Flows to be run on your repositories. The Review Flow is enabled by default and reviews pull requests to you repos, using Tenets stored in your repository inside a codelingo.yaml file. A Tenet is made up of a `name`, a `doc` specifiying what the Tenet does, `flows` that use this Tenet and a `query` used by the Flow:
+First, [install the CodeLingo GitHub App](https://github.com/apps/codelingo-clair). This will enable CodeLingo Flows to be run on your repositories. The Review Action is enabled by default and reviews pull requests to you repos, using Tenets stored in your repository inside a codelingo.yaml file. A Tenet is made up of a `name`, a `doc` specifiying what the Tenet does, `actions` that use this Tenet and a `query` used by the Action:
 
 ```yaml
 tenets:
   - name: sprintf-error
-    flows:
+    actions:
       codelingo/docs:
         body: Find instances of 'errors.New(fmt.Sprintf(...))'.
       codelingo/review:
@@ -178,7 +178,7 @@ tenets:
 
 Tenets live in codelingo.yaml files in your repository and are used by Flows to automate tasks. You can think of a Tenet as an underlying principle guiding a workflow.
 
-In the sprintf-error Tenet above, the Review Flow uses the Tenet to make sure `errors.New` is being used correctly and attaches a comment to the line where the `go.call_expr` is found, using the `@review.comment` decorator.
+In the sprintf-error Tenet above, the Review Action uses the Tenet to make sure `errors.New` is being used correctly and attaches a comment to the line where the `go.call_expr` is found, using the `@review.comment` decorator.
 
 ### Adding Tenets
 
@@ -206,7 +206,7 @@ tenets:
 ```
 tenets:
   - name: find-funcs
-    flows:
+    actions:
       codelingo/docs:
         title: "example Tenet that finds all func decls"
       codelingo/review:
@@ -283,12 +283,12 @@ For more information and about writing your own Tenets, please [see the document
 ## Flows
 Tenets are integrated into your workflow through Flows. Flows are automated and semi-automated processes that rely heavily on bots (integrations) to drive your software development lifecycle. They are completely customizable pipelines and can be configured directly in YAML or via the UI.
 
-Currently the default Flow is the review Flow. Custom Flows are currently in development.
+Currently the default Action is the review Action. Custom Flows are currently in development.
 
 ## Bots
 Bots are agents that integrate with all your data sources, tools, and services. They can be used to:
 
-* ingest your codebase into a flow
+* ingest your codebase into a action
 * make a comment on Github
 * create Slack messages on results
 * integrate with other external services
