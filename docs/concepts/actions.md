@@ -60,9 +60,11 @@ query: |
 # ...
 ```
 
-By decorating the `go.func_decl` fact with `@review comment` the Review Action's comment function extracts the file and line from the query result, to be used by the review Action to comment on that line.
+By decorating the `go.func_decl` fact with `@review comment` the Review Action's comment function extracts the file and line from the query result, to be used by the Review Action to comment on that line.
 
-Please note that CLQL treats 'actions' and 'flows' interchangeably. So if you are working with a 'codelingo.yaml' file and see the word 'flows' where 'actions' should be, it can be safely ignored.
+#### Note:
+
+We have deprecated flows in favor of actions. For now we still support flows so if you are working with a 'codelingo.yaml' file and see the word 'flows' where 'actions' should be, it can be safely ignored.
 
 <div class="alert alert-info">
   <p style="font-size:16px;">

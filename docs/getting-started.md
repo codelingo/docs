@@ -1,5 +1,9 @@
 # Getting Started
 <br/>
+#### Note:
+
+We have deprecated flows in favor of actions. For now we still support flows so if you are working with a 'codelingo.yaml' file and see the word 'flows' where 'actions' should be, it can be safely ignored.
+
 ## Introduction
 This guide provides instructions and documentation for:
 

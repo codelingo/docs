@@ -81,6 +81,8 @@ A Tenet is an encoded project specific best practice used to guide development. 
 
 A Action is an automated development workflow that leverages Tenets to do some task, for example automating code reviews. While a Tenet lives next to your code in a codelingo.yaml file, it is inert until a Action uses it.
 
-Please note that CLQL treats 'actions' and 'flows' interchangeably. So if you are working with a 'codelingo.yaml' file and see the word 'flows' where 'actions' should be, it can be safely ignored.
+#### Note:
+
+We have deprecated flows in favor of actions. For now we still support flows so if you are working with a 'codelingo.yaml' file and see the word 'flows' where 'actions' should be, it can be safely ignored.
 
 **[View the guide and docs for working with Actions](concepts/actions.md)**
