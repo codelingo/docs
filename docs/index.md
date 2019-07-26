@@ -83,6 +83,6 @@ A Action is an automated development workflow that leverages Tenets to do some t
 
 #### Note:
 
-We have deprecated flows in favor of actions. For now we still support flows so if you are working with a 'codelingo.yaml' file and see the word 'flows' where 'actions' should be, it can be safely ignored.
+We have deprecated flows in favor of actions. Please modify your codelingo.yaml files accordingly.
 
 **[View the guide and docs for working with Actions](concepts/actions.md)**
