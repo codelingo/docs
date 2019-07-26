@@ -121,7 +121,7 @@ actions:
 
 #### Note:
 
-We have deprecated flows in favor of actions. For now we still support flows so if you are working with a 'codelingo.yaml' file and see the word 'flows' where 'actions' should be, it can be safely ignored.
+We have deprecated flows in favor of actions. Please modify your codelingo.yaml files accordingly.
 
 ## Query
 
