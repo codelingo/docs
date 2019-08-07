@@ -27,6 +27,8 @@ This will download, build and place the `lingo` binary on your $PATH
 
 #### Windows
 
+**NOTE: The `lingo update` command and the auto-update feature does not support Windows. To update lingo, follow these instructions again with the newer binary.**
+
 Put the binary in a folder listed in your %PATH%. If you don't have an appropriate folder set up, create a new one (ie C:\Lingo) and append it to PATH with a ; in between by going to Control Panel\System and Security\System -> Advanced system settings -> Environment Variables
 
 #### Linux / Unix
