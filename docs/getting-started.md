@@ -105,6 +105,17 @@ tenets:
   - import: codelingo/go
 ```
 
+When importing a bundle, if there are particular tenets you wish to exclude, you can do so using skip:
+
+```
+# example of skipping tenets from a bundle import
+tenets:
+  - import: codelingo/go
+  skip:
+    - global-var
+    - empty-slice
+```
+
 Published Tenets to import (driven by best practices and the community) can be found [on CodeLingo](https://www.codelingo.io/tenets).
 
 **[View more information on importing published Tenets](concepts/tenets.md#importing).**
