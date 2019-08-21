@@ -14,6 +14,8 @@ This guide provides instructions and documentation for:
 
 ## Installation
 
+_Note: lingo and all Actions no longer supports 32-bit operating systems_
+
 The lingo CLI tool can be used to generate [Tenets](concepts/tenets.md) and run [Actions](concepts/actions.md) for your repositories.
 
 <a href="https://github.com/codelingo/lingo/releases" target="_blank">Download</a> a pre-built binary or, if you have <a href="https://golang.org/doc/install" target="_blank">Golang setup</a>, install from source:
