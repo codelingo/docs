@@ -1,8 +1,6 @@
 # Getting Started
-<br/>
-#### Note:
 
-We have deprecated flows in favor of actions. Please modify your codelingo.yaml files accordingly.
+_Note: We have deprecated flows in favor of actions. Please modify your codelingo.yaml files accordingly._
 
 ## Introduction
 This guide provides instructions and documentation for:
@@ -31,14 +29,14 @@ This will download, build and place the `lingo` binary on your $PATH
 
 **NOTE: The `lingo update` command and the auto-update feature does not support Windows. To update lingo, follow these instructions again with the newer binary.**
 
-Put the binary in a folder listed in your %PATH%. If you don't have an appropriate folder set up, create a new one (ie C:\Lingo) and append it to PATH with a ; in between by going to Control Panel\System and Security\System -> Advanced system settings -> Environment Variables
+Put the binary in a folder listed in your `%PATH%`. If you don't have an appropriate folder set up, create a new one (ie `C:\Lingo`) and append it to PATH with a `;` in between by going to Control Panel\System and Security\System -> Advanced system settings -> Environment Variables
 
 #### Linux / Unix
 
-Place the lingo binary on your $PATH, either:
+Place the lingo binary on your `$PATH`, either:
 
-Open ~/.bashrc and add the line 'export PATH=$PATH:/path/to/folder/containing/lingo-binary' for wherever you would like the binary to be.
-Or put the binary on your current $PATH. Note: You can find your current $PATH by running:
+Open `~/.bashrc` and add the line `export PATH=$PATH:/path/to/folder/containing/lingo-binary` for wherever you would like the binary to be.
+Or put the binary on your current `$PATH`. Note: You can find your current `$PATH` by running:
 
 ```bash
 $ echo $PATH
@@ -58,7 +56,7 @@ You should see a success message. The client is now authenticated to talk to the
 
 ---
 
-*Under The Hood*: The setup command creates a ~/.codelingo folder in which it stores credentials and configuration details to push code up and get issues back from the CodeLingo platform. Note: It also adds a ~/.codelingo/config/git-credentials file. This is used by the lingo tool, via git, to sync code to the CodeLingo git server.
+*Under The Hood*: The setup command creates a `~/.codelingo` folder in which it stores credentials and configuration details to push code up and get issues back from the CodeLingo platform. Note: It also adds a `~/.codelingo/config/git-credentials` file. This is used by the lingo tool, via git, to sync code to the CodeLingo git server.
 
 ## Adding Tenets
 
