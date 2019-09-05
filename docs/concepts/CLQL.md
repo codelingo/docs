@@ -352,6 +352,51 @@ If run with `lingo run rewrite --dump-comments=<file/path>` a JSON file is creat
 
 Functions currently only accept variables as arguments, so `userInput("StringLiteral", "Goodbye, World")` is invalid.
 
+### Resolvers
+
+#### concat
+
+`concat` returns the concatenation of an arbitrary number of strings:
+
+```javascript
+concat("H", "e", "l", "l", "o", "!") // Hello!
+```
+
+#### toUpper
+
+`toUpper` returns a string in upper case:
+
+```javascript
+toUpper("Hello, World!") // HELLO, WORLD!
+```
+
+### Asserters
+
+#### regex
+
+`regex` is true if a given regex matches a given string:
+
+```javascript
+regex(/[A-Z][a-z]*/, "Hello") // true
+```
+
+#### shorterThan
+
+`shorterThan` is true if the first string is shorter than the second:
+
+```javascript
+shorterThan("abc", "abcd") // true
+```
+
+#### containsOneOf
+
+`containsOneOf` is true if its first string argument contains any of the following arguments:
+
+```javascript
+containsOneOf("Hello, World!", "Hello!") // false
+containsOneOf("Hello, World!", "Hello") // true
+```
+
 ## Custom Functions
 
 JS functions are defined in codelingo.yaml files under the functions section. These functions can then be called in the query section of any [Tenets](/concepts/tenets.md) within the same codelingo.yaml file.
