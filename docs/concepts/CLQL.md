@@ -277,6 +277,227 @@ method(depth = any):
 
 <br />
 
+# Edge
+
+Facts in AST lexicons refer to nodes in an AST, and the parent/child relationship between facts refers to the parent/child relationship of nodes in the AST. These nodes can have other parent/child relationships that are orthogonal to AST, such as calls. These relationships can be queried with the `edge` keyword.
+
+The following query finds function calls at the top level of a file and follows the `calls` edge to their definition:
+
+```
+common.func_call:
+  edge("calls"):
+    common.func
+```
+
+<br />
+
+# Path
+
+Path statements encapsulate CLQL trees. These subtrees can be repeated with a single argument allowing succint repition of complex patterns. Branched paths can rejoin allowing a fact to match nodes with different kinds of parents.
+
+## Linear
+
+Say we wanted to find triply nested if statements, our query would look like the following:
+
+```clql
+common.if_stmt:
+  common.if_stmt:
+    common.if_stmt
+```
+
+With paths, we can express the same thing like so:
+
+```clql
+path(repeat = 3):
+  common.if_stmt:
+    pathcontinue
+```
+
+Once a query reaches a `pathcontinue` statement it continues from the `path` statement until the path has been repeated the specified number of times.
+
+## Repeat range
+
+Some queries cannot be written with `path` statements. Say we wanted to find all functions called by `someFunc()` and an arbitrarily long chain of calls. Our query would have to explicitly match either directly called functions, or functions with 1, 2, 3 etc intermediaries to infinity.
+
+```clql
+common.func:
+  name == "someFunc"
+  any_of:
+    common.func_call(depth = any):
+      edge("calls"):
+        common.func
+    common.func_call(depth = any):
+      edge("calls"):
+        common.func:
+          common.func_call(depth = any):
+            edge("calls"):
+              common.func
+    ...
+    common.func_call(depth = any):
+      edge("calls"):
+        common.func:
+          common.func_call(depth = any):
+            edge("calls"):
+              common.func:
+                ...
+```
+
+With paths the same query is trivial:
+
+```clql
+common.func:
+  name == "someFunc"
+  path(repeat = 1:):
+    common.func_call(depth = any):
+      edge("calls"):
+        common.func:
+          pathcontinue
+```
+
+`repeat = 1:` is a range specifying that the path should be repeated one or more times.
+
+## Complex subtrees
+
+Say we wanted to match triply nested if statements that all check the same value, our query would look like the following:
+
+```clql
+common.if_stmt:
+  common.condition:
+    common.var:
+      name as varName
+  common.if_stmt:
+    common.condition:
+      common.var:
+        name == varName
+    common.if_stmt:
+      common.condition:
+        common.var:
+          name == varName
+```
+
+With paths our query has much less repitition:
+
+```clql
+common.func:
+  path(repeat = 3):
+    common.if_stmt:
+      common.condition:
+        common.var:
+          name as varName
+      pathcontinue
+```
+
+Note that CLQL elements that are children of `path`, not just the `if_stmt`. Also note that repeated definitions of `varName` are replaced with assertions.
+
+## Pathend
+
+Suppose we wanted to match triply nested if statements with a function call inside the innermost if statement. Without paths our query looks like:
+
+```clql
+common.if_stmt:
+  common.if_stmt:
+    common.if_stmt:
+      common.func_call
+```
+
+with paths our query looks like:
+
+```clql
+path(repeat = 3):
+  common.if_stmt:
+    pathcontinue
+  pathend:
+    common.func_call
+```
+
+## Branching
+
+A `path` statement can have multiple `pathcontinue` statements. This allows multiple parents to have the same children. These children are defined under a `pathend` statment, rather than as children of the `pathcontinue` statements. It is often used with an `any_of` to match classes of simlar facts such as methods, closures, and functions, for example.
+
+Say we wanted to find functions or methods with doubly nested for loops. Without `pathend` we would need to repeat the doubly nested for loop facts under `func` and `method`:
+
+```
+common.file:
+  any_of:
+    common.func:
+      common.for_stmt:
+        common.for_stmt
+    common.method
+      common.for_stmt:
+        common.for_stmt
+```
+
+With `pathend` there is no repitition:
+
+```
+common.file:
+  path:
+    any_of:
+      common.func:
+        pathcontinue
+      common.method
+        pathcontinue
+    pathend:
+      common.for_stmt:
+        common.for_stmt
+```
+
+Say we wanted to find functions with function calls inside doubly nested for/while statements, our query would have to handle all combinations of for/for for/while, while/for, and while/while:
+
+```clql
+common.func:
+  any_of:
+    common.for_stmt:
+      any_of:
+        common.for_stmt:
+          common.func_call
+        common.while_stmt:
+          common.func_call
+    common.while_stmt:
+      any_of:
+        common.for_stmt:
+          common.func_call
+        common.while_stmt:
+          common.func_call
+```
+
+With paths, we can express the same thing like so:
+
+```clql
+common.func:
+  path(repeat = 2):
+    any_of:
+      common.for_stmt:
+        pathcontinue
+      common.while_stmt:
+        pathcontinue
+    pathend:
+      common.func_call
+```
+
+## Nested paths
+
+Nested paths are not yet valid CLQL. The following query is intended to follow the callgraph from `someFunc` and via function calls with multiply nested for loops. It will currently give a parse error.
+
+```clql
+common.func:
+  name == "someFunc"
+  path(repeat = any):
+    path(repeat = 2:):
+     common.for_stmt:
+       pathcontinue:
+        common.func_call(depth = any):
+          edge("calls"):
+            common.func:
+              pathcontinue
+```
+
+## Decorators
+
+Some decorators such as `@review comment` can only be used once per query. Using them in a repeated path will cause an error.
+
+<br />
+
 # Variables
 
 Facts that do not have a parent-child relationship can be compared by assigning their properties to variables. A query with a variable will only match a pattern in the code if all properties representing that variable are equal.
