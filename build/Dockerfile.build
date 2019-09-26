@@ -1,0 +1,12 @@
+FROM alpine:3.10
+
+RUN apk --update add git bash python make docker py-pip openssh
+RUN pip install --upgrade awscli \
+        && apk del py-pip
+
+RUN git config --global url.'git@github.com:'.insteadOf 'https://github.com/' \
+  && git config --global user.email "bot@codelingo.io" \
+  && git config --global user.name "CodeLingoBot"
+
+COPY . /go/src/github.com/codelingo/codelingo_io
+WORKDIR /go/src/github.com/codelingo/codelingo_io

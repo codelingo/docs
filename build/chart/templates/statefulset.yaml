@@ -1,0 +1,21 @@
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: docs
+spec:
+  selector:
+      matchLabels:
+        app: docs
+  serviceName: "docs"
+  replicas: {{.Values.replicas}}
+  template:
+    metadata:
+      labels:
+        app: docs
+    spec:
+      containers:
+      - name: docs
+        image: {{.Values.image}}:{{.Values.tag}}
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 80

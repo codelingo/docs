@@ -1,0 +1,32 @@
+- name: reinstate SSH Private Key File for build service
+  service: build
+  command: /bin/bash -c "echo -e $PRIVATE_SSH_KEY >> /root/.ssh/id_rsa"
+
+- name: add server to list of known hosts build
+  service: build
+  command: /bin/bash -c "ssh-keyscan -H github.com >> /root/.ssh/known_hosts"
+
+- name: 'init deploy svc'
+  service: deploy
+  command: /bin/bash -c "echo hello world"
+
+- name: chmod id_rsa build
+  service: build
+  command: chmod 600 /root/.ssh/id_rsa
+
+- type: serial
+  name: 'build and deploy docker image'
+  service: build
+  steps:
+  - command: /bin/bash -c "aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID && aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY && aws configure set default.region $AWS_DEFAULT_REGION"
+  - command: make builddocs
+
+- name: 'deploy to kubernetes staging cluster'
+  service: deploy
+  command: /bin/bash -c "kubectl config use-context codelingo.staging.k8s.local && helm upgrade docs build/chart --wait"
+
+- type: manual
+  name: 'deploy to kubernetes production cluster'
+  service: deploy
+  steps:
+  - command: /bin/bash -c "kubectl config use-context codelingo.prod.k8s.local && helm upgrade docs build/chart --wait"

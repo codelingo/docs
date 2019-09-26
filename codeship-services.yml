@@ -1,0 +1,13 @@
+build:
+  build:
+    dockerfile_path: build/Dockerfile.build
+  add_docker: true
+  encrypted_env_file:
+    - build/aws.env.encrypted
+  volumes:
+    - build/.sshbuild:/root/.ssh
+
+deploy:
+  build:
+    dockerfile_path: build/Dockerfile.deploy
+  encrypted_env_file: build/k8s.env.encrypted
