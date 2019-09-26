@@ -8,5 +8,5 @@ RUN git config --global url.'git@github.com:'.insteadOf 'https://github.com/' \
   && git config --global user.email "bot@codelingo.io" \
   && git config --global user.name "CodeLingoBot"
 
-COPY . /go/src/github.com/codelingo/codelingo_io
-WORKDIR /go/src/github.com/codelingo/codelingo_io
+COPY . /go/src/github.com/codelingo/docs
+WORKDIR /go/src/github.com/codelingo/docs

@@ -9,8 +9,8 @@ RUN apt-get update \
   && mv linux-amd64/helm /usr/local/bin \
   && rm -f /helm-${HELM_VERSION}-linux-amd64.tar.gz
 
-COPY . /go/src/github.com/codelingo/codelingo_io
-WORKDIR /go/src/github.com/codelingo/codelingo_io
+COPY . /go/src/github.com/codelingo/docs
+WORKDIR /go/src/github.com/codelingo/docs
 
 RUN export COMMIT_ID=$(git rev-parse --verify --short HEAD) \
   && sed -i -e "s/<TAG>/$COMMIT_ID/g" build/chart/values.yaml
