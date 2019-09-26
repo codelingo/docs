@@ -4,8 +4,6 @@ build:
   add_docker: true
   encrypted_env_file:
     - build/aws.env.encrypted
-  volumes:
-    - build/.sshbuild:/root/.ssh
 
 deploy:
   build:
