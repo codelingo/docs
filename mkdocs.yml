@@ -1,5 +1,5 @@
 site_name: CodeLingo Docs #- On Prem
-site_url: https://staging.codelingo.io/docs
+site_url: https://codelingo.io/docs
 repo_url: null #= TODO: should we add this and have links to github?
 
 extra_css:

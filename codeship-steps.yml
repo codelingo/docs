@@ -5,12 +5,6 @@
   - command: /bin/bash -c "aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID && aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY && aws configure set default.region $AWS_DEFAULT_REGION"
   - command: make builddocs
 
-- name: 'deploy to kubernetes staging cluster'
+- name: 'deploy to kubernetes prod cluster'
   service: deploy
-  command: /bin/bash -c "kubectl config use-context codelingo.staging.k8s.local && helm upgrade docs build/chart --wait"
-
-- type: manual
-  name: 'deploy to kubernetes production cluster'
-  service: deploy
-  steps:
-  - command: /bin/bash -c "kubectl config use-context codelingo.prod.k8s.local && helm upgrade docs build/chart --wait"
+  command: /bin/bash -c "kubectl config use-context codelingo.prod.k8s.local && helm upgrade docs build/chart --wait"
