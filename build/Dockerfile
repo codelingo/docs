@@ -10,3 +10,5 @@ RUN mkdocs build
 FROM nginx:alpine
 
 COPY --from=builder /go/src/github.com/codelingo/docs/site  /usr/share/nginx/html
+
+EXPOSE 80
