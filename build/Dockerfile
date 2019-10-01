@@ -1,4 +1,4 @@
-FROM python:2.7 as builder
+FROM python:3 as builder
 
 RUN pip install mkdocs mkdocs-cinder
 
