@@ -7,14 +7,14 @@ This guide provides instructions and documentation for:
 
 - Installation and usage of the CodeLingo command line interface (CLI)
 - Configuration of CodeLingo for your repositories via codelingo.yaml files
-- Importing and writing of Tenets
+- Importing and writing of Specs
 - Instructions for integrating CodeLingo into your workflow for automated code reviews
 
 ## Installation
 
 _Note: lingo and all Actions no longer supports 32-bit operating systems_
 
-The lingo CLI tool can be used to generate [Tenets](concepts/tenets.md) and run [Actions](concepts/actions.md) for your repositories.
+The lingo CLI tool can be used to generate [Specs](concepts/specs.md) and run [Actions](concepts/actions.md) for your repositories.
 
 <a href="https://github.com/codelingo/lingo/releases" target="_blank">Download</a> a pre-built binary or, if you have <a href="https://golang.org/doc/install" target="_blank">Golang setup</a>, install from source:
 ```bash
@@ -44,7 +44,7 @@ $ echo $PATH
 
 ## Authentication
 
-In order to run Tenets against your repository, your lingo client will need to authenticate with the CodeLingo servers. To do so, you are required to have an account. Please follow these steps to set up your client:
+In order to run Specs against your repository, your lingo client will need to authenticate with the CodeLingo servers. To do so, you are required to have an account. Please follow these steps to set up your client:
 
 1. Create a CodeLingo account: navigate to codelingo.io and click on the "Sign in with GitHub" button.
 2. Generate the token from the  <a href="https://www.codelingo.io/settings/profile" target="_blank">web app here</a>, and copy it to your clipboard
@@ -58,16 +58,16 @@ You should see a success message. The client is now authenticated to talk to the
 
 *Under The Hood*: The setup command creates a `~/.codelingo` folder in which it stores credentials and configuration details to push code up and get issues back from the CodeLingo platform. Note: It also adds a `~/.codelingo/config/git-credentials` file. This is used by the lingo tool, via git, to sync code to the CodeLingo git server.
 
-## Adding Tenets
+## Adding Specs
 
-Writing and running Tenets is driven via configuration stored in your repository's `codelingo.yaml` files. Each `codelingo.yaml` file specifies a collection of Tenets to apply to all code under the directory it's written in. A project requires at least one `codelingo.yaml` file, however multiple files can be used. All `codelingo.yaml` files in a repository will be run by the client, with configuration in children directories only being scoped to that directory's files. `codelingo.yaml` files are based on the YAML format.
+Writing and running Specs is driven via configuration stored in your repository's `codelingo.yaml` files. Each `codelingo.yaml` file specifies a collection of Specs to apply to all code under the directory it's written in. A project requires at least one `codelingo.yaml` file, however multiple files can be used. All `codelingo.yaml` files in a repository will be run by the client, with configuration in children directories only being scoped to that directory's files. `codelingo.yaml` files are based on the YAML format.
 
-To initialize a default `codelingo.yaml` file, run `$ lingo init`. The default file contains an example Tenet as follows:
+To initialize a default `codelingo.yaml` file, run `$ lingo init`. The default file contains an example Spec as follows:
 
 ``` yaml
-  tenets:
+  specs:
   - name: find-funcs
-    doc: Example tenet that finds all functions.
+    doc: Example spec that finds all functions.
     actions:
       codelingo/review:
         comment: This is a function, but you probably already knew that.
@@ -78,56 +78,56 @@ To initialize a default `codelingo.yaml` file, run `$ lingo init`. The default f
       common.func(depth = any)
 ```
 
-This single Tenet will find functions across any language.
+This single Spec will find functions across any language.
 
-Tenets can be added to a project's `codelingo.yaml` file via two methods:
+Specs can be added to a project's `codelingo.yaml` file via two methods:
 
-- Importing published Tenets
-- Writing custom Tenets
+- Importing published Specs
+- Writing custom Specs
 
-Note: a `codelingo.yaml` file can contain a combination of both custom Tenets and imported Tenets.
+Note: a `codelingo.yaml` file can contain a combination of both custom Specs and imported Specs.
 
-### Importing Tenets
+### Importing Specs
 
-To import a published Tenet, add the url to your `codelingo.yaml` file:
+To import a published Spec, add the url to your `codelingo.yaml` file:
 
 ```
-# example of importing an individual Tenet from the CodeLingo's Go Bundle
-tenets:
+# example of importing an individual Spec from the CodeLingo's Go Bundle
+specs:
   - import: codelingo/go/marshelling
 ```
 
-Tenets can be imported individually (as above), or as a Bundle:
+Specs can be imported individually (as above), or as a Bundle:
 
 ```
 #  example of importing the whole Go Bundle
-tenets:
+specs:
   - import: codelingo/go
 ```
 
-When importing a bundle, if there are particular tenets you wish to exclude, you can do so using skip:
+When importing a bundle, if there are particular specs you wish to exclude, you can do so using skip:
 
 ```
-# example of skipping tenets from a bundle import
-tenets:
+# example of skipping specs from a bundle import
+specs:
   - import: codelingo/go
   skip:
     - global-var
     - empty-slice
 ```
 
-Published Tenets to import (driven by best practices and the community) can be found [on CodeLingo](https://www.codelingo.io/tenets).
+Published Specs to import (driven by best practices and the community) can be found [on CodeLingo](https://www.codelingo.io/specs).
 
-**[View more information on importing published Tenets](concepts/tenets.md#importing).**
+**[View more information on importing published Specs](concepts/specs.md#importing).**
 
-### Writing Custom Tenets
+### Writing Custom Specs
 
 
-Custom Tenets can be written from scratch directly in `codelingo.yaml` files using CodeLingo Query Language (CLQL). CLQL relies on importing Lexicons, which provide a set of domain specific facts to work with. Here is an example of a custom Tenet that find all functions in a repository:
+Custom Specs can be written from scratch directly in `codelingo.yaml` files using CodeLingo Query Language (CLQL). CLQL relies on importing Lexicons, which provide a set of domain specific facts to work with. Here is an example of a custom Spec that find all functions in a repository:
 
 ```
-# example of a Tenet written directly in a codelingo.yaml file
-tenets:
+# example of a Spec written directly in a codelingo.yaml file
+specs:
   - name: find-funcs
     actions:
        codelingo/review
@@ -140,20 +140,20 @@ tenets:
 
 ```
 
-The key parts of each Tenet are:
+The key parts of each Spec are:
 
-- **`name`** Meta data for the identification of the Tenet
-- **`actions`** The metadata for actions the Tenet integrates with. In this case, for the review action, we provide a comment for the review.
-- **`query`** - this is the pattern the Tenet is looking for and core to all Tenets.
+- **`name`** Meta data for the identification of the Spec
+- **`actions`** The metadata for actions the Spec integrates with. In this case, for the review action, we provide a comment for the review.
+- **`query`** - this is the pattern the Spec is looking for and core to all Specs.
 - **`@review comment`** - is a query decorator which extracts the information needed from the query result for the Review Action. In this case, it'll return the filename and line number for every function declaration found in the repository.
 
 
-**[View more information on writing custom Tenets](concepts/tenets.md#writing-custom-tenets)**
+**[View more information on writing custom Specs](concepts/specs.md#writing-custom-specs)**
 
 
 ## Running the Review Action
 
-Integrating Tenets into your existing developer workflow is done through Actions. The simplest Action to get started with is the Review Action. To install, run:
+Integrating Specs into your existing developer workflow is done through Actions. The simplest Action to get started with is the Review Action. To install, run:
 
 ```bash
   $ lingo install review
@@ -171,7 +171,7 @@ All actions are run via `$ lingo run <flow_name>`.
   $ lingo run review
 ```
 
-By default, this will step through each occurrence of each Tenet. For example,
+By default, this will step through each occurrence of each Spec. For example,
 
 ```bash
 $ lingo run review
@@ -191,7 +191,7 @@ test.php:2
 [o]pen [d]iscard [K]eep:
 ```
 
-In this example, the Tenet is using the inbuilt php fact "stmt_function" which matches functions in PHP. See [Tenet](concepts/tenets.md) for more details.
+In this example, the Spec is using the inbuilt php fact "stmt_function" which matches functions in PHP. See [Spec](concepts/specs.md) for more details.
 
 To open a file at the line of the issue, type `o` and hit return. It will give you an option (which it will remember) to set your editor, defaulting to vi.
 
@@ -199,7 +199,7 @@ Note: The first time `lingo run review` is run on a repository, `lingo` will aut
 
 ## Integrating the Review Action
 
-Actions are used to integrate CodeLingo into your workflow. The Review Action uses the comment from the Tenets to comment on Pull Requests. This ensures a teams best practices are followed by all developers on a team.
+Actions are used to integrate CodeLingo into your workflow. The Review Action uses the comment from the Specs to comment on Pull Requests. This ensures a teams best practices are followed by all developers on a team.
 
 Setting up the Review Action on a repository is as easy as adding a new webhook on Github. Simply navigate to the settings menu of the reposiory you wish to add the review action to and click on Webhooks.
 
@@ -214,7 +214,7 @@ For more infomation on creating webhooks, see https://developer.github.com/webho
 
 Note: The Review Action only supports public repos at this time.
 
-Once configured, the Review Action will comment on pull requests that violate a Tenet.
+Once configured, the Review Action will comment on pull requests that violate a Spec.
 
 The Review Action will only review Pull Requests and will never make changes to your codebase.
 
@@ -225,8 +225,8 @@ If you are interested in building custom Actions and integrations, please contac
 
 ## Next Steps
 
-Now that you have basic integration with CodeLingo into your project, you can start to add additional Tenets and build custom workflow augmentation.
+Now that you have basic integration with CodeLingo into your project, you can start to add additional Specs and build custom workflow augmentation.
 <br/><br/>
-**[Explore published Tenets to add to your project](https://www.codelingo.io/tenets)**
+**[Explore published Specs to add to your project](https://www.codelingo.io/specs)**
 <br/><br/>
-**[View guide to importing and writing Tenets](https://www.codelingo.io/docs/concepts/tenets/)**
+**[View guide to importing and writing Specs](https://www.codelingo.io/docs/concepts/specs/)**

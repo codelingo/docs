@@ -11,13 +11,13 @@ The default Flow provided with CodeLingo is the [Review Flow](#review-flow). Add
 
 
 ## Functions
-Functions watch resources and look for patterns in them based on the Tenets associated with the resource.
+Functions watch resources and look for patterns in them based on the Specs associated with the resource.
 
 Functions can either inject information (such as pull request info or log files) or output information to a service (github comments or dashboard panels)
 
 Possible Functions include:
 
-- A forensic Function that analyses logs and finds event B happened before A, which violates a Tenet
+- A forensic Function that analyses logs and finds event B happened before A, which violates a Spec
 - A project overview Function that graphs Tech Debt burndown chart and delegates based on ownership
 - A Copilot Function that gives real time feedback to a developer in their IDE as they’re coding
 - A profiling Function that detects high memory usage correlated to similar code
@@ -44,11 +44,11 @@ In this example a CodeLingo IDE plugin allows the user to query code within thei
 
 ### Review Flow
 
-This is an example of a fully automated flow with no dashboard. When a pull request is made to the monitored repository, GitHub sends a webhook to the Function. That Function then queries the pull request and repository for any Tenets.
+This is an example of a fully automated flow with no dashboard. When a pull request is made to the monitored repository, GitHub sends a webhook to the Function. That Function then queries the pull request and repository for any Specs.
 
 ![Review Flow](../img/review_flow.jpg)
 
-The next Function in the Flow then queries the pull request with the Tenets. Any issues found are added as comments on the pull request.
+The next Function in the Flow then queries the pull request with the Specs. Any issues found are added as comments on the pull request.
 
 
 ### Review Confirm Flow
@@ -57,7 +57,7 @@ This is the same flow as above except a Function waits for a human to confirm ea
 
 ![Review Confirm Flow](../img/review_confirm_flow.jpg)
 
-Further customization of this Flow might include categorizing the issues and keeping track of which Tenets where kept and discarded.
+Further customization of this Flow might include categorizing the issues and keeping track of which Specs where kept and discarded.
 
 
 ### Crash Report Flow
@@ -72,6 +72,6 @@ Similar to the example above, this is a long running Flow which waits to be trig
 
 This Flow extends the above crash report Flow to add in debugging, fixing and preventing. First the crash dump is sent, an issue is added on Jira and the team are alerted on Slack.
 
-Along with the report panels, debug panels are added to help narrow down the cause of the crash and generate a Tenet to protect against future occurrences. The Lexicons reproduce a running state of the software, which matches, as close as possible, that of the crashed program with the information provided.
+Along with the report panels, debug panels are added to help narrow down the cause of the crash and generate a Spec to protect against future occurrences. The Lexicons reproduce a running state of the software, which matches, as close as possible, that of the crashed program with the information provided.
 
 ![Crash Redeploy Flow](../img/crash_redeploy_flow.jpg)
