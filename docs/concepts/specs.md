@@ -255,7 +255,7 @@ $ git clone https://github.com/codelingo/codelingo
 ```
 - Create a new git branch:
 ```
-$ git checkout -b my_first_tenet
+$ git checkout -b my_first_spec
 ```
 - Create your CodeLingo hub under codelingo/specs by creating a folder named after your username e.g codelingo/specs/rstorr.
 - Create a new Bundle inside your hub. For example, I may want a Bundle of Specs that I will use to ensure the quality of my code for my 'cool project' so I create a new folder named cool-project inside my hub i.e codelingo/specs/rstorr/cool-project.
