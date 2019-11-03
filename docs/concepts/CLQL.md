@@ -75,7 +75,7 @@ This query finds float literals with the value 8.7:
 
 ```yaml
 float_lit(depth = any):
-  value: 8.7
+  value == 8.7
 ```
 
 <br />
