@@ -3,7 +3,7 @@ syntax clear
 syn match comment "^[^\n#]*#.*$"
 syn match imports " as .*$" 
 syn match colon "\:\|\-"
-syn match lingoLexiconBranch    "tenets\:\|lexicons\:"  contains=colon
+syn match lingoLexiconBranch    "specs\:\|lexicons\:"  contains=colon
 syn match lingoDoc2    "\(comment\)\:.*$" contains=regstring,colon
 syn match docstring       "^\(\t\| \)*doc\:.*$"
 syn region  regstring          oneline start='"' end='"' containedin=lingoDoc2

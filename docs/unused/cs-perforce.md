@@ -55,9 +55,9 @@ Edit the codelingo.yaml file as follows:
 lexicons:
 - codelingo/common
 - codelingo/csharp
-tenets:
+specs:
 - name: find-funcs
-  doc: Example tenet that finds all functions.
+  doc: Example spec that finds all functions.
   comment: This is a function, but you probably already knew that.
   match: |
     @ clair.comment

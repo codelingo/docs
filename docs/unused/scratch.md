@@ -1,15 +1,15 @@
 ```yaml
-tenets:
+specs:
   - import: modica/default
   - import: modica/default/null-check
   - import: codelingo/default
-  - name: find-funcs #name of the tenet
+  - name: find-funcs #name of the spec
     comment: This is a function, but you probably already knew that.
     query: |
     import: codelingo/csharp
       @ clair.comment
       csharp.method_declaration(depth = any)
-  - name: same-other-tenet
+  - name: same-other-spec
     comment: This is the comment left by the flow
     actions:
       # functions here ...
@@ -19,7 +19,7 @@ tenets:
 
 
 ```yaml
-tenets:
+specs:
   - import: modica/default/null-check
     actions:
       - codelingo/review
@@ -29,7 +29,7 @@ tenets:
 <pre>
 <code>
 ...
-tenets:
+specs:
   - name: four-or-less
     actions:
       codelingo/docs:

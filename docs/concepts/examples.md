@@ -24,13 +24,13 @@ query:
 
 Lexicons get data into the CodeLingo Platform and provide a list of Facts to query that data. In the above example, the Git Lexicon finds and clones the "myrepo" repository from the "myvcsgithost.com" VCS host. The "myrepo" repository must be publicly accessible for the Git Lexicon to access it.
 
-The CodeLingo Platform can be queried directly with the `$ lingo run search` command or via [Functions](actions.md) which use queries stored in Tenets.
+The CodeLingo Platform can be queried directly with the `$ lingo run search` command or via [Functions](actions.md) which use queries stored in Specs.
 
 ## Matching a function name
 
 ```yaml
-tenets:
-- name: first-tenet
+specs:
+- name: first-spec
   actions:
     codelingo/docs:
       body: example doc
@@ -43,7 +43,7 @@ tenets:
       name == "writeMsg"
 ```
 
-This will find funcs named "writeMsg". Save and close the file, then run `lingo run review`. Try adding another func called "readMsg" and run a review. Only the "writeMsg" func should be highlighted. Now, update the Tenet to find all funcs that end in "Msg":
+This will find funcs named "writeMsg". Save and close the file, then run `lingo run review`. Try adding another func called "readMsg" and run a review. Only the "writeMsg" func should be highlighted. Now, update the Spec to find all funcs that end in "Msg":
 
 ```yaml
   query:
@@ -104,7 +104,7 @@ csharp.method_declaration:
 
 ## C++
 
-The following Tenet asserts that functions should not return local objects by reference. When the function returns and the stack is unwrapped, that object will be destructed, and the reference will not point to anything.
+The following Spec asserts that functions should not return local objects by reference. When the function returns and the stack is unwrapped, that object will be destructed, and the reference will not point to anything.
 
 The following query finds this bug by matching all functions that return a reference type, and declare the returned value inside the function body:
 
@@ -195,10 +195,10 @@ namespace Testing.EmptyBlockRule {
 </SourceAnalyzer>
 ```
 
-The same rule can be expressed in CLQL as the following [Tenet](tenets.md):
+The same rule can be expressed in CLQL as the following [Spec](specs.md):
 
 ```yaml
-tenets:
+specs:
   - name: "EmptyBlock"
     actions:
       codelingo/docs:
@@ -226,7 +226,7 @@ private bool VisitStatement(Statement statement, Expression parentExpression, St
 ```
 
 The VisitStatement method is run at every node of the AST tree, then a violation is added if the node is a block statement with no children.
-In CLQL, the match statement expresses the logic of the query. Traversal is entirely abstracted away, and the Tenet author only needs to express the condition for a "rule violation":
+In CLQL, the match statement expresses the logic of the query. Traversal is entirely abstracted away, and the Spec author only needs to express the condition for a "rule violation":
 
 ```clql
 cs.block_stmt:
@@ -255,7 +255,7 @@ private bool VisitElement(CsElement element, CsElement parentElement, object con
 }
 ```
 
-As in the [empty block statements example below](#empty-block-statements), to express the pattern in CLQL, the Tenet author only needs to express conditions in the VisitElement body:
+As in the [empty block statements example below](#empty-block-statements), to express the pattern in CLQL, the Spec author only needs to express conditions in the VisitElement body:
 
 ```yaml
 cs.element:
@@ -275,7 +275,7 @@ In the example below we have a database manager class that wraps up a third part
 
 From past profiles of our application, we expect the function `getDBCon` to use less than 10MB of memory. If it uses more than this, we want to be notified.
 
-We can do this with the following Tenet:
+We can do this with the following Spec:
 
 ```yaml
 csprof.session:
@@ -294,7 +294,7 @@ csprof.session:
         memory_mb >= 10
 ```
  
-Sometime in the future we decide to update the underlying library to the latest version. After profiling our application again, the Tenet catches that multiple instances of the `getDBCon` function have used more than the allowed 10MB of memory.
+Sometime in the future we decide to update the underlying library to the latest version. After profiling our application again, the Spec catches that multiple instances of the `getDBCon` function have used more than the allowed 10MB of memory.
 
 As we iterate over the issues, we see a steady increase in the memory consumed by the `getDBCon` function. Knowing that this didn't happen with the older version of the library, we suspect a memory leak may have been introduced in the update and further investigation is required.
 
@@ -307,7 +307,7 @@ In the example below we have a database manager class that we use to update and 
 
 Our application has a number of different workers that operate asynchronously, making calls to the database manager at any time.
 
-We need to know if our database manager is handling the asynchronous calls correctly, so we write a Tenet below to catch potential race conditions between two functions used by the workers:
+We need to know if our database manager is handling the asynchronous calls correctly, so we write a Spec below to catch potential race conditions between two functions used by the workers:
 
 
 ```yaml
@@ -341,7 +341,7 @@ This query uses [variables](#variables). If the `getUser` function is called whi
 
 ## Detecting Deadlocks
 
-In the example below, we have an application used for importing data into a database from a number of different sources asynchronously. The `importData` function is particularly resource heavy on our server due to the raw amount of data that needs to be processed. Knowing this, we decide to write a Tenet to catch any idle instances of the `importData` function:
+In the example below, we have an application used for importing data into a database from a number of different sources asynchronously. The `importData` function is particularly resource heavy on our server due to the raw amount of data that needs to be processed. Knowing this, we decide to write a Spec to catch any idle instances of the `importData` function:
 
 ```yaml
 cs.session:

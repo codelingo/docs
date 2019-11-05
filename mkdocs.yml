@@ -7,15 +7,15 @@ extra_css:
 extra_javascript:
   - js/smallchat.js
 site_description: Documentation for the CodeLingo platform. # TODO SEO strategy
-google_analytics: ['UA-117506438-1', 'codelingo.io/docs'] #TODO: Turn this on...
+google_analytics: ["UA-117506438-1", "codelingo.io/docs"] #TODO: Turn this on...
 
 pages:
-    - Home: index.md
-    - Getting Started: getting-started.md
-    - Tenets: concepts/tenets.md
-    - Actions: concepts/actions.md
-    - CLQL Reference: concepts/CLQL.md
-    - Examples: concepts/examples.md
-    # todo (junyu) mkdocs fails to build with external links
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - Specs: concepts/specs.md
+  - Actions: concepts/actions.md
+  - CLQL Reference: concepts/CLQL.md
+  - Examples: concepts/examples.md
+  # todo (junyu) mkdocs fails to build with external links
 
 theme: cinder

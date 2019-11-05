@@ -399,7 +399,7 @@ containsOneOf("Hello, World!", "Hello") // true
 
 ## Custom Functions
 
-JS functions are defined in codelingo.yaml files under the functions section. These functions can then be called in the query section of any [Tenets](/concepts/tenets.md) within the same codelingo.yaml file.
+JS functions are defined in codelingo.yaml files under the functions section. These functions can then be called in the query section of any [Specs](/concepts/specs.md) within the same codelingo.yaml file.
 
 The following example defines and uses a custom concat function:
 
@@ -412,7 +412,7 @@ funcs:
         c = a.concat(b)
         return c
       }
-tenets:
+specs:
   - actions:
       codelingo/review:
         comment: |
@@ -436,7 +436,7 @@ funcs:
       function (str, minLen) {
         return str.length > minLen
       }
-tenets:
+specs:
   - actions:
       codelingo/review:
         comment: |
@@ -459,10 +459,10 @@ For the most part, variables defined anywhere in the query can be passed to func
 
 # Interleaving
 
-When writing a Tenet in a codelingo.yaml file, only the AST lexicon Facts are required:
+When writing a Spec in a codelingo.yaml file, only the AST lexicon Facts are required:
 
 ```yaml
-tenets:
+specs:
   - name: all-classes
     actions:
       codelingo/docs:
@@ -519,11 +519,11 @@ git.repo:
 <!---
 TODO(BlakeMScurr) fully fill out template
 
-We can write the same Tenet with the Common AST lexicon, which would catch the pattern in both languages as the Common lexicon lets us express facts that apply commonly across all languages:
+We can write the same Spec with the Common AST lexicon, which would catch the pattern in both languages as the Common lexicon lets us express facts that apply commonly across all languages:
 
 [common lexicon example]
 
-A Tenet can be made of interleaved facts from different lexicons.
+A Spec can be made of interleaved facts from different lexicons.
 
 
 [update imports to begin with lexicon type: codelingo/ast/common]
@@ -533,7 +533,7 @@ A Tenet can be made of interleaved facts from different lexicons.
 
 [example of code blocks that have > x memory allocated (run golang’s pprof to get an idea)]
 
-Further examples can be found in the [link to Tenet examples directory].
+Further examples can be found in the [link to Spec examples directory].
 
 
 -->
