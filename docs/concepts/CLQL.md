@@ -43,7 +43,7 @@ common.class(depth = any)
 It consists of a single Fact `common.class`. The name `class` indicates that the Fact refers to a class, and the namespace `common` indicates that it may be a class from any language with classes. If the namespace were `csharp` this Fact would only match classes from the C# Lexicon. The depth range `depth = any` makes this Fact match any class within the context of the query (a single C# program), no matter how deeply nested.
 A comment is made on every class found as there is a decorator `@review comment` directly above the single Fact `common.class`.
 
-Note: For brevity we will omit the `common` namespace. This can be done in codelingo.yaml files by importing the common lexicon into the global namespace: `import codelingo/ast/common as _`. For comparison a lexicon import would normally look like `import codelingo/ast/common` and require us to prefix any fact such as `method` like so `common.method`.
+Note: For brevity we will omit the `common` namespace. This can be done in codelingo.yaml files by importing the common lexicon into the global namespace: `import codelingo/ast/common as _`. For comparison a lexicon import normally looks like: `import codelingo/ast/common` and require us to prefix any fact such as `method` like so: `common.method`.
 
 <br />
 
@@ -178,7 +178,7 @@ method(depth = any):
   while_stmt
 ```
 
-Note: The child Facts do not need to be contiguous, other facts can occur in between and CLQL will ignore them, however the child Facts must be on the same level of the ast (Have the same imediate parent).
+Note: The child Facts do not need to be contiguous, other facts can occur in-between and CLQL will ignore them, however the child Facts must be on the same level of the AST (Have the same immediate parent).
 
 <!--TODO(blakemscurr): Explain the <lexicon>.element fact-->
 
@@ -463,7 +463,7 @@ In addition to the string and regex literals shown above, functions can accept f
 
 # Interleaving
 
-Although a query usually begins with a class or method Fact the root of the tree is actually the the repository itself. The repository, along with other version control information, is added automatically to the query by the Review Action before searching the CodeLingo Platform:
+Although a query usually begins with a class or method Fact the root of the tree is actually the repository itself. The repository, along with other version control information, is added automatically to the query by the Review Action before searching the CodeLingo Platform:
 
 ```yaml
 query:
@@ -480,7 +480,7 @@ query:
         cs.class(depth = any)
 ```
 
-This means when writing a Spec in a codelingo.yaml file, only the AST lexicon Facts are required:
+This means when writing a Spec in a codelingo.yaml file, only the AST Lexicon Facts are required:
 
 ```yaml
 specs:
