@@ -30,26 +30,26 @@ If you are interested in writing your own custom Lexicons please see the **[Lexi
 # Querying with Facts
 
 <!--Should we include systems that CLQL does not *yet* support? -->
-CLQL can query many types of software related systems but assume for simplicity that all queries on this page are scoped to a single object oriented program.
+CLQL can query many types of software-related systems but assume for simplicity that all queries on this page are scoped to a single object oriented program.
 
 <!--TODONOW link to fact definition section on lexicon page-->
 Queries are made up of Facts. A CLQL query with just a single Fact will match all elements of that type in the program. The following query matches and returns all classes in the queried program:
 
 ```yaml
-# ...
+@review comment
 common.class(depth = any)
 ```
 
 It consists of a single Fact `common.class`. The name `class` indicates that the Fact refers to a class, and the namespace `common` indicates that it may be a class from any language with classes. If the namespace were `csharp` this Fact would only match classes from the C# Lexicon. The depth range `depth = any` makes this Fact match any class within the context of the query (a single C# program), no matter how deeply nested.
 A comment is made on every class found as there is a decorator `@review comment` directly above the single Fact `common.class`.
 
-Note: For brevity we will omit the `common` namespace. This can be done in codelingo.yaml files by importing the common lexicon into the global namespace: `import codelingo/ast/common as _`.
+Note: For brevity we will omit the `common` namespace. This can be done in codelingo.yaml files by importing the common lexicon into the global namespace: `import codelingo/ast/common as _`. For comparison a lexicon import would normally look like `import codelingo/ast/common` and require us to prefix any fact such as `method` like so `common.method`.
 
 <br />
 
 ## Fact Properties
 
-To limit the above query to match classes with a particular name, add a "name" property as an argument to the `method` Fact:
+Each fact has a number of properties which we can access to further refine our queries. For example the method fact in the example below has a "name" property. To limit the query to match classes with a particular name, utilize the "name" property as an argument to the `method` Fact:
 
 ```yaml
 @review comment
@@ -57,7 +57,7 @@ method(depth = any):
   name == "myFunc"
 ```
 
-This query returns all methods with the name "myFunc". Note that the query decorator is still on the `method` Fact - properties cannot be returned, only their parent Facts. Also note that properties are not namespaced, as their namespace is implied from their parent Fact.
+This query returns all methods with the name "myFunc". Note that the query decorator is still on the `method` Fact. The decorator indicates what we want to return, while the properties allow us to specify conditions for which Facts will be matched. Also note that properties are not namespaced, as their namespace is implied from their parent Fact.
 
 
 <br />
@@ -116,6 +116,7 @@ method(depth = any):
 Any Fact in a query can be decorated. If `class` is decorated, this query returns all classes named "myClass", but only if it has at least one method:
 
 ```yaml
+@review comment
 class(depth = any):
   name == “myClass”
   method(depth = any)
@@ -177,6 +178,8 @@ method(depth = any):
   while_stmt
 ```
 
+Note: The child Facts do not need to be contiguous, other facts can occur in between and CLQL will ignore them, however the child Facts must be on the same level of the ast (Have the same imediate parent).
+
 <!--TODO(blakemscurr): Explain the <lexicon>.element fact-->
 
 <br />
@@ -237,7 +240,7 @@ method:
           name == "nil"
 ```
 
-Note: Facts nested under multiple excludes still do not return results and cannot be decorated.
+Note: Facts nested under multiple excludes still do not return results and cannot be [decorated.](https://www.codelingo.io/docs/concepts/actions/#action-function-decorators)
 
 <br />
 # Include
@@ -250,7 +253,7 @@ func:
   exclude:
     if_stmt:
       include:
-        func_call:
+        func_call(depth = any):
           name == funcName
 ```
 
@@ -263,7 +266,7 @@ Results under include statements appear as children of the parent of the corresp
 <br />
 # any_of
 
-A Fact with multiple children will match against elements of the code that have child1 *and* child2 *and* child3 etc. The `any_of` operator overrides the implicit "and". The following query finds all methods named `helloWorld` that use basic loops:
+A Fact with multiple children will match against elements of the code that have child1 *and* child2 *and* child3 etc. The `any_of` operator overrides the implicit "and" with an "or". The following query finds all methods named `helloWorld` that use basic loops:
 
 ```yaml
 method(depth = any):
@@ -295,6 +298,8 @@ class(depth = any):
 ```
 
 The query above will only return methods of `classA` for which `classB` has a corresponding method.
+
+For the most part, variables defined anywhere in the query can be passed to functions anywhere else in the query. However, variables defined inside an `exclude` block cannot be passed to functions outside that exclude block and vice versa.
 
 <br />
 
@@ -452,30 +457,13 @@ specs:
 
 In addition to the string and regex literals shown above, functions can accept float, bool, and int arguments.
 
-For the most part, variables defined anywhere in the query can be passed to functions anywhere else in the query. However, variables defined inside an `exclude` block cannot be passed to functions outside that exclude block and vice versa.
 
 <br />
 
 
 # Interleaving
 
-When writing a Spec in a codelingo.yaml file, only the AST lexicon Facts are required:
-
-```yaml
-specs:
-  - name: all-classes
-    actions:
-      codelingo/docs:
-        body: Documentation for all-classes
-      codelingo/review:
-        comment: This is a class, but you probably already knew that.
-    query:
-      import codelingo/ast/csharp as cs
-      @review comment
-      cs.class(depth = any)
-```
-
-The Review Action adds the repository information to the query before searching the CodeLingo Platform:
+Although a query usually begins with a class or method Fact the root of the tree is actually the the repository itself. The repository, along with other version control information, is added automatically to the query by the Review Action before searching the CodeLingo Platform:
 
 ```yaml
 query:
@@ -490,6 +478,22 @@ query:
       cs.project:
         @review comment
         cs.class(depth = any)
+```
+
+This means when writing a Spec in a codelingo.yaml file, only the AST lexicon Facts are required:
+
+```yaml
+specs:
+  - name: all-classes
+    actions:
+      codelingo/docs:
+        body: Documentation for all-classes
+      codelingo/review:
+        comment: This is a class, but you probably already knew that.
+    query:
+      import codelingo/ast/csharp as cs
+      @review comment
+      cs.class(depth = any)
 ```
 
 Every query to the CodeLingo platform itself starts with VCS Facts to instruct the CodeLingo Platform on where to retrieve the source code from.

@@ -79,7 +79,7 @@ A Spec is an encoded project specific best practice used to guide development. A
 
 ## Actions
 
-A Action is an automated development workflow that leverages Specs to do some task, for example automating code reviews. While a Spec lives next to your code in a codelingo.yaml file, it is inert until a Action uses it.
+An Action is an automated development workflow that leverages Specs to do some task, for example automating code reviews. While a Spec lives next to your code in a codelingo.yaml file, it is inert until an Action uses it.
 
 #### Note:
 
