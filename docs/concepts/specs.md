@@ -2,7 +2,7 @@
 
 Specs live in codelingo.yaml files in your repository and are used by Actions to automate tasks. You can think of a Spec as an underlying principle guiding a workflow.
 
-In the Spec [sprintf](https://www.codelingo.io/specs/codelingo/go/sprintf) below, the Review Action uses the Spec to make sure `errors.New` is being used correctly and attaches a comment to the line where the `go.call_expr` is found, using the `@review comment` decorator:
+In the Golang Spec [sprintf](https://www.codelingo.io/specs/codelingo/go/sprintf) below, the Review Action uses the Spec to make sure `errors.New` is being used correctly and attaches a comment to the line where the `go.call_expr` is found, using the `@review comment` decorator:
 
 ```yaml
 specs:
