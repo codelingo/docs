@@ -1,6 +1,6 @@
 # Lexicons
 
-CodeLingo Query Language (CLQL) queries are statements of Facts about a domain of knowledge. Those Facts come from Lexicons.
+CodeLingo Query Language (CLQL) queries are statements of Facts about a domain of knowledge such as an AST. Those Facts come from Lexicons, for example, an AST lexicon provides Facts about the syntatic structure of a codebase which we can then query to identify complex patterns.
 
 There are currently three domains of knowledge Lexicon types support:
 
@@ -25,7 +25,7 @@ We plan to extend the Lexicons libraries to include:
 
 ## Lexicon SDK
 
-If you are interested in writing your own custom Lexicons please see the **[Lexicon SDK](https://github.com/codelingo/lexiconsdk)**.
+If you are interested in writing your own custom Lexicons please reach out via  **hello@codelingo.io**.
 
 # Querying with Facts
 
@@ -294,7 +294,7 @@ class(depth = any):
 class(depth = any):
   name == "classB"
   method:
-    name as methodName
+    name == methodName
 ```
 
 The query above will only return methods of `classA` for which `classB` has a corresponding method.
@@ -350,12 +350,15 @@ query:
 
 If run in the CLI with `lingo run rewrite` the user is prompted with a prompt like:
 ```
+Syncing your repo...
+Running rewrite flow...
 StringLiteral["Goodbye, World"]:
 ```
+Where the uesr can enter custom input to replace the string or have it replaced by the default we defined: "Goodbye, World".
 
 If run with `lingo run rewrite --dump-comments=<file/path>` a JSON file is created that can be used to build interactive comments on Github.
 
-Functions currently only accept variables as arguments, so `userInput("StringLiteral", "Goodbye, World")` is invalid.
+UserInput currently only accept variables as arguments, so `userInput("StringLiteral", "Goodbye, World")` is invalid.
 
 ### Resolvers
 
