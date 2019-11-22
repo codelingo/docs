@@ -354,7 +354,7 @@ Syncing your repo...
 Running rewrite flow...
 StringLiteral["Goodbye, World"]:
 ```
-Where the uesr can enter custom input to replace the string or have it replaced by the default we defined: "Goodbye, World".
+Where the user can enter custom input to replace the string or have it replaced by the default we defined: "Goodbye, World".
 
 If run with `lingo run rewrite --dump-comments=<file/path>` a JSON file is created that can be used to build interactive comments on Github.
 

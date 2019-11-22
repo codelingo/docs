@@ -365,6 +365,6 @@ cs.session:
 If an instance of the `importData` runs for more than 4 minutes with unusually low resource usage, an issue will be raised as the function is suspect of deadlock.
 
 
-# Currenlty Available Specs
+# Additional Examples
 
 To see more examples of what can be done with CLQL see our currenlty available [**Specs**](https://www.codelingo.io/specs)
