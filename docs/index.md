@@ -14,6 +14,10 @@ Test out writing a Spec and running a Action online with zero installs using the
 
 <!-- TODO CLQL tutorial -->
 
+## Dashboard
+
+The CodeLingo [Dashboard](https://www.codelingo.io/dashboard) lets you manage you automated workflows for each of your repositories. It is your hub for adding and removing Specs from your repositories and running Actions. Sign in with GitHub and follow the tutorial to run your first Action.
+
 ## GitHub Review Action
 
 After [installing CodeLingo on GitHub](https://github.com/apps/codelingo), write the following codelingo.yaml to the root of your repository:
@@ -32,10 +36,6 @@ You're done! Every pull request to your repository will now be checked against t
 Other Spec Bundles (including for other languages) from the community can be found at [codelingo.io/specs](https://www.codelingo.io/specs).
 
 <!-- TODO add instructions on how to interact with Review Action with GitHub comments -->
-
-## Dashboard
-
-Automating code reviews is now easier than ever using the CodeLingo [Dashboard](https://www.codelingo.io/dashboard). Sign in with GitHub and follow the tutorial to run your first Action.
 
 # Getting Started Guide
 

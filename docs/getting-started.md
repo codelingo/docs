@@ -1,59 +1,12 @@
 # Getting Started
 
-_Note: We have deprecated flows in favor of actions. Please modify your codelingo.yaml files accordingly._
-
 ## Introduction
-This guide provides instructions and documentation for:
 
-- Configuration of CodeLingo for your repositories via codelingo.yaml files
-- Importing and writing of Specs
-- Instructions for integrating CodeLingo into your workflow for automated code reviews
+There are two ways to leverage CodeLingo Actions to automate your workflows, the [CodeLingo Dashboard](https://www.codelingo.io/dashboard) and the [CodeLingo GitHub App](https://github.com/apps/codelingo). Here we will see how to use these tool with an example.
 
-## Adding Specs
+## CodeLingo Dashboard
 
-Writing and running Specs is driven via configuration stored in your repository's `codelingo.yaml` files. Each `codelingo.yaml` file specifies a collection of Specs to apply to all code under the directory it's written in. A project requires at least one `codelingo.yaml` file, however multiple files can be used. All `codelingo.yaml` files in a repository will be run by the client, with configuration in children directories only being scoped to that directory's files. `codelingo.yaml` files are based on the YAML format.
-
-Specs can be added to a project's `codelingo.yaml` file via two methods:
-
-- Importing published Specs
-- Writing custom Specs
-
-Note: a `codelingo.yaml` file can contain a combination of both custom Specs and imported Specs.
-
-### Importing Specs
-
-To import a published Spec, add the url to your `codelingo.yaml` file:
-
-```
-# example of importing an individual Spec from the CodeLingo's Go Bundle
-specs:
-  - import: codelingo/go/marshelling
-```
-
-Specs can be imported individually (as above), or as a Bundle:
-
-```
-#  example of importing the whole Go Bundle
-specs:
-  - import: codelingo/go
-```
-
-When importing a bundle, if there are particular specs you wish to exclude, you can do so using skip:
-
-```
-# example of skipping specs from a bundle import
-specs:
-  - import: codelingo/go
-  skip:
-    - global-var
-    - empty-slice
-```
-
-Published Specs to import (driven by best practices and the community) can be found [on CodeLingo](https://www.codelingo.io/specs).
-
-**[View more information on importing published Specs](concepts/specs.md#importing).**
-
-## Running the Review Action
+To use the CodeLingo Dashboard you must first be a GitHub user or organization and have at least on public GitHub Repository.
 
 Integrating Specs into your existing developer workflow is done through Actions. The simplest Action to get started with is the Review Action. To try it for yourself, navigate to the CodeLingo [dashboard](https://www.codelingo.io/dashboard) and follow the tutorial.
 
