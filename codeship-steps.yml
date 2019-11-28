@@ -12,4 +12,5 @@
 - type: manual
   name: 'deploy to kubernetes prod cluster'
   service: deploy
-  command: /bin/bash -c "kubectl config use-context codelingo.prod.k8s.local && helm upgrade docs build/chart --wait"
+  steps:
+  - command: /bin/bash -c "kubectl config use-context codelingo.prod.k8s.local && helm upgrade docs build/chart --wait"
