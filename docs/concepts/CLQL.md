@@ -1,6 +1,6 @@
 # Lexicons
 
-CodeLingo Query Language (CLQL) queries are statements of Facts about a domain of knowledge such as an AST. Those Facts come from Lexicons, for example, an AST lexicon provides Facts about the syntatic structure of a codebase which we can then query to identify complex patterns.
+CodeLingo Query Language (CLQL) queries are statements of Facts about a domain of knowledge (e.g. an AST). In the case of an AST lexicon, the lexicon provides Facts about the syntatic structure of a codebase, which can then be queried to identify arbitrary patterns in code.
 
 There are currently three domains of knowledge Lexicon types support:
 
@@ -25,7 +25,7 @@ We plan to extend the Lexicons libraries to include:
 
 ## Lexicon SDK
 
-If you are interested in writing your own custom Lexicons please reach out via  **hello@codelingo.io**.
+If you are interested in writing your own custom Lexicons, please reach out via  **hello@codelingo.io**.
 
 # Querying with Facts
 
@@ -336,6 +336,7 @@ class(depth = any):
 ### UserInput
 
 User input is a builtin function that allows users to define values in CLQL. For example, the following query matches any string literal containing "Hello, World" and replaces it with a string defined by the user which defaults to "Goodbye, World":
+
 ```yaml
 vars:
   variableName: StringLiteral

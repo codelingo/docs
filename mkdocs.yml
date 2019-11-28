@@ -16,6 +16,7 @@ pages:
   - Actions: concepts/actions.md
   - CLQL Reference: concepts/CLQL.md
   - Examples: concepts/examples.md
+  - CLQL Comparison: concepts/CLQL-Comparison.md
   # todo (junyu) mkdocs fails to build with external links
 
 theme: cinder
