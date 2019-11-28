@@ -33,31 +33,9 @@ Other Spec Bundles (including for other languages) from the community can be fou
 
 <!-- TODO add instructions on how to interact with Review Action with GitHub comments -->
 
-## Local Review Action
+## Dashboard
 
-To run the Review Action against repositories on your local machine, install the [lingo CLI](https://github.com/codelingo/lingo/releases/latest) and set it up with the following commands:
-
-```bash
-# Run this command from anywhere. Follow the prompts to set up Codelingo on your machine.
-$ lingo config setup
-
-# Run this command inside a git repository to add a default codelingo.yaml file in the current directory.
-$ lingo init
-```
-
-Replace the content of the codelingo.yaml file we wrote above with:
-
-```yaml
-  specs:
-    - import: codelingo/go
-```
-
-You can now run the Review Action to check your source code against the Go Spec Bundle we imported above.
-
-```bash
-# Run this command from the same directory as the codelingo.yaml file or any of its sub directories.
-$ lingo run review
-```
+Automating code reviews is now easier than ever using the codelingo [dashboard](https://www.codelingo.io/dashboard). Simply sign in with github and follow the tutorial to run your first Action.
 
 # Getting Started Guide
 
