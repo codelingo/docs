@@ -25,7 +25,7 @@ We plan to extend the Lexicons libraries to include:
 
 ## Lexicon SDK
 
-If you are interested in writing your own custom Lexicons, please reach out via  **hello@codelingo.io**.
+If you are interested in writing your own custom Lexicons, please reach out via  **hello@codelingo.io** or ping the team on [Slack](https://codelingo.slack.com/join/shared_invite/enQtNTE5MTAyNTAxMTU4LTg2ZWRkYTI3NGMzOTM5ZjYwMWE4MjY0ODg3M2E4NzAxNDUxNjU4YTNkYzA4NGJjMDU3YjY5OTQwNjZkYWQ1ZGI)
 
 # Querying with Facts
 
