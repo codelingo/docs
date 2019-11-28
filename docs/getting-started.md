@@ -55,9 +55,7 @@ Published Specs to import (driven by best practices and the community) can be fo
 
 ## Running the Review Action
 
-Integrating Specs into your existing developer workflow is done through Actions. The simplest Action to get started with is the Review Action. To install, run:
-
-Here we will probably want to point to the dashboard!
+Integrating Specs into your existing developer workflow is done through Actions. The simplest Action to get started with is the Review Action. To try it for yourself, navigate to the CodeLingo [dashboard](https://www.codelingo.io/dashboard) and follow the tutorial.
 
 Note: The Review Action only supports public repos at this time.
 
