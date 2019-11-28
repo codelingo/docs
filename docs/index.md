@@ -35,7 +35,7 @@ Other Spec Bundles (including for other languages) from the community can be fou
 
 ## Dashboard
 
-Automating code reviews is now easier than ever using the codelingo [dashboard](https://www.codelingo.io/dashboard). Simply sign in with github and follow the tutorial to run your first Action.
+Automating code reviews is now easier than ever using the CodeLingo [Dashboard](https://www.codelingo.io/dashboard). Sign in with GitHub and follow the tutorial to run your first Action.
 
 # Getting Started Guide
 

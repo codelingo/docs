@@ -41,11 +41,11 @@ Examples of problems that can be solved with Specs & Actions include:
 
 # Adding Specs
 
-There are four ways to add Specs to a codelingo.yaml file:
+There are four ways to add Specs to your project:
 
-1. The easiet is to use the codelingo dashboard:
+1. The easiest is to use the CodeLingo Dashboard:
 
-Just navigate to the [dashboard](https://www.codelingo.io/dashboard) and, assuming you already have at least one public repository on github, follow the tutorial.
+Navigate to the [Dashboard](https://www.codelingo.io/dashboard) and, assuming you already have at least one public repository on GitHub, follow the tutorial.
 
 2. The second is to import a bundle of Specs by writing directly to a codelingo.yaml file in one of your repositories:
 
