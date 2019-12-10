@@ -157,39 +157,6 @@ The above query matches all C# elements that are not generated, whose declaratio
 
 # Runtime
 
-## Detecting Memory Leaks
-
-In the example below we have a database manager class that wraps up a third party library we use to return connections to a database.
-
-From past profiles of our application, we expect the function `getDBCon` to use less than 10MB of memory. If it uses more than this, we want to be notified.
-
-We can do this with the following Spec:
-
-```yaml
-csprof.session:
-  csprof.exec:
-      command == "./scripts/build.sh"
-      args == "-o ./bin/program.exe"
-  csprof.exec:
-    command == "./bin/program.exe"
-    args == "/host:127.0.0.1 /db:testing"
-  cs.file:
-    filename == "./db/manager.cs"
-    @review comment
-    cs.method:
-      name == "getDBCon"
-      csprof.exit:
-        memory_mb >= 10
-```
- 
-Sometime in the future we decide to update the underlying library to the latest version. After profiling our application again, the Spec catches that multiple instances of the `getDBCon` function have used more than the allowed 10MB of memory.
-
-As we iterate over the issues, we see a steady increase in the memory consumed by the `getDBCon` function. Knowing that this didn't happen with the older version of the library, we suspect a memory leak may have been introduced in the update and further investigation is required.
-
-Note: CLQL is able to assist in pinpointing the source of memory leaks, but that is outside the scope of this use case.
-
-<br />
-
 ## Detecting Race Conditions
 In the example below we have a database manager class that we use to update and read user records.
 
