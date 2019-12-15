@@ -2,9 +2,9 @@
 
 ## Introduction
 
-There are two ways to leverage CodeLingo Actions to automate your workflows, the [CodeLingo Dashboard](https://www.codelingo.io/dashboard) and the [CodeLingo GitHub App](https://github.com/apps/codelingo). Below is an example demonstrating using the CodeLingo Dashboard to run an automated code-review.
+There are two ways to leverage CodeLingo Actions to automate your workflows, the [CodeLingo Dashboard](https://www.codelingo.io/dashboard) and the [CodeLingo GitHub App](https://github.com/apps/codelingo). Below is an example demonstrating how to use the CodeLingo Dashboard to run an automated code-review and employ the CodeLingo GitHub App to protect against future issues being introduced in Pull Requests.
 
-## CodeLingo Dashboard Example
+## Automated CodeReview Example
 
 This example will be a simple demonstration of using the CodeLingo Review action to automatically find issues in a codebase and prevent them from returning by reviewing each new Pull Request made to the repository. A quicker tutorial can be found on the [CodeLingo Dashboard](https://www.codelingo.io/dashboard). To use CodeLingo for free you must have your code in public repositories on GitHub (GitLab and BitBucket support coming soon).
 
@@ -18,20 +18,15 @@ We do this by selecting the repository and clicking on `Add Spec`, then searchin
 ![Add Spec](img/add-defer.png)
 Notice that `defer-close-file` is now listed under Specs, we can use the Review Action to create Issues for the repository as well as commenting on any instance of an unclosed file in Pull Requests made to the repository. Clicking on `Commit` creates a Pull Request made by the CodeLingoBot adding the Spec to the repository. After merging the Pull Request, return to the CodeLingo Dashboard and refresh the page.
 ![Done Adding Spec](img/done-adding-defer.png)
-You will notice the Spec is now listed in blue in this repository.
+You will notice the Spec is now listed in blue in this repository signifying that it can now be used by CodeLingo Actions.
 
-... Continue
+We can now run an automated code review by pressing `REVIEW ALL`. CodeLingo will run the Review Action and use `defer-close-file` Spec to identify unclosed files. After the Action has completed, the following Issue is created on the GitHub Repository:
+![GH Issue](img/gh-issue.png)
+From now on the CodeLingoBot will automatically review all Pull Requests made to the repository. If the same issue is then introduced in subsequent Pull Request, the CodeLingoBot will comment as such:
+![Comment On PR](img/pr-comment.png)
 
 
-Integrating Specs into your existing developer workflow is done through Actions. The simplest Action to get started with is the Review Action. To try it for yourself, navigate to the CodeLingo [dashboard](https://www.codelingo.io/dashboard) and follow the tutorial.
-
-Note: The Review Action only supports public repos at this time.
-
-Once configured, the Review Action will comment on pull requests that violate a Spec.
-
-The Review Action will only review Pull Requests and will never make changes to your codebase.
-
-Actions can be used to build any custom workflow. Whether that's generating custom reports on your project dashboard, or integrations with your existing tools and services through Functions.
+Note: Actions can be used to build any custom workflow. Whether that's generating custom reports on your project dashboard, or integrations with your existing tools and services through Functions.
 
 If you are interested in building custom Actions and integrations, please contact us directly at:
  [hello@codelingo.io](hello@codelingo.io).
