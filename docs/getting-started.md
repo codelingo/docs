@@ -4,7 +4,7 @@
 
 There are two ways to leverage CodeLingo Actions to automate your workflows, the [CodeLingo Dashboard](https://www.codelingo.io/dashboard) and the [CodeLingo GitHub App](https://github.com/apps/codelingo). Below is an example demonstrating how to use the CodeLingo Dashboard to run an automated code-review and employ the CodeLingo GitHub App to protect against future issues being introduced in Pull Requests.
 
-## Automated Code-Rxeview Example
+## Automated Code-Review Example
 
 This example will be a simple demonstration of using the CodeLingo Review Action to automatically find issues in a codebase and prevent them from returning by reviewing each new Pull Request made to the repository. A quicker tutorial can be found on the [CodeLingo Dashboard](https://www.codelingo.io/dashboard). To use CodeLingo for free you must have your code in public repositories on GitHub (GitLab and BitBucket support coming soon).
 
