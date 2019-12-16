@@ -1,6 +1,6 @@
 # Lexicons
 
-CodeLingo Query Language (CLQL) queries are statements of Facts about a domain of knowledge. Those Facts come from Lexicons.
+CodeLingo Query Language (CLQL) queries are statements of Facts about a domain of knowledge (e.g. an AST). In the case of an AST lexicon, the lexicon provides Facts about the syntatic structure of a codebase, which can then be queried to identify arbitrary patterns in code.
 
 There are currently three domains of knowledge Lexicon types support:
 
@@ -25,7 +25,7 @@ We plan to extend the Lexicons libraries to include:
 
 ## Lexicon SDK
 
-If you are interested in writing your own custom Lexicons please see the **[Lexicon SDK](https://github.com/codelingo/lexiconsdk)**.
+If you are interested in writing your own custom Lexicons, please reach out via  **hello@codelingo.io** or ping the team on [Slack](https://codelingo.slack.com/join/shared_invite/enQtNTE5MTAyNTAxMTU4LTg2ZWRkYTI3NGMzOTM5ZjYwMWE4MjY0ODg3M2E4NzAxNDUxNjU4YTNkYzA4NGJjMDU3YjY5OTQwNjZkYWQ1ZGI)
 
 # Querying with Facts
 
@@ -294,7 +294,7 @@ class(depth = any):
 class(depth = any):
   name == "classB"
   method:
-    name as methodName
+    name == methodName
 ```
 
 The query above will only return methods of `classA` for which `classB` has a corresponding method.
@@ -332,30 +332,6 @@ class(depth = any):
 ```
 
 ## Builtin Functions
-
-### UserInput
-
-User input is a builtin function that allows users to define values in CLQL. For example, the following query matches any string literal containing "Hello, World" and replaces it with a string defined by the user which defaults to "Goodbye, World":
-```yaml
-vars:
-  variableName: StringLiteral
-  default: Goodbye, World
-...
-query:
-  @rewrite --replace "{{userInput(variableName, default)}}"
-  go.basic_lit:
-    value as literalValue
-    regex(/Hello, World/, literalValue)
-```
-
-If run in the CLI with `lingo run rewrite` the user is prompted with a prompt like:
-```
-StringLiteral["Goodbye, World"]:
-```
-
-If run with `lingo run rewrite --dump-comments=<file/path>` a JSON file is created that can be used to build interactive comments on Github.
-
-Functions currently only accept variables as arguments, so `userInput("StringLiteral", "Goodbye, World")` is invalid.
 
 ### Resolvers
 

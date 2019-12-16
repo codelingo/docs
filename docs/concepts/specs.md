@@ -41,9 +41,13 @@ Examples of problems that can be solved with Specs & Actions include:
 
 # Adding Specs
 
-There are three ways to add Specs to a codelingo.yaml file:
+There are four ways to add Specs to your project:
 
-1. The easiest is to import a bundle of Specs:
+1. The easiest is to use the CodeLingo Dashboard:
+
+Navigate to the [Dashboard](https://www.codelingo.io/dashboard) and, assuming you already have at least one public repository on GitHub, follow the tutorial.
+
+2. The second is to import a bundle of Specs by writing directly to a codelingo.yaml file in one of your repositories:
 
 ```yaml
 specs:
@@ -52,7 +56,7 @@ specs:
 
 In the example above `codelingo` is the Bundle owner and `go` is the Bundle name. More Spec bundles from the CodeLingo community can be found [here](https://www.codelingo.io/specs).
 
-2. The second way is to import individual Specs from a Bundle:
+3. The third way is to import individual Specs from a Bundle:
 
 ```yaml
 specs:
@@ -60,7 +64,7 @@ specs:
   - import: codelingo/go/sprintf
 ```
 
-3. The third way is to write a new Spec directly in the codelingo.yaml file:
+4. The final way is to write a new Spec directly in the codelingo.yaml file:
 
 ```yaml
 specs:
@@ -190,115 +194,3 @@ specs:
 # ...
 ```
 
-# Writing Specs
-
-Follow these steps for writing Specs for your own requirements:
-
-- Create a new codelingo.yaml file and open in your favourite text editor.
-
-- Create a `specs` key that will contain your Spec(s).
-
-```yaml
-# ...
-specs: 
-
-# ...
-```
-
-- Define your Spec `name`
-
-```yaml
-# ...
-specs: 
-  - name: my-first-spec
-
-# ...
-```
-
-- Identify what Lexicon(s) will be required (view available Lexicons via [the CodeLingo repository.](https://github.com/codelingo/codelingo/tree/master/lexicons))
-
-- Import the Lexicon(s) into your Spec. (e.g.`import codelingo/ast/csharp`).
-
-- Write the specific `query` you are interested in; using the Facts provided by the Lexicon. You can use one of the [IDE plugins](#ide-integration) or the [playground](https://www.codelingo.io/playground) to help you!
-
-- Add the relevant Action configs and decorators.
-
-- Add [Asserter](CLQL.md#Asserters) and [Resolver](CLQL.md#Resolvers) functions if needed to the codelingo.yaml.
-
-- (_optional_) [Share your Spec with the CodeLingo community!](#share-your-spec-with-the-codelingo-community).
-
-If your having any trouble writing Specs ping the team on [Slack](https://codelingo.slack.com/join/shared_invite/enQtNDYxOTYyNTI5NjUwLWFiNjFjOTM3YzgzMjA4NjNiNDhmN2RkZWNlODM0ZTM5NTkzOThhZjczN2ZlYmNkMjhkNDBkYjBlMjQ1NDk2NTQ). We'd love to help you out :)
-
-# Testing Specs
-
-Testing your Spec on test code is an essential part of the process and ensures that your Spec is working correctly before you use it on your codebase. Follow these steps to test your Spec.
-
-- Put your codelingo.yaml in a new folder named after the Spec e.g sprintf
-- Add some example code files in this folder to test your Spec against e.g test.go
-- Create a new test repository inside this folder and make a commit to it. This is so that lingo knows what code to query.
-```
-$ git init
-$ git add .
-$ git commit -m "initial commit"
-```
-- Run lingo i.e `$ lingo run review` and make sure that lingo works as expected on the test code.
-
-<br/>
-
-# Publishing Specs
-
-Follow these steps to publish your Spec and share with the CodeLingo community!
-
-- Clone the CodeLingo GitHub repository:
-```
-$ git clone https://github.com/codelingo/codelingo
-```
-- Create a new git branch:
-```
-$ git checkout -b my_first_spec
-```
-- Create your CodeLingo hub under codelingo/specs by creating a folder named after your username e.g codelingo/specs/rstorr.
-- Create a new Bundle inside your hub. For example, I may want a Bundle of Specs that I will use to ensure the quality of my code for my 'cool project' so I create a new folder named cool-project inside my hub i.e codelingo/specs/rstorr/cool-project.
-- Inside your Bundle create a new folder named after your Spec(s) that will be in your codelingo.yaml.
-- Inside this folder add your codelingo.yaml.
-- Add README's inside your Bundle and each of your Spec(s) folders so the community knows the purpose of the Bundle and its Specs.
-- Git add, commit and push your new Bundle and Spec(s) to the CodeLingo repository.
-- Now others can use your Spec(s) to automatically review and rewrite their code!
-- Give yourself a pat on the back for publishing your first Spec. Thanks for being a part of the CodeLingo community! 
-
-If your having any trouble publishing Specs ping the team on [Slack](https://codelingo.slack.com/join/shared_invite/enQtNDYxOTYyNTI5NjUwLWFiNjFjOTM3YzgzMjA4NjNiNDhmN2RkZWNlODM0ZTM5NTkzOThhZjczN2ZlYmNkMjhkNDBkYjBlMjQ1NDk2NTQ). We'd love to help you out :)
-
-<br/>
-
-# IDE Integration
-
-CodeLingo integrates with your IDE to provide support for writing and running CLQL queries (Specs):
-
-## Sublime
-
-<a href="https://github.com/codelingo/ideplugins/tree/master/sublime" target="_blank">View Sublime plugin README</a>
-
-CodeLingo's Integrated Development Environment (IDE) plugins can help build patterns in code by automatically generating queries to detect selected elements of programs. A generated query will describe the selected element and its position in the structure of the program:
-
-![Query Generation](../img/queryGeneration.png)
-
-In the above example, a string literal is selected. The generated CLQL query will match any literal directly inside an assignment statement, in a function declaration, matching the nested pattern of the selected literal.
-
-## Vistual Studio
-
-<a href="https://github.com/codelingo/ideplugins/tree/master/vs" target="_blank">View Visual Studio extension README</a>
-
-## VIM
-
-Vim also has full support for the Lingo syntax, including CLQL. To set it up:
-
-- Download [lingo.vim](../resources/lingo.vim)
-- Copy to `~/.vim/syntax/lingo.vim`
-- Enable in vim with `:set syntax=lingo`
-- Auto enable on `codelingo.yaml` file open by adding the following line to `~/.vimrc`
-
-```
-au BufRead,BufNewFile codelingo.yaml set syntax=lingo
-```
-
-Other than the match statement, written in CLQL, the rest of a codelingo.yaml file is written in YAML. As such, you can set codelingo.yaml files to YAML syntax in your IDE to get partial highlighting.
