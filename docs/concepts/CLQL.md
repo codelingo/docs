@@ -240,6 +240,8 @@ method:
           name == "nil"
 ```
 
+More examples of nested exclusion can be found [here](https://www.codelingo.io/docs/concepts/examples/#nested-exclusion).
+
 Note: Facts nested under multiple excludes still do not return results and cannot be [decorated.](https://www.codelingo.io/docs/concepts/actions/#action-function-decorators)
 
 <br />
