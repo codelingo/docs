@@ -206,7 +206,7 @@ Thinking about this in the same way, we can read the above as:
  - Then of those thrown out, take back those with if statements 
  - Then of those taken back, throw out those with assignment statements
 
-So we end up with each function without a for loop - **and** - those with for loops but without child if statements - unless - those if statements contain assignment statements. You can see how it gets complicated to think of exclusion in this way as the number of exclude statements increases, and so the layer by layer approach can help clarify what is being expressed.
+So we end up with each function without a for loop - **and** - those with for loops but without child if statements - **unless** - those if statements contain assignment statements. You can see how it gets complicated to think of exclusion in this way as the number of exclude statements increases, and so the layer by layer approach can help clarify what is being expressed.
 
 As a sanity check, it helps to remember that as we move in descending order down the tree, each odd numbered exclusion can only decrease the number of results of its parent, and each even numbered exclusion can only increase the number of results it inherits from its parent exclusion.
 
