@@ -20,7 +20,7 @@ Notice that `defer-close-file` is now listed under Specs, we can use the Review 
 ![Done Adding Spec](img/done-adding-defer.png)
 You will notice the Spec is now listed in blue in this repository signifying that it can now be used by CodeLingo Actions.
 
-We can now run an automated code review by pressing `REVIEW ALL`. CodeLingo will run the Review Action and use `defer-close-file` Spec to identify unclosed files. After the Action has completed, the following Issue is created on the GitHub Repository:
+We can now run an automated code-review by pressing `REVIEW ALL`. CodeLingo will run the Review Action and use `defer-close-file` Spec to identify unclosed files. After the Action has completed, the following Issue is created on the GitHub Repository:
 ![GH Issue](img/gh-issue.png)
 From now on the CodeLingoBot will automatically review subsequent Pull Requests made to the repository. If the same issue is then introduced in subsequent Pull Request, the CodeLingoBot will comment as such:
 ![Comment On PR](img/pr-comment.png)
@@ -82,84 +82,18 @@ specs:
   - import: <author>/<bundle>/<name>
 ```
 
-Remove the contents of your codelingo.yaml file and replace them with the following:
+For example:
 
 ```yaml
 specs: 
   import: codelingo/effective-go/defer-close-file
 ```
 
-The Spec defer-close-file will identify code segments of Golang in which files are left open with the OS package. Create such a file or paste the following example:
-
-```go
-package main
-
-import (
-	"fmt"
-	"os"
-)
-
-func check(e error) {
-	if e != nil {
-		panic(e)
-	}
-}
-func test1() *os.File {
-	f, err := os.Open("/tmp/test.txt")
-	check(err)
-	return f
-}
-
-func test2() {
-	f, err := os.Open("/tmp/test.txt") //ISSUE
-	check(err)
-	//defer f.Close()
-	b := make([]byte, 5)
-	n, err := f.Read(b)
-	check(err)
-	fmt.Printf("%d bytes: %s\n", n, string(b))
-}
-
-func test3() (f *os.File) {
-	f, err := os.Open("/tmp/test.txt")
-	check(err)
-	return
-}
-
-func main() {
-
-	f1, err := os.Open("/tmp/test.txt") //ISSUE
-	check(err)
-	//defer f1.Close()
-	b1 := make([]byte, 5)
-	n1, err := f1.Read(b1)
-	check(err)
-	fmt.Printf("%d bytes: %s\n", n1, string(b1))
-
-	f2, err := os.Open("/tmp/test.txt")
-	check(err)
-	defer f2.Close()
-	b2 := make([]byte, 5)
-	n2, err := f2.Read(b2)
-	check(err)
-	fmt.Printf("%d bytes: %s\n", n2, string(b2))
-	f2.Close()
-
-	f3, err := os.OpenFile("/tmp/test.txt", os.O_RDWR, 0644) //ISSUE
-	check(err)
-	//defer f3.Close()
-	b3 := make([]byte, 5)
-	n3, err := f3.Read(b3)
-	check(err)
-	fmt.Printf("%d bytes: %s\n", n3, string(b3))
-
-}
-```
+Replace the contents of your codelingo.yaml file with the above to run a CodeLingo Review and check that everything is working as expected. The Spec defer-close-file will identify code segments of Golang in which files opened with the OS package are left open. Create a Golang program with unclosed files or copy and paste the following [example](https://github.com/codelingo/codelingo/blob/master/tenets/codelingo/effective-go/defer-close-file/test.go) into the root of your repositoty.
 
 Run - $ lingo run review - to execute an automated code-review, the terminal will present you with each unclosed file in sequence and give you the option to either ignore, or open the file at that line.
 
-Get the screen shot next 
-
+TODO: Include screenshot of successful review
 
 ## Next Steps
 
