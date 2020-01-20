@@ -19,4 +19,4 @@ pages:
   - CLQL Comparison: concepts/CLQL-Comparison.md
   # todo (junyu) mkdocs fails to build with external links
 
-theme: cinder
+theme: mkdocs
