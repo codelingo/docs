@@ -1,10 +1,10 @@
 
 ---
 
-First, [install the CodeLingo GitHub App](https://github.com/apps/codelingo). This will enable CodeLingo Flows to be run on your repositories. The Review Action is enabled by default and reviews pull requests to you repos, using Specs stored in your repository inside a codelingo.yaml file. A Spec is made up of a `name`, a `doc` specifiying what the Spec does, `actions` that use this Spec and a `query` used by the Action:
+First, [install the CodeLingo GitHub App](https://github.com/apps/codelingo). This will enable CodeLingo Flows to be run on your repositories. The Review Action is enabled by default and reviews pull requests to you repos, using Rules stored in your repository inside a codelingo.yaml file. A Rule is made up of a `name`, a `doc` specifiying what the Rule does, `actions` that use this Rule and a `query` used by the Action:
 
 ```yaml
-specs:
+rules:
   - name: sprintf-error
     actions:
       codelingo/docs:
@@ -30,41 +30,41 @@ specs:
                 name: "Sprintf"
 ```
 
-## Specs
+## Rules
 
-Specs live in codelingo.yaml files in your repository and are used by Flows to automate tasks. You can think of a Spec as an underlying principle guiding a workflow.
+Rules live in codelingo.yaml files in your repository and are used by Flows to automate tasks. You can think of a Rule as an underlying principle guiding a workflow.
 
-In the sprintf-error Spec above, the Review Action uses the Spec to make sure `errors.New` is being used correctly and attaches a comment to the line where the `go.call_expr` is found, using the `@review.comment` decorator.
+In the sprintf-error Rule above, the Review Action uses the Rule to make sure `errors.New` is being used correctly and attaches a comment to the line where the `go.call_expr` is found, using the `@review.comment` decorator.
 
-### Adding Specs
+### Adding Rules
 
-There are three ways to add Specs to a codelingo.yaml file:
+There are three ways to add Rules to a codelingo.yaml file:
 
-1. The easist is to import a bundle of Specs:
+1. The easist is to import a bundle of Rules:
 
 ```yaml
-specs:
+rules:
   - import: codelingo/go
 ```
 
-In the example above `codelingo` is the bundle owner and `go` is the bundle name. More Spec bundles from the community can be found [here](https://github.com/codelingo/hub/tree/master/specs).https://github.com/codelingo/hub/tree/master/specs
+In the example above `codelingo` is the bundle owner and `go` is the bundle name. More Rule bundles from the community can be found [here](https://github.com/codelingo/hub/tree/master/rules).https://github.com/codelingo/hub/tree/master/rules
 
-2. The second way is to import individual Specs from a bundle:
+2. The second way is to import individual Rules from a bundle:
 
 ```yaml
-specs:
+rules:
   - import: codelingo/go/goto
   - import: codelingo/go/sprintf
 ```
 
-3. The third way is to write a new Spec directly in the codelingo.yaml file:
+3. The third way is to write a new Rule directly in the codelingo.yaml file:
 
 ```
-specs:
+rules:
   - name: find-funcs
     actions:
       codelingo/docs:
-        title: "example Spec that finds all func decls"
+        title: "example Rule that finds all func decls"
       codelingo/review:
         comment: "this is a function"
 
@@ -77,15 +77,15 @@ query:
 
 ---
 
-Publishing a Spec Bundle
+Publishing a Rule Bundle
 
-To publish a Spec Bundle, make a pull request to github.com/codelingo/hub and add a folder under:
+To publish a Rule Bundle, make a pull request to github.com/codelingo/hub and add a folder under:
 
 ```
-specs/
+rules/
   <your-codelingo-username>/
     <bundle-name>/
-      <spec-name>/
+      <rule-name>/
         codelingo.yaml
 ```
 
@@ -98,7 +98,7 @@ _Find and Share CodeLingo Resources_
 The CodeLingo Hub is an Open source collection of CodeLingo Resources.
 
 * Lexicons - Libraries for DSLs, such as a language AST or VCS. Provides facts for queries.
-* Specs -  Patterns and anti-patterns in your software stack written in CLQL.
+* Rules -  Patterns and anti-patterns in your software stack written in CLQL.
 * Flows - pipelines for process augmentation and automation.
 * Bots - agents that integrate with your services and data stores.
 
@@ -120,24 +120,24 @@ Lexicons are currently available for the follow programming languages:
 
 If you are interested in writing your own lexicon, please contact us at hello@codelingo.io
 
-## Specs
-Specs are stored patterns and queries that can be applied to your software stack. All Specs are constructed in CLQL and rely on specific lexicons.
+## Rules
+Rules are stored patterns and queries that can be applied to your software stack. All Rules are constructed in CLQL and rely on specific lexicons.
 
-Pre-written Specs found in the Hub can be imported within your lingo file as follows: 
+Pre-written Rules found in the Hub can be imported within your lingo file as follows: 
 ```
-specs:
+rules:
   - import codelingo/go/empty-slice
 ```
 
-All pre-written Specs are available within this repository, and simply be explored through the file structure. For example, [here is a Spec for Go](specs/codelingo/go/goto) that uses of goto
+All pre-written Rules are available within this repository, and simply be explored through the file structure. For example, [here is a Rule for Go](rules/codelingo/go/goto) that uses of goto
 
-For more information and about writing your own Specs, please [see the documentation](https://codelingo.io/docs/concepts/specs/)
+For more information and about writing your own Rules, please [see the documentation](https://codelingo.io/docs/concepts/rules/)
 
 
-**[Explore all Specs](/specs)**
+**[Explore all Rules](/rules)**
 
 ## Flows
-Specs are integrated into your workflow through Flows. Flows are automated and semi-automated processes that rely heavily on bots (integrations) to drive your software development lifecycle. They are completely customizable pipelines and can be configured directly in YAML or via the UI.
+Rules are integrated into your workflow through Flows. Flows are automated and semi-automated processes that rely heavily on bots (integrations) to drive your software development lifecycle. They are completely customizable pipelines and can be configured directly in YAML or via the UI.
 
 Currently the default Action is the review Action. Custom Flows are currently in development.
 
@@ -145,10 +145,10 @@ Currently the default Action is the review Action. Custom Flows are currently in
 Bots are agents that integrate with all your data sources, t
 ---
 
-First, [install the CodeLingo GitHub App](https://github.com/apps/codelingo-clair). This will enable CodeLingo Flows to be run on your repositories. The Review Action is enabled by default and reviews pull requests to you repos, using Specs stored in your repository inside a codelingo.yaml file. A Spec is made up of a `name`, a `doc` specifiying what the Spec does, `actions` that use this Spec and a `query` used by the Action:
+First, [install the CodeLingo GitHub App](https://github.com/apps/codelingo-clair). This will enable CodeLingo Flows to be run on your repositories. The Review Action is enabled by default and reviews pull requests to you repos, using Rules stored in your repository inside a codelingo.yaml file. A Rule is made up of a `name`, a `doc` specifiying what the Rule does, `actions` that use this Rule and a `query` used by the Action:
 
 ```yaml
-specs:
+rules:
   - name: sprintf-error
     actions:
       codelingo/docs:
@@ -174,41 +174,41 @@ specs:
                 name: "Sprintf"
 ```
 
-## Specs
+## Rules
 
-Specs live in codelingo.yaml files in your repository and are used by Flows to automate tasks. You can think of a Spec as an underlying principle guiding a workflow.
+Rules live in codelingo.yaml files in your repository and are used by Flows to automate tasks. You can think of a Rule as an underlying principle guiding a workflow.
 
-In the sprintf-error Spec above, the Review Action uses the Spec to make sure `errors.New` is being used correctly and attaches a comment to the line where the `go.call_expr` is found, using the `@review.comment` decorator.
+In the sprintf-error Rule above, the Review Action uses the Rule to make sure `errors.New` is being used correctly and attaches a comment to the line where the `go.call_expr` is found, using the `@review.comment` decorator.
 
-### Adding Specs
+### Adding Rules
 
-There are three ways to add Specs to a codelingo.yaml file:
+There are three ways to add Rules to a codelingo.yaml file:
 
-1. The easist is to import a bundle of Specs:
+1. The easist is to import a bundle of Rules:
 
 ```yaml
-specs:
+rules:
   - import: codelingo/go
 ```
 
-In the example above `codelingo` is the bundle owner and `go` is the bundle name. More Spec bundles from the community can be found [here](https://github.com/codelingo/hub/tree/master/specs).https://github.com/codelingo/hub/tree/master/specs
+In the example above `codelingo` is the bundle owner and `go` is the bundle name. More Rule bundles from the community can be found [here](https://github.com/codelingo/hub/tree/master/rules).https://github.com/codelingo/hub/tree/master/rules
 
-2. The second way is to import individual Specs from a bundle:
+2. The second way is to import individual Rules from a bundle:
 
 ```yaml
-specs:
+rules:
   - import: codelingo/go/goto
   - import: codelingo/go/sprintf
 ```
 
-3. The third way is to write a new Spec directly in the codelingo.yaml file:
+3. The third way is to write a new Rule directly in the codelingo.yaml file:
 
 ```
-specs:
+rules:
   - name: find-funcs
     actions:
       codelingo/docs:
-        title: "example Spec that finds all func decls"
+        title: "example Rule that finds all func decls"
       codelingo/review:
         comment: "this is a function"
 
@@ -221,15 +221,15 @@ query:
 
 ---
 
-Publishing a Spec Bundle
+Publishing a Rule Bundle
 
-To publish a Spec Bundle, make a pull request to github.com/codelingo/hub and add a folder under:
+To publish a Rule Bundle, make a pull request to github.com/codelingo/hub and add a folder under:
 
 ```
-specs/
+rules/
   <your-codelingo-username>/
     <bundle-name>/
-      <spec-name>/
+      <rule-name>/
         codelingo.yaml
 ```
 
@@ -242,7 +242,7 @@ _Find and Share CodeLingo Resources_
 The CodeLingo Hub is an Open source collection of CodeLingo Resources.
 
 * Lexicons - Libraries for DSLs, such as a language AST or VCS. Provides facts for queries.
-* Specs -  Patterns and anti-patterns in your software stack written in CLQL.
+* Rules -  Patterns and anti-patterns in your software stack written in CLQL.
 * Flows - pipelines for process augmentation and automation.
 * Bots - agents that integrate with your services and data stores.
 
@@ -264,24 +264,24 @@ Lexicons are currently available for the follow programming languages:
 
 If you are interested in writing your own lexicon, please contact us at hello@codelingo.io
 
-## Specs
-Specs are stored patterns and queries that can be applied to your software stack. All Specs are constructed in CLQL and rely on specific lexicons.
+## Rules
+Rules are stored patterns and queries that can be applied to your software stack. All Rules are constructed in CLQL and rely on specific lexicons.
 
-Pre-written Specs found in the Hub can be imported within your lingo file as follows: 
+Pre-written Rules found in the Hub can be imported within your lingo file as follows: 
 ```
-specs:
+rules:
   - import codelingo/go/empty-slice
 ```
 
-All pre-written Specs are available within this repository, and simply be explored through the file structure. For example, [here is a Spec for Go](specs/codelingo/go/goto) that uses of goto
+All pre-written Rules are available within this repository, and simply be explored through the file structure. For example, [here is a Rule for Go](rules/codelingo/go/goto) that uses of goto
 
-For more information and about writing your own Specs, please [see the documentation](https://codelingo.io/docs/concepts/specs/)
+For more information and about writing your own Rules, please [see the documentation](https://codelingo.io/docs/concepts/rules/)
 
 
-**[Explore all Specs](/specs)**
+**[Explore all Rules](/rules)**
 
 ## Flows
-Specs are integrated into your workflow through Flows. Flows are automated and semi-automated processes that rely heavily on bots (integrations) to drive your software development lifecycle. They are completely customizable pipelines and can be configured directly in YAML or via the UI.
+Rules are integrated into your workflow through Flows. Flows are automated and semi-automated processes that rely heavily on bots (integrations) to drive your software development lifecycle. They are completely customizable pipelines and can be configured directly in YAML or via the UI.
 
 Currently the default Action is the review Action. Custom Flows are currently in development.
 
@@ -296,7 +296,7 @@ Bots are agents that integrate with all your data sources, tools, and services. 
 
 ## Contributing
 
-If you have new Specs or Flows that you would like to contribute to the Hub, please raise a Pull Request directly against the repo.
+If you have new Rules or Flows that you would like to contribute to the Hub, please raise a Pull Request directly against the repo.
 
 ## Other Resources
 

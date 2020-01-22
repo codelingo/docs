@@ -1,12 +1,12 @@
 # Overview
 
-An Action is an automated development workflow that leverages Specs to do some task, for example automating code reviews. While a Spec lives next to your code in a codelingo.yaml file, it is inert until an Action uses it.
+An Action is an automated development workflow that leverages Rules to do some task, for example automating code reviews. While a Rule lives next to your code in a codelingo.yaml file, it is inert until an Action uses it.
 
-Under the hood, an Action is a pipeline of serverless functions, called Action Functions. Action Functions allow Actions to integrate with your existing tools and infrastructure. Action Functions are also what glue Specs and Actions together, with the use of query decorators. Let's walk through the following Spec to see how this works:
+Under the hood, an Action is a pipeline of serverless functions, called Action Functions. Action Functions allow Actions to integrate with your existing tools and infrastructure. Action Functions are also what glue Rules and Actions together, with the use of query decorators. Let's walk through the following Rule to see how this works:
 
 ```yaml
-specs:
-    - name: example-spec
+rules:
+    - name: example-rule
       actions:
         codelingo/docs:
           title: Find functions named helloWorld.
@@ -23,7 +23,7 @@ specs:
 
 ## Import & Config
 
-Actions that can be used with the above Spec are configured under the `actions` section:
+Actions that can be used with the above Rule are configured under the `actions` section:
 
 ```yaml
 # ...
@@ -37,7 +37,7 @@ Here we are importing the `review` action from the `codelingo` owner and configu
 
 ## Action Function Decorators
 
-The Spec query searches for all Go functions named "helloWorld":
+The Rule query searches for all Go functions named "helloWorld":
 
 ```yaml
 # ...
@@ -51,7 +51,7 @@ query: |
 # ...
 ```
 
- Spec queries are decorated with Action Function decorators which extract the results of the query to be used by the Action. In this case, `@review comment` is the decorator for the comment Action Function of the Review Action:
+ Rule queries are decorated with Action Function decorators which extract the results of the query to be used by the Action. In this case, `@review comment` is the decorator for the comment Action Function of the Review Action:
 
 ```yaml
 # ...
@@ -68,6 +68,6 @@ We have deprecated flows in favor of actions. Please modify your codelingo.yaml 
 
 <div class="alert alert-info">
   <p style="font-size:16px;">
-  Documentation on how to compose custom Actions is coming soon. In the mean time, please see the <a href="/docs/concepts/specs/">Specs</a> documention to understand how Actions work with Specs. 
+  Documentation on how to compose custom Actions is coming soon. In the mean time, please see the <a href="/docs/concepts/rules/">Rules</a> documention to understand how Actions work with Rules. 
 </p>
 </div>

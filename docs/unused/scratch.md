@@ -1,15 +1,15 @@
 ```yaml
-specs:
+rules:
   - import: modica/default
   - import: modica/default/null-check
   - import: codelingo/default
-  - name: find-funcs #name of the spec
+  - name: find-funcs #name of the rule
     comment: This is a function, but you probably already knew that.
     query: |
     import: codelingo/csharp
       @ clair.comment
       csharp.method_declaration(depth = any)
-  - name: same-other-spec
+  - name: same-other-rule
     comment: This is the comment left by the flow
     actions:
       # functions here ...
@@ -19,7 +19,7 @@ specs:
 
 
 ```yaml
-specs:
+rules:
   - import: modica/default/null-check
     actions:
       - codelingo/review
@@ -29,7 +29,7 @@ specs:
 <pre>
 <code>
 ...
-specs:
+rules:
   - name: four-or-less
     actions:
       codelingo/docs:

@@ -2,7 +2,7 @@ apiVersion: apps/v1beta1
 kind: StatefulSet
 metadata:
   name: docs
-spec:
+rule:
   selector:
       matchLabels:
         app: docs
@@ -12,7 +12,7 @@ spec:
     metadata:
       labels:
         app: docs
-    spec:
+    rule:
       containers:
       - name: docs
         image: {{.Values.image}}:{{.Values.tag}}
