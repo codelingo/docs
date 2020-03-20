@@ -7,7 +7,7 @@ extra_css:
 extra_javascript:
   - js/smallchat.js
 site_description: Documentation for the CodeLingo platform. # TODO SEO strategy
-google_analytics: ["UA-117506438-1", "codelingo.io/docs"] #TODO: Turn this on...
+google_analytics: ["UA-117506438-4", "docs.codelingo.io"]
 
 pages:
   - Home: index.md
