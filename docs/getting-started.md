@@ -14,10 +14,10 @@ CodeLingo works by using what we call Specs, which can be thought of as specific
 
 For this example we will add the [defer-close-file](https://www.codelingo.io/specs/codelingo/effective-go/defer-close-file) Spec from the Effective Go Bundle to a small example repository. This Spec identifies any case of a file that has been opened using the Golang [OS](https://golang.org/pkg/os/) package and recommends adding `defer <file>.Close()`. 
 
-We do this by selecting the repository and clicking on `Add Spec`, then searching for `defer-close-file`. After adding the Spec you should see it listed as shown below:
-![Add Spec](img/add-defer.png)
-Notice that `defer-close-file` is now listed under Specs, we can use the Review Action to create GitHub Issues for the repository as well as commenting on any instance of an unclosed file in Pull Requests made to the repository. Clicking on `Commit` creates a Pull Request made by the CodeLingoBot adding the Spec to the repository. After merging the Pull Request, return to the CodeLingo Dashboard and refresh the page.
-![Done Adding Spec](img/done-adding-defer.png)
+We do this by selecting the repository and clicking on `Search Specs`, then searching for `defer-close-file`. After adding the Spec you should see it listed as shown below:
+![Add Spec](img/commit-spec.png)
+Notice that `defer-close-file` is now listed under this repository, we can use the Review Action to create GitHub Issues for the repository as well as commenting on any instance of an unclosed file in Pull Requests made to the repository. Clicking on `Commit To Repository` creates a Pull Request made by the CodeLingoBot adding the Spec to the repository. After merging the Pull Request, return to the CodeLingo Dashboard and refresh the page.
+![Done Adding Spec](img/added-spec.png)
 You will notice the Spec is now listed in blue in this repository signifying that it can now be used by CodeLingo Actions.
 
 We can now run an automated code review by pressing `REVIEW ALL`. CodeLingo will run the Review Action and use `defer-close-file` Spec to identify unclosed files. After the Action has completed, the following Issue is created on the GitHub Repository:
