@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: docs
-rule:
+spec:
   type: ClusterIP
   ports:
     - protocol: TCP
