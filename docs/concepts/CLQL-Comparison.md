@@ -68,10 +68,10 @@ namespace Testing.EmptyBlockRule {
 </SourceAnalyzer>
 ```
 
-The same rule can be expressed in CLQL as the following [Spec](specs.md):
+The same rule can be expressed in CLQL as the following [Rule](rules.md):
 
 ```yaml
-specs:
+rules:
   - name: "EmptyBlock"
     actions:
       codelingo/docs:
@@ -99,7 +99,7 @@ private bool VisitStatement(Statement statement, Expression parentExpression, St
 ```
 
 The VisitStatement method is run at every node of the AST tree, then a violation is added if the node is a block statement with no children.
-In CLQL, the match statement expresses the logic of the query. Traversal is entirely abstracted away, and the Spec author only needs to express the condition for a "rule violation":
+In CLQL, the match statement expresses the logic of the query. Traversal is entirely abstracted away, and the Rule author only needs to express the condition for a "rule violation":
 
 ```clql
 cs.block_stmt:

@@ -382,7 +382,7 @@ containsOneOf("Hello, World!", "Hello") // true
 
 ## Custom Functions
 
-JS functions are defined in codelingo.yaml files under the functions section. These functions can then be called in the query section of any [Specs](/concepts/specs.md) within the same codelingo.yaml file.
+JS functions are defined in codelingo.yaml files under the functions section. These functions can then be called in the query section of any [Rules](/concepts/rules.md) within the same codelingo.yaml file.
 
 The following example defines and uses a custom concat function:
 
@@ -395,7 +395,7 @@ funcs:
         c = a.concat(b)
         return c
       }
-specs:
+rules:
   - actions:
       codelingo/review:
         comment: |
@@ -419,7 +419,7 @@ funcs:
       function (str, minLen) {
         return str.length > minLen
       }
-specs:
+rules:
   - actions:
       codelingo/review:
         comment: |
@@ -458,10 +458,10 @@ query:
         cs.class(depth = any)
 ```
 
-This means when writing a Spec in a codelingo.yaml file, only the AST Lexicon Facts are required:
+This means when writing a Rule in a codelingo.yaml file, only the AST Lexicon Facts are required:
 
 ```yaml
-specs:
+rules:
   - name: all-classes
     actions:
       codelingo/docs:
@@ -501,11 +501,11 @@ git.repo:
 <!---
 TODO(BlakeMScurr) fully fill out template
 
-We can write the same Spec with the Common AST lexicon, which would catch the pattern in both languages as the Common lexicon lets us express facts that apply commonly across all languages:
+We can write the same Rule with the Common AST lexicon, which would catch the pattern in both languages as the Common lexicon lets us express facts that apply commonly across all languages:
 
 [common lexicon example]
 
-A Spec can be made of interleaved facts from different lexicons.
+A Rule can be made of interleaved facts from different lexicons.
 
 
 [update imports to begin with lexicon type: codelingo/ast/common]
@@ -515,7 +515,7 @@ A Spec can be made of interleaved facts from different lexicons.
 
 [example of code blocks that have > x memory allocated (run golang’s pprof to get an idea)]
 
-Further examples can be found in the [link to Spec examples directory].
+Further examples can be found in the [link to Rule examples directory].
 
 
 -->

@@ -12,7 +12,7 @@ google_analytics: ["UA-117506438-4", "docs.codelingo.io"]
 pages:
   - Home: index.md
   - Getting Started: getting-started.md
-  - Specs: concepts/specs.md
+  - Rules: concepts/rules.md
   - Actions: concepts/actions.md
   - CLQL Reference: concepts/CLQL.md
   - Examples: concepts/examples.md

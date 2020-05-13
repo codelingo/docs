@@ -24,13 +24,13 @@ query:
 
 Lexicons get data into the CodeLingo Platform and provide a list of Facts to query that data. In the above example, the Git Lexicon finds and clones the "myrepo" repository from the "myvcsgithost.com" VCS host. The "myrepo" repository must be publicly accessible for the Git Lexicon to access it.
 
-The CodeLingo Platform can be queried directly with the `$ lingo run search` command or via [Functions](actions.md) which use queries stored in Specs.
+The CodeLingo Platform can be queried directly with the `$ lingo run search` command or via [Functions](actions.md) which use queries stored in Rules.
 
 ## Matching a function name
 
 ```yaml
-specs:
-- name: first-spec
+rules:
+- name: first-rule
   actions:
     codelingo/docs:
       body: example doc
@@ -43,7 +43,7 @@ specs:
       name == "writeMsg"
 ```
 
-This will find funcs named "writeMsg". Save and close the file, then run `lingo run review`. Try adding another func called "readMsg" and run a review. Only the "writeMsg" func should be highlighted. Now, update the Spec to find all funcs that end in "Msg":
+This will find funcs named "writeMsg". Save and close the file, then run `lingo run review`. Try adding another func called "readMsg" and run a review. Only the "writeMsg" func should be highlighted. Now, update the Rule to find all funcs that end in "Msg":
 
 ```yaml
   query:
@@ -104,7 +104,7 @@ csharp.method_declaration:
 
 ## C++
 
-The following Spec asserts that functions should not return local objects by reference. When the function returns and the stack is unwrapped, that object will be destructed, and the reference will not point to anything.
+The following Rule asserts that functions should not return local objects by reference. When the function returns and the stack is unwrapped, that object will be destructed, and the reference will not point to anything.
 
 The following query finds this bug by matching all functions that return a reference type, and declare the returned value inside the function body:
 
@@ -143,7 +143,7 @@ private bool VisitElement(CsElement element, CsElement parentElement, object con
 }
 ```
 
-As in the [empty block statements example below](#empty-block-statements), to express the pattern in CLQL, the Spec author only needs to express conditions in the VisitElement body:
+As in the [empty block statements example below](#empty-block-statements), to express the pattern in CLQL, the Rule author only needs to express conditions in the VisitElement body:
 
 ```yaml
 cs.element:
@@ -220,7 +220,7 @@ In the example below we have a database manager class that we use to update and 
 
 Our application has a number of different workers that operate asynchronously, making calls to the database manager at any time.
 
-We need to know if our database manager is handling the asynchronous calls correctly, so we write a Spec below to catch potential race conditions between two functions used by the workers:
+We need to know if our database manager is handling the asynchronous calls correctly, so we write a Rule below to catch potential race conditions between two functions used by the workers:
 
 
 ```yaml
@@ -254,7 +254,7 @@ This query uses [variables](#variables). If the `getUser` function is called whi
 
 ## Detecting Deadlocks
 
-In the example below, we have an application used for importing data into a database from a number of different sources asynchronously. The `importData` function is particularly resource heavy on our server due to the raw amount of data that needs to be processed. Knowing this, we decide to write a Spec to catch any idle instances of the `importData` function:
+In the example below, we have an application used for importing data into a database from a number of different sources asynchronously. The `importData` function is particularly resource heavy on our server due to the raw amount of data that needs to be processed. Knowing this, we decide to write a Rule to catch any idle instances of the `importData` function:
 
 ```yaml
 cs.session:
@@ -280,4 +280,4 @@ If an instance of the `importData` runs for more than 4 minutes with unusually l
 
 # Additional Examples
 
-To see more examples of what can be done with CLQL see our currenlty available [**Specs**](https://www.codelingo.io/specs)
+To see more examples of what can be done with CLQL see our currenlty available [**Rules**](https://www.codelingo.io/rules)

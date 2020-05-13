@@ -1,6 +1,6 @@
 # Overview
 
-Codelingo is a Platform as a Service (PaaS) for software development teams to solve software development problems. It treats your software as data and automates your workflows, called Actions, with the rules and patterns you define, called Specs.
+Codelingo is a Platform as a Service (PaaS) for software development teams to solve software development problems. It treats your software as data and automates your workflows, called Actions, with the rules and patterns you define, called Rules.
 
 Our flagship Action is the [Review Action](https://www.codelingo.io/actions/codelingo/review), which checks a repository's pull requests conform to its project specific patterns. We have also built the [Rewrite Action](https://www.codelingo.io/actions/codelingo/rewrite) and the [Docs Action](https://www.codelingo.io/actions/codelingo/docs). 
 
@@ -8,7 +8,7 @@ Our flagship Action is the [Review Action](https://www.codelingo.io/actions/code
 
 ## Playground
 
-Test out writing a Spec and running a Action online with zero installs using the CodeLingo [playground](https://codelingo.io/playground) - it's easier than you think!
+Test out writing a Rule and running a Action online with zero installs using the CodeLingo [playground](https://codelingo.io/playground) - it's easier than you think!
 
 <!-- TODO image of the playground UI -->
 
@@ -16,7 +16,7 @@ Test out writing a Spec and running a Action online with zero installs using the
 
 ## Dashboard
 
-The CodeLingo [Dashboard](https://www.codelingo.io/dashboard) lets you manage you automated workflows for each of your repositories. It is your hub for adding and removing Specs from your repositories and running Actions. Sign in with GitHub and follow the tutorial to run your first Action.
+The CodeLingo [Dashboard](https://www.codelingo.io/dashboard) lets you manage you automated workflows for each of your repositories. It is your hub for adding and removing Rules from your repositories and running Actions. Sign in with GitHub and follow the tutorial to run your first Action.
 
 ## GitHub Review Action
 
@@ -25,39 +25,39 @@ After [installing CodeLingo on GitHub](https://github.com/apps/codelingo), write
 ```yaml
 # codelingo.yaml file
 
-specs:
+rules:
   - import: codelingo/go
 ```
 
-You're done! Every pull request to your repository will now be checked against the Go Spec Bundle we imported above [like so](https://github.com/codelingo/ReviewDemonstration/pull/1).
+You're done! Every pull request to your repository will now be checked against the Go Rule Bundle we imported above [like so](https://github.com/codelingo/ReviewDemonstration/pull/1).
 
 <!-- TODO add screenshot of review comment -->
 
-Other Spec Bundles (including for other languages) from the community can be found at [codelingo.io/specs](https://www.codelingo.io/specs).
+Other Rule Bundles (including for other languages) from the community can be found at [codelingo.io/rules](https://www.codelingo.io/rules).
 
 <!-- TODO add instructions on how to interact with Review Action with GitHub comments -->
 
 # Getting Started Guide
 
-A step by step guide to getting started with Specs and Actions: 
+A step by step guide to getting started with Rules and Actions: 
 
 **[View the getting started guide](getting-started.md)**
 
 # Concepts
 
-The CodeLingo platform has two key concepts: Specs and Actions.
+The CodeLingo platform has two key concepts: Rules and Actions.
 
-## Specs
+## Rules
 
-A Spec is an encoded project specific best practice used to guide development. A Spec can be used for: coding styles, performance tuning, security audits, debugging, avoiding gotchas, reducing complexity and churn, and more.
+A Rule is an encoded project specific best practice used to guide development. A Rule can be used for: coding styles, performance tuning, security audits, debugging, avoiding gotchas, reducing complexity and churn, and more.
 
-**[View the guide and docs for working with Specs](concepts/specs.md)**
+**[View the guide and docs for working with Rules](concepts/rules.md)**
 
-**[Explore published Specs](https://www.codelingo.io/specs)**
+**[Explore published Rules](https://www.codelingo.io/rules)**
 
 ## Actions
 
-An Action is an automated development workflow that leverages Specs to do some task, for example automating code reviews. While a Spec lives next to your code in a codelingo.yaml file, it is inert until an Action uses it.
+An Action is an automated development workflow that leverages Rules to do some task, for example automating code reviews. While a Rule lives next to your code in a codelingo.yaml file, it is inert until an Action uses it.
 
 #### Note:
 
