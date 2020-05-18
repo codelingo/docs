@@ -1,9 +1,9 @@
-FROM codeship/kubectl
+FROM codeship/google-cloud-deployment
 
 ARG HELM_VERSION="v2.12.3"
 
 RUN apt-get update \
-  && apt-get install -y gettext \
+  && apt-get install -y gettext wget \
   && wget https://storage.googleapis.com/kubernetes-helm/helm-${HELM_VERSION}-linux-amd64.tar.gz \
   && tar -xvf helm-${HELM_VERSION}-linux-amd64.tar.gz \
   && mv linux-amd64/helm /usr/local/bin \
