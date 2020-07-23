@@ -1,5 +1,5 @@
-site_name: CodeLingo Docs #- On Prem
-site_url: https://codelingo.io/docs
+site_name: CodeLingo Documentation
+site_url: https://docs.codelingo.io
 repo_url: null #= TODO: should we add this and have links to github?
 
 extra_css:
@@ -17,6 +17,11 @@ pages:
   - CLQL Reference: concepts/CLQL.md
   - Examples: concepts/examples.md
   - CLQL Comparison: concepts/CLQL-Comparison.md
-  # todo (junyu) mkdocs fails to build with external links
 
-theme: mkdocs
+theme:
+  name: material
+  logo:  img/cl_logo_small.png
+  favicon:  img/cl_logo_small.png
+  palette:
+    scheme: default
+    primary: white
