@@ -23,6 +23,13 @@ The CodeLingo Dashboard
 [(codelingo.io/dashboard)](https://www.codelingo.io/dashboard) lets you manage
 your rules for each of your repositories. It is your teams hub for discussion and creating project specific rules.
 
+## Writing Rule Queries
+
+Using CodeLingo Query Language (CLQL) you can write queries for your rules that
+will capture anti patterns in your codebase.
+
+**[View the CLQL guide](concepts/CLQL.md)**
+
 # Concepts
 
 The CodeLingo platform has two key concepts: Rules and Actions.
