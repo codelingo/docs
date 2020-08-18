@@ -1,6 +1,6 @@
-FROM python:2.7 as builder
+FROM python:3.8 as builder
 
-RUN pip install mkdocs mkdocs-cinder
+RUN pip install mkdocs-material
 
 COPY . /go/src/github.com/codelingo/docs
 WORKDIR /go/src/github.com/codelingo/docs
