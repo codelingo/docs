@@ -11,7 +11,8 @@ google_analytics: ["UA-117506438-4", "docs.codelingo.io"]
 
 pages:
   - Home: index.md
-  - Getting Started: getting-started.md
+  # - Getting Started: getting-started.md
+  - Integrating With GitHub: concepts/integrating-with-github.md
   - Rules: concepts/rules.md
   - Actions: concepts/actions.md
   - CLQL Reference: concepts/CLQL.md
@@ -20,8 +21,12 @@ pages:
 
 theme:
   name: material
-  logo:  img/cl_logo_small.png
-  favicon:  img/cl_logo_small.png
+  logo: img/cl_logo_small.png
+  favicon: img/cl_logo_small.png
   palette:
     scheme: default
     primary: white
+
+markdown_extensions:
+  - toc:
+      permalink: "#"
