@@ -22,6 +22,15 @@ Optionally, append a title and description to prepopulate the rule.
 
 ![capture example](../img/capture-github.png)
 
+### Reply
+
+```
+@CodeLingoBot [<your reply content>]
+```
+
+Replying to a CodeLingo review comment whilst mentioning @CodeLingoBot will add the reply 
+to the corresponding rule discussion thread on the dashboard.
+
 ### Review
 
 ```
