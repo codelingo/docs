@@ -28,9 +28,8 @@ Optionally, append a title and description to prepopulate the rule.
 @CodeLingoBot [<your reply content>]
 ```
 
-If CodeLingo finds an issue in your pull request, you can reply to the issue comment and your
-reply will be added to the applicable rule discussion thread on your dashboard. Note that no explicit
-command is needed other than mentioning CodeLingoBot.
+Replying to a CodeLingo review comment whilst mentioning @CodeLingoBot will add the reply 
+to the corresponding rule discussion thread on the dashboard.
 
 ### Review
 
