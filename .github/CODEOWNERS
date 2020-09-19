@@ -1,0 +1,4 @@
+
+# Require Jesse or Ben to review PRs and approve changes to master for the docs.
+# See https://github.com/codelingo/docs/settings/branch_protection_rules/1003050
+/docs/  @waigani @mrcrowl
