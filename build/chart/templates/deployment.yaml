@@ -1,12 +1,11 @@
-apiVersion: apps/v1beta1
-kind: StatefulSet
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: docs
 spec:
   selector:
       matchLabels:
         app: docs
-  serviceName: "docs"
   replicas: {{.Values.replicas}}
   template:
     metadata:
@@ -19,5 +18,3 @@ spec:
         imagePullPolicy: Always
         ports:
           - containerPort: 80
-  updateStrategy:
-    type: RollingUpdate
