@@ -2,8 +2,8 @@
 
 set -e
 
-codeship_google authenticate
+az login --service-principal  --username $USERNAME --password $PASSWORD --tenant $TENANT
 
-gcloud container clusters get-credentials production --zone us-west2-b
+az aks get-credentials --resource-group DefaultResourceGroup-WUS --name production
 
-helm upgrade docs build/chart -f build/chart/prod-values.yaml --wait
+helm upgrade --install docs build/chart -f build/chart/values.yaml --wait

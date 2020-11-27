@@ -1,34 +1,11 @@
-staging-gcrdockercfg:
-  image: codeship/gcr-dockercfg-generator
-  add_docker: true
-  encrypted_env_file: build/gcp-staging.env.encrypted
-
-prod-gcrdockercfg:
-  image: codeship/gcr-dockercfg-generator
-  add_docker: true
-  encrypted_env_file: build/gcp-prod.env.encrypted
-
-staging-build:
+build:
   build:
     dockerfile_path: build/Dockerfile.build
   add_docker: true
   cached: true
-  encrypted_env_file: build/gcp-staging.env.encrypted
+  encrypted_env_file: build/azure.env.encrypted
 
-prod-build:
-  build:
-    dockerfile_path: build/Dockerfile.build
-  add_docker: true
-  cached: true
-  encrypted_env_file: build/gcp-prod.env.encrypted
-
-staging-deploy:
+deploy:
   build:
     dockerfile_path: build/Dockerfile.deploy
-  encrypted_env_file: build/gcp-staging.env.encrypted
-
-prod-deploy:
-  build:
-    dockerfile_path: build/Dockerfile.deploy
-  encrypted_env_file: build/gcp-prod.env.encrypted
-
+  encrypted_env_file: build/azure.env.encrypted
