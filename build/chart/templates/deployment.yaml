@@ -1,12 +1,11 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: docs
 spec:
   selector:
       matchLabels:
         app: docs
-  serviceName: "docs"
   replicas: {{.Values.replicas}}
   template:
     metadata:
@@ -21,5 +20,3 @@ spec:
           - containerPort: 80
       imagePullSecrets:
       - name: acr-secret
-  updateStrategy:
-    type: RollingUpdate
