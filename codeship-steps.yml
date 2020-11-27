@@ -7,5 +7,7 @@
   command: build/deploy_staging.sh
 
 - name: 'deploy image to prod cluster'
+  type: manual
   service: deploy
-  command: build/deploy_prod.sh
+  steps:
+    - command: build/deploy_prod.sh
