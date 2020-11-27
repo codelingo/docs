@@ -1,18 +1,11 @@
-- name: 'build & push staging image to GCR'
-  service: staging-build
-  command: build/build_staging.sh
+- name: 'build & push image to registry'
+  service: build
+  command: build/build.sh
 
 - name: 'deploy image to staging cluster'
-  service: staging-deploy
+  service: deploy
   command: build/deploy_staging.sh
 
-- name: 'build & push production image to GCR'
-  service: prod-build
-  command: build/build_prod.sh
-
-- type: manual
-  name: 'deploy image to production cluster'
-  service: prod-deploy
-  steps:
-  - command: build/deploy_prod.sh
-
+- name: 'deploy image to prod cluster'
+  service: deploy
+  command: build/deploy_prod.sh
